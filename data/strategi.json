@@ -1,0 +1,113 @@
+{
+  "strategi": [
+    {
+      "id": 1,
+      "nama": "Pengembangan Pertanian Modern dan Diversifikasi Komoditas",
+      "tipe": "SO",
+      "deskripsi": "Mengembangkan pertanian modern berbasis irigasi teknis untuk meningkatkan produksi dan memenuhi permintaan pasar yang meningkat. Diversifikasi komoditas pertanian untuk mengurangi risiko fluktuasi harga.",
+      "program": [
+        "Pengembangan pertanian irigasi teknis dan penerapan teknologi pertanian terkini",
+        "Rehabilitasi dan pembangunan saluran irigasi tersier (Rp382.638.000)",
+        "Diversifikasi komoditas pertanian (hortikultura, tanaman obat)"
+      ],
+      "sumber_dana": ["Dana Desa (APBDes)", "Bantuan Pemerintah Provinsi"],
+      "timeline": "2025-2030",
+      "indikator": [
+        "Peningkatan produktivitas padi minimal 20%",
+        "Terciptanya 3 jenis komoditas unggulan baru",
+        "Rehabilitasi 100% saluran irigasi"
+      ]
+    },
+    {
+      "id": 2,
+      "nama": "Penguatan BUMDes sebagai Motor Penggerak Ekonomi Desa",
+      "tipe": "SO",
+      "deskripsi": "Memperkuat BUMDes dengan memanfaatkan Dana Desa untuk membuka unit usaha baru yang berbasis potensi lokal, termasuk pengelolaan aset kas desa dan pengembangan wisata sejarah.",
+      "program": [
+        "Pengembangan unit usaha pengolahan hasil pertanian",
+        "Pengelolaan aset kas desa (21 Ha) secara produktif",
+        "Pengembangan wisata berbasis situs sejarah (0,35 Ha)"
+      ],
+      "sumber_dana": ["Dana Desa", "PAD", "Investasi Swasta"],
+      "timeline": "2025-2030",
+      "indikator": [
+        "Peningkatan pendapatan BUMDes minimal 50%",
+        "Terbentuk 3 unit usaha baru BUMDes",
+        "Wisata sejarah mulai beroperasi"
+      ]
+    },
+    {
+      "id": 3,
+      "nama": "Pengembangan UMKM Berbasis Teknologi Digital",
+      "tipe": "WO",
+      "deskripsi": "Mengembangkan UMKM (peternakan, jahit, kayu) melalui program pemberdayaan dan akses modal pemerintah, serta memanfaatkan teknologi digital untuk pemasaran.",
+      "program": [
+        "Pelatihan e-commerce dan pemasaran digital bagi pelaku UMKM",
+        "Pembangunan jaringan komunikasi lokal desa (Rp9.205.000)",
+        "Fasilitasi sertifikasi produk lokal"
+      ],
+      "sumber_dana": ["Dana Desa", "ADD", "Program Pemerintah Daerah"],
+      "timeline": "2025-2030",
+      "indikator": [
+        "50% pelaku UMKM menggunakan platform digital",
+        "Terbentuk 10 UMKM baru",
+        "Sertifikasi produk untuk 5 produk unggulan"
+      ]
+    },
+    {
+      "id": 4,
+      "nama": "Peningkatan Kualitas Sumber Daya Manusia",
+      "tipe": "WO",
+      "deskripsi": "Meningkatkan kualitas SDM melalui pelatihan keterampilan vokasional, program beasiswa, dan kerja sama dengan perguruan tinggi untuk pemberdayaan masyarakat.",
+      "program": [
+        "Pelatihan keterampilan vokasional bagi angkatan kerja",
+        "Program beasiswa bagi siswa berprestasi dari keluarga kurang mampu (Rp31.200.000)",
+        "Kerja sama dengan perguruan tinggi untuk program pemberdayaan"
+      ],
+      "sumber_dana": ["ADD", "Dana Desa", "Bantuan Pendidikan"],
+      "timeline": "2025-2030",
+      "indikator": [
+        "Penurunan angka pengangguran 30%",
+        "100% anak usia sekolah mendapatkan pendidikan",
+        "500 masyarakat mengikuti pelatihan vokasional"
+      ]
+    },
+    {
+      "id": 5,
+      "nama": "Diversifikasi Ekonomi dan Mitigasi Risiko",
+      "tipe": "ST",
+      "deskripsi": "Mendiversifikasi komoditas pertanian, mengembangkan usaha non-pertanian berbasis potensi lokal, dan membangun infrastruktur pengendalian banjir menggunakan alokasi APBDes.",
+      "program": [
+        "Diversifikasi komoditas pertanian (hortikultura, tanaman obat)",
+        "Pengembangan usaha non-pertanian berbasis potensi lokal",
+        "Pembangunan infrastruktur pengendalian banjir dan perbaikan irigasi"
+      ],
+      "sumber_dana": ["Dana Desa", "Bantuan Provinsi", "APBD Kabupaten"],
+      "timeline": "2025-2030",
+      "indikator": [
+        "Pengurangan risiko gagal panen 40%",
+        "Terbentuk 5 usaha non-pertanian baru",
+        "Banjir teratasi di 4 Ha wilayah rawan"
+      ]
+    },
+    {
+      "id": 6,
+      "nama": "Penguatan Kelembagaan dan Partisipasi Masyarakat",
+      "tipe": "WT",
+      "deskripsi": "Memperkuat kelembagaan BPD dan LKMD, membentuk koperasi/kelompok usaha bersama, dan optimalisasi pengelolaan APBDes untuk dampak ekonomi langsung bagi masyarakat.",
+      "program": [
+        "Penguatan BPD dan LKMD agar pengawasan pembangunan lebih efektif",
+        "Pembentukan koperasi/kelompok usaha bersama untuk meningkatkan daya saing",
+        "Optimalisasi pengelolaan APBDes dengan mengutamakan program berdampak ekonomi"
+      ],
+      "sumber_dana": ["ADD", "PAD", "APBDes"],
+      "timeline": "2025-2030",
+      "indikator": [
+        "BPD aktif dan berfungsi optimal",
+        "Terbentuk 5 kelompok usaha bersama",
+        "Efisiensi APBDes 20% untuk program produktif"
+      ]
+    }
+  ],
+  "updated_at": "2026-07-19"
+}

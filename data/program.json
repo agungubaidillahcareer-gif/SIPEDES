@@ -1,0 +1,109 @@
+{
+  "program": [
+    {
+      "id": 1,
+      "strategi_id": 1,
+      "nama": "Pengembangan Pertanian Modern",
+      "deskripsi": "Optimalisasi lahan sawah irigasi teknis melalui penerapan teknologi pertanian terkini",
+      "anggaran": 382638000,
+      "sumber_dana": "Dana Desa (APBDes)",
+      "tahun_mulai": 2025,
+      "tahun_selesai": 2030,
+      "penanggung_jawab": "Kepala Desa / Koordinator Pertanian",
+      "status": "Berjalan",
+      "indikator": "Peningkatan produksi padi 20%"
+    },
+    {
+      "id": 2,
+      "strategi_id": 2,
+      "nama": "Penguatan BUMDes",
+      "deskripsi": "Pengembangan unit usaha pengolahan hasil pertanian dan pengelolaan aset kas desa",
+      "anggaran": 15000000,
+      "sumber_dana": "Dana Desa, PAD",
+      "tahun_mulai": 2025,
+      "tahun_selesai": 2030,
+      "penanggung_jawab": "Pengelola BUMDes",
+      "status": "Berjalan",
+      "indikator": "Pendapatan BUMDes naik 50%"
+    },
+    {
+      "id": 3,
+      "strategi_id": 3,
+      "nama": "Digitalisasi UMKM",
+      "deskripsi": "Pelatihan e-commerce, pembangunan jaringan komunikasi lokal, sertifikasi produk",
+      "anggaran": 9205000,
+      "sumber_dana": "Dana Desa, ADD",
+      "tahun_mulai": 2025,
+      "tahun_selesai": 2030,
+      "penanggung_jawab": "Koordinator UMKM",
+      "status": "Berjalan",
+      "indikator": "50% UMKM go digital"
+    },
+    {
+      "id": 4,
+      "strategi_id": 4,
+      "nama": "Program Beasiswa dan Pelatihan SDM",
+      "deskripsi": "Program beasiswa bagi siswa berprestasi dan pelatihan vokasional masyarakat",
+      "anggaran": 31200000,
+      "sumber_dana": "ADD, Dana Desa",
+      "tahun_mulai": 2025,
+      "tahun_selesai": 2030,
+      "penanggung_jawab": "Kepala Desa / Dinas Pendidikan",
+      "status": "Berjalan",
+      "indikator": "Penurunan pengangguran 30%"
+    },
+    {
+      "id": 5,
+      "strategi_id": 5,
+      "nama": "Diversifikasi Komoditas Pertanian",
+      "deskripsi": "Pengembangan hortikultura, tanaman obat, dan komoditas bernilai ekonomi tinggi",
+      "anggaran": 100000000,
+      "sumber_dana": "Dana Desa, Bantuan Provinsi",
+      "tahun_mulai": 2025,
+      "tahun_selesai": 2030,
+      "penanggung_jawab": "Koordinator Pertanian",
+      "status": "Perencanaan",
+      "indikator": "5 komoditas unggulan baru"
+    },
+    {
+      "id": 6,
+      "strategi_id": 5,
+      "nama": "Mitigasi Banjir dan Irigasi",
+      "deskripsi": "Pembangunan infrastruktur pengendalian banjir dan perbaikan saluran irigasi",
+      "anggaran": 129600000,
+      "sumber_dana": "Dana Desa, APBD",
+      "tahun_mulai": 2025,
+      "tahun_selesai": 2027,
+      "penanggung_jawab": "Kepala Desa / Dinas PU",
+      "status": "Perencanaan",
+      "indikator": "0 genangan banjir di 4 Ha"
+    },
+    {
+      "id": 7,
+      "strategi_id": 6,
+      "nama": "Penguatan BPD dan LKMD",
+      "deskripsi": "Reaktivasi dan penguatan fungsi pengawasan BPD serta LKMD",
+      "anggaran": 25000000,
+      "sumber_dana": "ADD, PAD",
+      "tahun_mulai": 2025,
+      "tahun_selesai": 2026,
+      "penanggung_jawab": "Ketua BPD",
+      "status": "Perencanaan",
+      "indikator": "BPD aktif dan berfungsi"
+    },
+    {
+      "id": 8,
+      "strategi_id": 6,
+      "nama": "Pembentukan Koperasi Desa",
+      "deskripsi": "Pembentukan koperasi/kelompok usaha bersama untuk meningkatkan daya saing",
+      "anggaran": 15000000,
+      "sumber_dana": "Dana Desa, ADD",
+      "tahun_mulai": 2025,
+      "tahun_selesai": 2026,
+      "penanggung_jawab": "Pengelola BUMDes",
+      "status": "Perencanaan",
+      "indikator": "5 kelompok usaha terbentuk"
+    }
+  ],
+  "updated_at": "2026-07-19"
+}

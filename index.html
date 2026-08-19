@@ -1,0 +1,3484 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes"
+    />
+    <title>SIPEDES · Sistem Informasi Potensi Desa</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="assets/images/logo.png" />
+    <style>
+      /* ===== ROOT ===== */
+      :root {
+        --primary: #0f4c3a;
+        --primary-light: #1b6b52;
+        --primary-dark: #0a3327;
+        --primary-50: #e8f5e9;
+        --accent: #c9956b;
+        --accent-light: #f0e0c8;
+        --bg: #f0eeea;
+        --bg-white: #ffffff;
+        --text: #1a262a;
+        --text-light: #4a5a62;
+        --text-muted: #8a9a9f;
+        --border: #e4e6db;
+        --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        --shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.1);
+        --radius: 14px;
+        --radius-sm: 10px;
+        --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        --font: "Inter", -apple-system, sans-serif;
+        --header-height: 64px;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+        scroll-behavior: smooth;
+        scroll-padding-top: 80px;
+      }
+      body {
+        font-family: var(--font);
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        padding-top: var(--header-height);
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      ul {
+        list-style: none;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 16px;
+      }
+
+      /* ===== PRELOADER ===== */
+      #preloader {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: var(--primary-dark);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.6s ease;
+      }
+      #preloader.hide {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .loader-ring {
+        width: 48px;
+        height: 48px;
+        border: 4px solid rgba(255, 255, 255, 0.1);
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 0.9s linear infinite;
+        margin-bottom: 12px;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .loader-text {
+        font-size: 22px;
+        font-weight: 800;
+        color: #fff;
+        letter-spacing: 2px;
+      }
+      .loader-sub {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.5);
+        margin-top: 4px;
+      }
+
+      /* ===== HEADER ===== */
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.97);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border);
+        height: var(--header-height);
+        transition: var(--transition);
+      }
+      .header.scrolled {
+        box-shadow: var(--shadow);
+      }
+      .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: var(--header-height);
+        padding: 0 16px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        font-size: 18px;
+        color: var(--primary-dark);
+      }
+      .brand img {
+        height: 34px;
+        width: 34px;
+        border-radius: 8px;
+      }
+      .brand small {
+        font-size: 10px;
+        font-weight: 400;
+        color: var(--text-muted);
+        background: var(--bg);
+        padding: 2px 10px;
+        border-radius: 20px;
+      }
+      .nav-menu {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+      }
+      .nav-menu a {
+        padding: 6px 10px;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text-light);
+        border-radius: 24px;
+        transition: var(--transition);
+        white-space: nowrap;
+      }
+      .nav-menu a i {
+        font-size: 13px;
+      }
+      .nav-menu a.active {
+        color: #fff;
+        background: var(--primary);
+      }
+      .nav-menu a:not(.active):hover {
+        color: var(--primary);
+        background: var(--primary-50);
+      }
+      .nav-menu .nav-dashboard {
+        background: var(--primary-50);
+        color: var(--primary) !important;
+      }
+      .nav-menu .nav-login {
+        background: var(--accent);
+        color: #fff !important;
+        padding: 6px 14px;
+      }
+      .nav-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 4px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+      }
+      .nav-toggle span {
+        width: 24px;
+        height: 2px;
+        background: var(--text);
+        border-radius: 2px;
+        transition: var(--transition);
+      }
+      .nav-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(4px, 4px);
+      }
+      .nav-toggle.active span:nth-child(2) {
+        opacity: 0;
+      }
+      .nav-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(4px, -4px);
+      }
+      .nav-menu-mobile {
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(12px);
+        padding: 16px;
+        border-bottom: 1px solid var(--border);
+        display: none;
+        flex-direction: column;
+        gap: 4px;
+        max-height: calc(100vh - var(--header-height));
+        overflow-y: auto;
+      }
+      .nav-menu-mobile.open {
+        display: flex;
+      }
+      .nav-menu-mobile a {
+        padding: 12px 16px;
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--text-light);
+        border-radius: var(--radius-sm);
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .nav-menu-mobile a.active {
+        color: var(--primary);
+        background: var(--primary-50);
+      }
+      .nav-menu-mobile a i {
+        width: 24px;
+        text-align: center;
+      }
+
+      /* ===== HERO ===== */
+      .hero {
+        position: relative;
+        min-height: 85vh;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(135deg, #0a3327, #1b6b52);
+        overflow: hidden;
+        padding: 20px 0 40px;
+      }
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse at 30% 50%,
+            rgba(255, 255, 255, 0.05) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse at 70% 20%,
+            rgba(201, 149, 107, 0.06) 0%,
+            transparent 50%
+          );
+      }
+      .hero-container {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+        align-items: center;
+      }
+      .hero-content {
+        color: #fff;
+        text-align: center;
+      }
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.12);
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 500;
+        margin-bottom: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .hero-badge img {
+        height: 20px;
+        width: 20px;
+        border-radius: 4px;
+      }
+      .hero-content h1 {
+        font-size: 28px;
+        font-weight: 800;
+        line-height: 1.15;
+        letter-spacing: -1px;
+        margin-bottom: 12px;
+      }
+      .hero-content h1 span {
+        background: linear-gradient(135deg, #f0e0c8, #d4a373);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .hero-content p {
+        font-size: 15px;
+        opacity: 0.85;
+        max-width: 100%;
+        margin-bottom: 20px;
+        line-height: 1.7;
+      }
+      .hero-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 24px;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 50px;
+        transition: var(--transition);
+        border: none;
+        cursor: pointer;
+      }
+      .btn:active {
+        transform: scale(0.96);
+      }
+      .btn-primary {
+        background: #fff;
+        color: var(--primary-dark);
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      }
+      .btn-outline {
+        background: transparent;
+        color: #fff;
+        border: 2px solid rgba(255, 255, 255, 0.25);
+      }
+      .btn-outline:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: #fff;
+      }
+      .hero-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(4px);
+        padding: 16px;
+        border-radius: var(--radius);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .stat-item {
+        text-align: center;
+      }
+      .stat-item .stat-number {
+        display: block;
+        font-size: 22px;
+        font-weight: 800;
+        color: #fff;
+        line-height: 1.1;
+      }
+      .stat-item label {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.6);
+      }
+      .hero-scroll {
+        display: none;
+      }
+
+      /* ===== SECTION ===== */
+      .section {
+        padding: 40px 0;
+      }
+      .section-head {
+        text-align: center;
+        margin-bottom: 28px;
+      }
+      .section-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--accent);
+        background: var(--accent-light);
+        padding: 4px 16px;
+        border-radius: 20px;
+        margin-bottom: 8px;
+      }
+      .section-head h2 {
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--primary-dark);
+        letter-spacing: -0.5px;
+      }
+      .section-line {
+        width: 40px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        margin: 8px auto 12px;
+        border-radius: 2px;
+      }
+      .section-head p {
+        max-width: 100%;
+        margin: 0 auto;
+        font-size: 14px;
+        color: var(--text-light);
+        line-height: 1.7;
+        padding: 0 4px;
+      }
+
+      /* ===== PROFIL ===== */
+      .profil {
+        background: var(--bg-white);
+      }
+      .profil-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .profil-card {
+        background: var(--bg);
+        padding: 16px 14px;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        transition: var(--transition);
+      }
+      .profil-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-hover);
+      }
+      .profil-icon {
+        width: 36px;
+        height: 36px;
+        background: var(--primary-50);
+        color: var(--primary);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+      .profil-card h3 {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--primary-dark);
+        margin-bottom: 8px;
+      }
+      .profil-card ul li {
+        font-size: 12px;
+        color: var(--text-light);
+        padding: 3px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        display: flex;
+        justify-content: space-between;
+      }
+      .profil-card ul li:last-child {
+        border-bottom: none;
+      }
+      .profil-card ul li strong {
+        color: var(--text);
+      }
+
+      /* ===== POTENSI ===== */
+      .potensi {
+        background: var(--bg);
+      }
+      .potensi-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .potensi-card {
+        background: var(--bg-white);
+        padding: 16px 14px;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        transition: var(--transition);
+      }
+      .potensi-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-hover);
+      }
+      .potensi-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+      .potensi-card h3 {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--primary-dark);
+        margin-bottom: 4px;
+      }
+      .potensi-card p {
+        font-size: 12px;
+        color: var(--text-light);
+        margin-bottom: 8px;
+        line-height: 1.5;
+      }
+      .potensi-card ul li {
+        font-size: 11px;
+        color: var(--text-light);
+        padding: 2px 0;
+        display: flex;
+        align-items: flex-start;
+        gap: 6px;
+      }
+      .potensi-card ul li i {
+        color: var(--primary);
+        margin-top: 3px;
+        font-size: 11px;
+      }
+
+      /* ===== SWOT ===== */
+      .swot {
+        background: var(--bg-white);
+      }
+      .swot-container {
+        background: var(--bg);
+        padding: 16px;
+        border-radius: var(--radius);
+        margin-bottom: 16px;
+        border: 1px solid var(--border);
+      }
+      .swot-form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .swot-form-col {
+        border-radius: var(--radius-sm);
+        padding: 12px;
+        border: 2px solid transparent;
+        background: var(--bg-white);
+      }
+      .swot-form-col h4 {
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .swot-form-col h4 i {
+        font-size: 14px;
+      }
+      .swot-faktor-list {
+        max-height: 200px;
+        overflow-y: auto;
+      }
+      .swot-faktor-item {
+        display: grid;
+        grid-template-columns: 20px 1fr 45px 40px 25px 20px;
+        gap: 4px;
+        align-items: center;
+        background: #fff;
+        padding: 4px 8px;
+        border-radius: 6px;
+        margin-bottom: 4px;
+        border: 1px solid var(--border);
+        font-size: 11px;
+      }
+      .swot-faktor-item .faktor-id {
+        font-weight: 700;
+        font-size: 10px;
+      }
+      .swot-faktor-item input,
+      .swot-faktor-item select {
+        padding: 3px 4px;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        font-size: 10px;
+        font-family: var(--font);
+        background: #fff;
+        width: 100%;
+      }
+      .swot-faktor-item .faktor-bobot {
+        width: 45px;
+        text-align: center;
+      }
+      .swot-faktor-item .faktor-rating {
+        width: 40px;
+        text-align: center;
+      }
+      .faktor-skor {
+        font-weight: 700;
+        font-size: 10px;
+        text-align: center;
+      }
+      .btn-remove {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 12px;
+        padding: 2px;
+        opacity: 0.5;
+      }
+      .btn-remove:hover {
+        opacity: 1;
+      }
+      .empty-state {
+        padding: 12px;
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 12px;
+        background: #fff;
+        border-radius: 6px;
+        border: 1px dashed var(--border);
+      }
+      .btn-sm {
+        padding: 4px 12px;
+        font-size: 11px;
+        border-radius: 4px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        transition: var(--transition);
+      }
+      .btn-add {
+        background: var(--primary);
+        color: #fff;
+        margin-top: 6px;
+      }
+      .btn-add:hover {
+        background: var(--primary-light);
+      }
+      .swot-form-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 16px;
+        justify-content: center;
+        flex-wrap: wrap;
+        padding-top: 12px;
+        border-top: 1px solid var(--border);
+      }
+      .swot-form-actions .btn {
+        padding: 10px 20px;
+        font-size: 12px;
+      }
+
+      /* ===== SWOT HASIL ===== */
+      .swot-hasil {
+        background: #fff;
+        padding: 20px;
+        border-radius: var(--radius);
+        margin-bottom: 16px;
+        border: 1px solid var(--border);
+      }
+      .swot-hasil h3 {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--primary-dark);
+        text-align: center;
+        margin-bottom: 16px;
+        letter-spacing: 0.5px;
+      }
+      .hasil-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+      .hasil-item {
+        padding: 12px 14px;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--border);
+        font-size: 12px;
+        min-height: 64px;
+        text-align: center;
+        transition: 0.2s;
+        background: var(--bg);
+      }
+      .hasil-item:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+      }
+      .hasil-item.highlight {
+        border-width: 2px;
+      }
+      .hasil-label {
+        font-weight: 600;
+        color: var(--text-light);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        letter-spacing: 0.3px;
+      }
+      .hasil-label i {
+        font-size: 13px;
+      }
+      .hasil-value {
+        font-weight: 700;
+        font-size: 20px;
+        margin-top: 2px;
+      }
+      .hasil-kuadran-info {
+        text-align: center;
+        padding: 16px 20px;
+        background: var(--bg);
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        margin-top: 4px;
+      }
+      .kuadran-badge {
+        display: inline-block;
+        padding: 6px 24px;
+        border-radius: 20px;
+        font-weight: 700;
+        color: #fff;
+        font-size: 15px;
+        letter-spacing: 0.5px;
+      }
+      .strategi-badge {
+        display: inline-block;
+        padding: 6px 24px;
+        border-radius: 20px;
+        font-weight: 600;
+        color: #fff;
+        font-size: 14px;
+        margin-left: 6px;
+        letter-spacing: 0.3px;
+      }
+      .strategi-deskripsi {
+        margin-top: 10px;
+        font-size: 14px;
+        font-weight: 500;
+      }
+      .hasil-detail {
+        margin-top: 10px;
+        font-size: 12px;
+        color: var(--text-muted);
+        border-top: 1px solid var(--border);
+        padding-top: 10px;
+      }
+      .hasil-detail span {
+        margin: 0 8px;
+      }
+      .hasil-detail .label {
+        font-weight: 600;
+        color: var(--text-light);
+      }
+
+      /* ===== SWOT KUADRAN ===== */
+      .swot-kuadran {
+        background: #fff;
+        padding: 20px;
+        border-radius: var(--radius);
+        margin-bottom: 16px;
+        border: 1px solid var(--border);
+      }
+      .swot-kuadran h3 {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--primary-dark);
+        text-align: center;
+        margin-bottom: 16px;
+        letter-spacing: 0.5px;
+      }
+      .kuadran-chart {
+        position: relative;
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
+        aspect-ratio: 1;
+      }
+      .kuadran-axis-x {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 10px;
+        font-size: 10px;
+        color: var(--text-muted);
+        margin-top: 4px;
+      }
+      .kuadran-axis-y {
+        display: none;
+      }
+      .kuadran-grid {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 2px;
+        background: var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .kuadran-area {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
+        font-size: 10px;
+        background: #fff;
+        color: var(--text-muted);
+        padding: 6px;
+        text-align: center;
+      }
+      .kuadran-area.active {
+        border: 2px solid;
+      }
+      .kuadran-area .check {
+        font-size: 14px;
+        display: block;
+        font-weight: 700;
+      }
+      .kuadran-area div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1px;
+      }
+      .kuadran-label {
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .kuadran-strategy {
+        font-size: 9px;
+      }
+      .kuadran-dot {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        border: 2px solid #fff;
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.15);
+        z-index: 10;
+      }
+      .dot-label {
+        position: absolute;
+        top: 22px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 9px;
+        font-weight: 700;
+        white-space: nowrap;
+        background: #fff;
+        padding: 1px 8px;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      .kuadran-note {
+        text-align: center;
+        margin-top: 12px;
+        padding: 12px;
+        background: var(--bg);
+        border-radius: 6px;
+        font-size: 13px;
+        color: var(--text-light);
+      }
+
+      /* ===== MATRIKS ===== */
+      .matrix-wrapper {
+        background: #fff;
+        padding: 20px;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+      }
+      .matrix-wrapper h3 {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--primary-dark);
+        text-align: center;
+        margin-bottom: 16px;
+        letter-spacing: 0.5px;
+      }
+      .matrix-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2px;
+        background: var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .matrix-header {
+        display: none;
+      }
+      .matrix-cell {
+        padding: 12px 14px;
+        background: #fff;
+        font-size: 12px;
+      }
+      .matrix-cell strong {
+        display: block;
+        font-size: 13px;
+        margin-bottom: 4px;
+      }
+      .matrix-cell ul li {
+        padding: 2px 0;
+        color: var(--text-light);
+        font-size: 11px;
+        padding-left: 16px;
+        position: relative;
+        line-height: 1.4;
+      }
+      .matrix-cell ul li::before {
+        content: "›";
+        position: absolute;
+        left: 0;
+        font-weight: 700;
+      }
+
+      /* ===== STRATEGI ===== */
+      .strategi {
+        background: var(--bg);
+      }
+      .strategi-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .strategi-card {
+        display: flex;
+        gap: 12px;
+        background: #fff;
+        padding: 16px;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        transition: var(--transition);
+      }
+      .strategi-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-hover);
+      }
+      .strategi-number {
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--primary-50);
+        line-height: 1;
+        min-width: 36px;
+      }
+      .strategi-content {
+        flex: 1;
+      }
+      .strategi-content h3 {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--primary-dark);
+        margin-bottom: 2px;
+      }
+      .strategi-type {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 600;
+        padding: 1px 10px;
+        border-radius: 10px;
+        margin-bottom: 6px;
+      }
+      .strategi-content p {
+        font-size: 12px;
+        color: var(--text-light);
+        line-height: 1.6;
+        margin-bottom: 8px;
+      }
+      .strategi-detail {
+        display: flex;
+        gap: 12px;
+        font-size: 11px;
+        color: var(--text-muted);
+        flex-wrap: wrap;
+      }
+      .strategi-detail span {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .strategi-detail i {
+        color: var(--primary);
+      }
+      .strategi-indikator {
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px solid var(--border);
+      }
+      .strategi-indikator small {
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--text-muted);
+      }
+      .strategi-indikator ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2px 8px;
+        margin-top: 2px;
+      }
+      .strategi-indikator ul li {
+        font-size: 11px;
+        color: var(--text-light);
+        padding-left: 12px;
+        position: relative;
+      }
+      .strategi-indikator ul li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+      }
+
+      /* ===== PROGRAM ===== */
+      .program {
+        background: var(--bg-white);
+      }
+      .program-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .program-card {
+        display: flex;
+        gap: 12px;
+        background: var(--bg);
+        padding: 14px 16px;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        transition: var(--transition);
+      }
+      .program-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-hover);
+      }
+      .program-number {
+        width: 32px;
+        height: 32px;
+        background: var(--primary);
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .program-content {
+        flex: 1;
+      }
+      .program-content h4 {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--primary-dark);
+        margin-bottom: 2px;
+      }
+      .program-content p {
+        font-size: 12px;
+        color: var(--text-light);
+        margin-bottom: 6px;
+      }
+      .program-meta {
+        display: flex;
+        gap: 8px;
+        font-size: 11px;
+        color: var(--text-muted);
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .program-meta span {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .program-meta i {
+        color: var(--accent);
+      }
+      .program-status {
+        padding: 1px 10px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 10px;
+      }
+      .program-indikator {
+        margin-top: 6px;
+        padding-top: 6px;
+        border-top: 1px solid var(--border);
+      }
+      .program-indikator small {
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--text-muted);
+      }
+      .program-indikator span {
+        font-size: 11px;
+        color: var(--text-light);
+        margin-left: 4px;
+      }
+
+      /* ===== TENTANG ===== */
+      .tentang {
+        background: var(--bg);
+      }
+      .tentang-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .tentang-card {
+        background: #fff;
+        padding: 20px 16px;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        text-align: center;
+        transition: var(--transition);
+      }
+      .tentang-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-hover);
+      }
+      .tentang-icon {
+        width: 48px;
+        height: 48px;
+        background: var(--primary-50);
+        color: var(--primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        margin: 0 auto 10px;
+      }
+      .tentang-card h3 {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--primary-dark);
+        margin-bottom: 6px;
+      }
+      .tentang-card p {
+        font-size: 13px;
+        color: var(--text-light);
+        line-height: 1.6;
+      }
+      .tentang-card ul li {
+        font-size: 12px;
+        color: var(--text-light);
+        padding: 3px 0;
+        text-align: left;
+        padding-left: 20px;
+        position: relative;
+      }
+      .tentang-card ul li::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: var(--primary);
+        font-weight: 700;
+      }
+
+      /* ===== FOOTER ===== */
+      .footer {
+        background: var(--primary-dark);
+        color: rgba(255, 255, 255, 0.8);
+        padding: 32px 0 16px;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .footer-brand h3 {
+        font-size: 20px;
+        font-weight: 700;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .footer-brand h3 img {
+        height: 28px;
+        width: 28px;
+        border-radius: 6px;
+      }
+      .footer-brand p {
+        font-size: 13px;
+        opacity: 0.7;
+        margin: 4px 0;
+      }
+      .footer-tagline {
+        font-style: italic;
+        font-size: 13px;
+        opacity: 0.5;
+        color: var(--accent-light);
+      }
+      .footer-tagline i {
+        opacity: 0.3;
+        margin-right: 4px;
+      }
+      .footer-links h4,
+      .footer-info h4 {
+        color: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+      .footer-links ul li {
+        padding: 3px 0;
+      }
+      .footer-links ul li a {
+        font-size: 13px;
+        opacity: 0.7;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: var(--transition);
+      }
+      .footer-links ul li a i {
+        font-size: 9px;
+        color: var(--accent);
+      }
+      .footer-links ul li a:hover {
+        opacity: 1;
+      }
+      .footer-info p {
+        font-size: 13px;
+        opacity: 0.7;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .footer-info p i {
+        color: var(--accent);
+        margin-top: 3px;
+        min-width: 16px;
+      }
+      .footer-bottom {
+        text-align: center;
+        padding-top: 16px;
+        font-size: 12px;
+        opacity: 0.5;
+      }
+
+      /* ===== TOAST ===== */
+      #toastContainer {
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        z-index: 9999;
+        pointer-events: none;
+        max-width: 380px;
+        width: 100%;
+      }
+      #toastContainer .toast {
+        pointer-events: auto;
+        margin-bottom: 8px;
+        padding: 12px 18px;
+        border-radius: 10px;
+        font-weight: 500;
+        font-size: 13px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        animation: toastSlide 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #fff;
+        border-left: 4px solid rgba(255, 255, 255, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+      #toastContainer .toast::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.06);
+        pointer-events: none;
+      }
+      #toastContainer .toast.success {
+        background: linear-gradient(135deg, #1b5e20, #2e7d32);
+      }
+      #toastContainer .toast.error {
+        background: linear-gradient(135deg, #b71c1c, #c62828);
+      }
+      #toastContainer .toast.warning {
+        background: linear-gradient(135deg, #bf360c, #e65100);
+      }
+      #toastContainer .toast.info {
+        background: linear-gradient(135deg, #0a3a7a, #0d47a1);
+      }
+      #toastContainer .toast.hide {
+        opacity: 0;
+        transform: translateX(50px);
+        transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      #toastContainer .toast i {
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+      #toastContainer .toast .toast-content {
+        flex: 1;
+        font-size: 12px;
+        line-height: 1.4;
+      }
+      #toastContainer .toast .toast-close {
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        font-size: 16px;
+        padding: 0 4px;
+        transition: 0.3s;
+        flex-shrink: 0;
+      }
+      #toastContainer .toast .toast-close:hover {
+        color: #fff;
+      }
+      @keyframes toastSlide {
+        from {
+          transform: translateX(60px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      /* ===== CONFIRM MODAL ===== */
+      .confirm-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        z-index: 99999;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        animation: fadeIn 0.25s ease;
+      }
+      .confirm-overlay.active {
+        display: flex;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .confirm-box {
+        background: var(--bg-white);
+        border-radius: var(--radius);
+        max-width: 400px;
+        width: 100%;
+        padding: 28px 24px;
+        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+        animation: popIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        text-align: center;
+      }
+      @keyframes popIn {
+        from {
+          transform: scale(0.92) translateY(16px);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1) translateY(0);
+          opacity: 1;
+        }
+      }
+      .confirm-box .confirm-icon {
+        font-size: 44px;
+        margin-bottom: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .confirm-box .confirm-icon.warning {
+        color: #e65100;
+      }
+      .confirm-box .confirm-icon.danger {
+        color: #c62828;
+      }
+      .confirm-box .confirm-icon.success {
+        color: #2e7d32;
+      }
+      .confirm-box .confirm-icon.info {
+        color: #0d47a1;
+      }
+      .confirm-box h3 {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--primary-dark);
+        margin-bottom: 6px;
+      }
+      .confirm-box p {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+      .confirm-box .confirm-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .confirm-box .confirm-actions button {
+        padding: 8px 28px;
+        border-radius: 8px;
+        border: none;
+        font-weight: 600;
+        font-size: 13px;
+        cursor: pointer;
+        transition: 0.3s ease;
+        font-family: var(--font);
+        min-width: 80px;
+      }
+      .confirm-box .confirm-actions .btn-confirm-yes {
+        background: #c62828;
+        color: #fff;
+        box-shadow: 0 4px 12px rgba(198, 40, 40, 0.3);
+      }
+      .confirm-box .confirm-actions .btn-confirm-yes:hover {
+        background: #b71c1c;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(198, 40, 40, 0.4);
+      }
+      .confirm-box .confirm-actions .btn-confirm-no {
+        background: #e8e8e8;
+        color: var(--text);
+      }
+      .confirm-box .confirm-actions .btn-confirm-no:hover {
+        background: #d5d5d5;
+        transform: translateY(-2px);
+      }
+
+      /* ===== SCROLL TOP ===== */
+      .scroll-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 44px;
+        height: 44px;
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        font-size: 16px;
+        cursor: pointer;
+        box-shadow: 0 4px 20px rgba(15, 76, 58, 0.3);
+        transition: var(--transition);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(20px);
+        z-index: 999;
+      }
+      .scroll-top.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+      .scroll-top:hover {
+        background: var(--primary-light);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 30px rgba(15, 76, 58, 0.4);
+      }
+
+      /* ===== RESPONSIVE ===== */
+      @media (min-width: 768px) {
+        .container {
+          padding: 0 24px;
+        }
+        .nav-toggle {
+          display: none;
+        }
+        .nav-menu {
+          display: flex !important;
+        }
+        .nav-menu-mobile {
+          display: none !important;
+        }
+        .hero {
+          min-height: 100vh;
+          padding: 100px 0 60px;
+        }
+        .hero-container {
+          grid-template-columns: 1fr 1fr;
+          gap: 40px;
+        }
+        .hero-content {
+          text-align: left;
+        }
+        .hero-actions {
+          justify-content: flex-start;
+        }
+        .hero-content h1 {
+          font-size: 44px;
+        }
+        .hero-content p {
+          font-size: 17px;
+          max-width: 520px;
+        }
+        .hero-stats {
+          max-width: 520px;
+        }
+        .hero-scroll {
+          display: block;
+          position: absolute;
+          bottom: 30px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+        .scroll-down {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 4px;
+          color: rgba(255, 255, 255, 0.4);
+          font-size: 12px;
+          letter-spacing: 1px;
+          transition: var(--transition);
+        }
+        .scroll-down i {
+          animation: bounce 2s ease-in-out infinite;
+        }
+        @keyframes bounce {
+          0%,
+          100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(8px);
+          }
+        }
+        .section {
+          padding: 60px 0;
+        }
+        .section-head h2 {
+          font-size: 34px;
+        }
+        .section-head p {
+          max-width: 700px;
+        }
+        .profil-grid {
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px;
+        }
+        .potensi-grid {
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px;
+        }
+        .swot-form-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 20px;
+        }
+        .swot-faktor-item {
+          grid-template-columns: 30px 1fr 70px 60px 40px 30px;
+          font-size: 13px;
+          padding: 6px 12px;
+        }
+        .hasil-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .strategi-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 20px;
+        }
+        .program-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 20px;
+        }
+        .tentang-grid {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 20px;
+        }
+        .footer-grid {
+          grid-template-columns: 2fr 1fr 1.5fr;
+          gap: 40px;
+        }
+        .kuadran-chart {
+          max-width: 400px;
+        }
+        .kuadran-area {
+          font-size: 12px;
+        }
+        .kuadran-label {
+          font-size: 14px;
+        }
+        .kuadran-strategy {
+          font-size: 11px;
+        }
+        .matrix-grid {
+          grid-template-columns: 100px 1fr 1fr;
+        }
+        .matrix-header {
+          display: block;
+        }
+        #toastContainer {
+          top: 80px;
+          right: 20px;
+          max-width: 380px;
+        }
+      }
+      @media (min-width: 1024px) {
+        .hero-content h1 {
+          font-size: 56px;
+        }
+        .brand small {
+          display: inline-block;
+        }
+        .swot-faktor-item {
+          grid-template-columns: 30px 1fr 70px 60px 40px 30px;
+        }
+      }
+      @media (max-width: 768px) {
+        .nav-menu {
+          display: none;
+        }
+        .nav-toggle {
+          display: flex;
+        }
+        .brand small {
+          display: none;
+        }
+        #toastContainer {
+          top: 70px;
+          right: 10px;
+          left: 10px;
+          max-width: none;
+        }
+        #toastContainer .toast {
+          font-size: 12px;
+          padding: 10px 14px;
+        }
+      }
+      @media (max-width: 480px) {
+        .container {
+          padding: 0 12px;
+        }
+        .hero-content h1 {
+          font-size: 22px;
+        }
+        .hero-stats {
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+          padding: 12px;
+        }
+        .hero-stats .stat-number {
+          font-size: 18px;
+        }
+        .profil-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+        }
+        .potensi-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+        }
+        .profil-card {
+          padding: 12px;
+        }
+        .potensi-card {
+          padding: 12px;
+        }
+        .swot-form-grid {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+        .swot-faktor-item {
+          grid-template-columns: 18px 1fr 40px 35px 20px 18px;
+          font-size: 10px;
+          padding: 3px 6px;
+        }
+        .swot-faktor-item input,
+        .swot-faktor-item select {
+          font-size: 9px;
+          padding: 2px 3px;
+        }
+        .swot-faktor-item .faktor-bobot {
+          width: 40px;
+        }
+        .swot-faktor-item .faktor-rating {
+          width: 35px;
+        }
+        .hasil-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 6px;
+        }
+        .hasil-item {
+          padding: 8px 10px;
+          font-size: 11px;
+        }
+        .hasil-value {
+          font-size: 16px;
+        }
+        .section-head h2 {
+          font-size: 20px;
+        }
+        .strategi-card {
+          padding: 12px;
+        }
+        .program-card {
+          padding: 12px;
+        }
+        .tentang-card {
+          padding: 16px;
+        }
+        .btn {
+          padding: 10px 18px;
+          font-size: 13px;
+        }
+        .brand {
+          font-size: 16px;
+        }
+        .brand img {
+          height: 28px;
+          width: 28px;
+        }
+        .confirm-box {
+          padding: 24px 20px;
+          margin: 10px;
+        }
+        .confirm-box .confirm-actions button {
+          padding: 8px 20px;
+          font-size: 12px;
+          min-width: 70px;
+        }
+        #toastContainer {
+          top: 65px;
+          right: 8px;
+          left: 8px;
+        }
+        #toastContainer .toast {
+          padding: 10px 14px;
+          font-size: 12px;
+        }
+      }
+      @media (max-width: 380px) {
+        .hero-content h1 {
+          font-size: 18px;
+        }
+        .hero-stats {
+          grid-template-columns: 1fr 1fr;
+        }
+        .profil-grid {
+          grid-template-columns: 1fr;
+        }
+        .potensi-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ===== PRELOADER ===== -->
+    <div id="preloader">
+      <div class="loader-ring"></div>
+      <span class="loader-text">SIPEDES</span>
+      <span class="loader-sub">Memuat data...</span>
+    </div>
+
+    <!-- ===== TOAST ===== -->
+    <div id="toastContainer"></div>
+
+    <!-- ===== CONFIRM MODAL ===== -->
+    <div class="confirm-overlay" id="confirmModal">
+      <div class="confirm-box">
+        <div class="confirm-icon" id="confirmIcon">⚠️</div>
+        <h3 id="confirmTitle">Konfirmasi</h3>
+        <p id="confirmMessage">Yakin ingin melanjutkan?</p>
+        <div class="confirm-actions">
+          <button class="btn-confirm-no" id="confirmNo">Batal</button>
+          <button class="btn-confirm-yes" id="confirmYes">Ya</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header" id="header">
+      <div class="container" style="padding: 0 16px">
+        <nav class="navbar">
+          <a href="index.html" class="brand">
+            <img
+              src="assets/images/logo.png"
+              alt="SIPEDES"
+              onerror="
+                this.src =
+                  'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230f4c3a%22/%3E%3Ctext x=%2250%22 y=%2265%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2248%22 font-weight=%22900%22 fill=%22%23c9956b%22%3ES%3C/text%3E%3C/svg%3E'
+              "
+            />
+            <span>SIPEDES</span>
+            <small>Desa Sleman</small>
+          </a>
+          <ul class="nav-menu" id="navMenu">
+            <li><a href="#beranda" class="nav-link active">Beranda</a></li>
+            <li><a href="#profil" class="nav-link">Profil</a></li>
+            <li><a href="#potensi" class="nav-link">Potensi</a></li>
+            <li><a href="#swot" class="nav-link">SWOT</a></li>
+            <li><a href="#strategi" class="nav-link">Strategi</a></li>
+            <li><a href="#program" class="nav-link">Program</a></li>
+            <li>
+              <a href="dashboard-admin.html" class="nav-dashboard"
+                ><i class="fas fa-gauge-high"></i
+              ></a>
+            </li>
+            <li>
+              <a href="login.html" class="nav-login"
+                ><i class="fas fa-user"></i
+              ></a>
+            </li>
+          </ul>
+          <button class="nav-toggle" id="navToggle" aria-label="Menu">
+            <span></span><span></span><span></span>
+          </button>
+        </nav>
+        <div class="nav-menu-mobile" id="navMenuMobile">
+          <a href="#beranda" class="active"
+            ><i class="fas fa-home"></i> Beranda</a
+          >
+          <a href="#profil"><i class="fas fa-info-circle"></i> Profil Desa</a>
+          <a href="#potensi"><i class="fas fa-bolt"></i> Potensi</a>
+          <a href="#swot"><i class="fas fa-chart-pie"></i> Analisis SWOT</a>
+          <a href="#strategi"><i class="fas fa-bullseye"></i> Strategi</a>
+          <a href="#program"><i class="fas fa-tasks"></i> Program</a>
+          <a href="dashboard-admin.html"
+            ><i class="fas fa-gauge-high"></i> Dashboard</a
+          >
+          <a href="login.html"><i class="fas fa-user"></i> Login</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section id="beranda" class="hero">
+      <div class="hero-bg"></div>
+      <div class="container hero-container">
+        <div class="hero-content" data-aos="fade-up">
+          <div class="hero-badge">
+            <img src="assets/images/logo.png" alt="SIPEDES" />
+            Sistem Informasi Potensi Desa
+          </div>
+          <h1>Perencanaan Pengembangan <span>Ekonomi Desa</span></h1>
+          <p>
+            SIPEDES adalah sistem informasi perencanaan strategis berbasis
+            analisis SWOT untuk mengidentifikasi potensi, merumuskan strategi,
+            dan menyusun rencana aksi pengembangan ekonomi desa secara
+            terstruktur dan berkelanjutan.
+          </p>
+          <div class="hero-actions">
+            <a href="#swot" class="btn btn-primary"
+              ><i class="fas fa-chart-pie"></i> Analisis SWOT</a
+            >
+            <a href="#profil" class="btn btn-outline"
+              ><i class="fas fa-chevron-down"></i> Jelajahi</a
+            >
+          </div>
+        </div>
+        <div class="hero-stats" data-aos="fade-up" data-aos-delay="200">
+          <div class="stat-item">
+            <span class="stat-number" data-count="4975">0</span>
+            <label>Penduduk</label>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" data-count="505">0</span>
+            <label>Ha Lahan</label>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" data-count="1969">0</span>
+            <label>Kepala Keluarga</label>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" data-count="49">0</span>
+            <label>Unit Usaha</label>
+          </div>
+        </div>
+      </div>
+      <div class="hero-scroll">
+        <a href="#profil" class="scroll-down">
+          <span>Scroll</span>
+          <i class="fas fa-chevron-down"></i>
+        </a>
+      </div>
+    </section>
+
+    <!-- ===== PROFIL ===== -->
+    <section id="profil" class="section profil">
+      <div class="container">
+        <div class="section-head" data-aos="fade-up">
+          <span class="section-tag"
+            ><i class="fas fa-info-circle"></i> Gambaran Umum</span
+          >
+          <h2>Profil Desa Sleman</h2>
+          <div class="section-line"></div>
+          <p>
+            Desa Sleman terletak di Kecamatan Sliyeg, Kabupaten Indramayu,
+            dengan luas wilayah 547,35 hektare dan didominasi oleh lahan
+            pertanian sawah.
+          </p>
+        </div>
+        <div id="profilContent" class="profil-grid"></div>
+      </div>
+    </section>
+
+    <!-- ===== POTENSI ===== -->
+    <section id="potensi" class="section potensi">
+      <div class="container">
+        <div class="section-head" data-aos="fade-up">
+          <span class="section-tag"
+            ><i class="fas fa-bolt"></i> Sumber Daya</span
+          >
+          <h2>Potensi Ekonomi</h2>
+          <div class="section-line"></div>
+          <p>
+            Desa Sleman memiliki beragam potensi ekonomi yang dapat dikembangkan
+            untuk meningkatkan kesejahteraan masyarakat.
+          </p>
+        </div>
+        <div id="potensiContent" class="potensi-grid"></div>
+      </div>
+    </section>
+
+    <!-- ===== SWOT ===== -->
+    <section id="swot" class="section swot">
+      <div class="container">
+        <div class="section-head" data-aos="fade-up">
+          <span class="section-tag"
+            ><i class="fas fa-chart-pie"></i> Analisis Strategis</span
+          >
+          <h2>Analisis SWOT</h2>
+          <div class="section-line"></div>
+          <p>
+            Identifikasi faktor internal dan eksternal untuk pengembangan
+            ekonomi desa.
+          </p>
+        </div>
+        <div id="swotContainer" class="swot-container"></div>
+        <div id="swotHasil" class="swot-hasil" style="display: none">
+          <h3>Hasil Analisis SWOT</h3>
+          <div id="swotHasilContent"></div>
+        </div>
+        <div id="swotKuadran" class="swot-kuadran" style="display: none">
+          <h3>Posisi Kuadran SWOT</h3>
+          <div id="swotKuadranContent"></div>
+        </div>
+        <div id="matrixWrapper" class="matrix-wrapper" style="display: none">
+          <h3>Matriks SWOT</h3>
+          <div id="matrixContent"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== STRATEGI ===== -->
+    <section id="strategi" class="section strategi">
+      <div class="container">
+        <div class="section-head" data-aos="fade-up">
+          <span class="section-tag"
+            ><i class="fas fa-bullseye"></i> Rekomendasi</span
+          >
+          <h2>Strategi Pengembangan</h2>
+          <div class="section-line"></div>
+          <p>Strategi prioritas untuk pengembangan ekonomi Desa Sleman.</p>
+        </div>
+        <div id="strategiContent" class="strategi-grid"></div>
+      </div>
+    </section>
+
+    <!-- ===== PROGRAM ===== -->
+    <section id="program" class="section program">
+      <div class="container">
+        <div class="section-head" data-aos="fade-up">
+          <span class="section-tag"
+            ><i class="fas fa-tasks"></i> Implementasi</span
+          >
+          <h2>Program Pengembangan</h2>
+          <div class="section-line"></div>
+          <p>Program strategis untuk pengembangan ekonomi desa.</p>
+        </div>
+        <div id="programContent" class="program-grid"></div>
+      </div>
+    </section>
+
+    <!-- ===== TENTANG ===== -->
+    <section id="tentang" class="section tentang">
+      <div class="container">
+        <div class="section-head" data-aos="fade-up">
+          <span class="section-tag"
+            ><i class="fas fa-info-circle"></i> Tentang</span
+          >
+          <h2>Tentang SIPEDES</h2>
+          <div class="section-line"></div>
+        </div>
+        <div class="tentang-grid">
+          <div class="tentang-card" data-aos="fade-up">
+            <div class="tentang-icon"><i class="fas fa-bullseye"></i></div>
+            <h3>Visi</h3>
+            <p>
+              Menjadi sistem perencanaan strategis yang membantu desa
+              mengembangkan potensi ekonomi secara berkelanjutan.
+            </p>
+          </div>
+          <div class="tentang-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="tentang-icon"><i class="fas fa-flag"></i></div>
+            <h3>Misi</h3>
+            <ul>
+              <li>Menyediakan data potensi desa terstruktur</li>
+              <li>Memfasilitasi analisis SWOT interaktif</li>
+              <li>Menghasilkan rekomendasi strategi tepat sasaran</li>
+            </ul>
+          </div>
+          <div class="tentang-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="tentang-icon">
+              <i class="fas fa-hand-holding-heart"></i>
+            </div>
+            <h3>Manfaat</h3>
+            <ul>
+              <li>Memudahkan identifikasi potensi desa</li>
+              <li>Membantu perumusan strategi</li>
+              <li>Menyediakan data untuk pengambilan keputusan</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <h3><img src="assets/images/logo.png" alt="SIPEDES" /> SIPEDES</h3>
+            <p>Sistem Informasi Potensi Desa</p>
+            <p class="footer-tagline">
+              <i class="fas fa-quote-left"></i> Membangun desa dari potensi
+              lokal
+            </p>
+          </div>
+          <div class="footer-links">
+            <h4>Navigasi</h4>
+            <ul>
+              <li>
+                <a href="#beranda"
+                  ><i class="fas fa-chevron-right"></i> Beranda</a
+                >
+              </li>
+              <li>
+                <a href="#profil"
+                  ><i class="fas fa-chevron-right"></i> Profil</a
+                >
+              </li>
+              <li>
+                <a href="#potensi"
+                  ><i class="fas fa-chevron-right"></i> Potensi</a
+                >
+              </li>
+              <li>
+                <a href="#swot"><i class="fas fa-chevron-right"></i> SWOT</a>
+              </li>
+              <li>
+                <a href="#strategi"
+                  ><i class="fas fa-chevron-right"></i> Strategi</a
+                >
+              </li>
+              <li>
+                <a href="#program"
+                  ><i class="fas fa-chevron-right"></i> Program</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="footer-info">
+            <h4>Desa Sleman</h4>
+            <p><i class="fas fa-map-pin"></i> Kec. Sliyeg, Kab. Indramayu</p>
+            <p><i class="fas fa-envelope"></i> desasleman@indramayu.go.id</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 SIPEDES · Sistem Informasi Potensi Desa</p>
+          <p class="footer-credit">Dibangun untuk kemajuan desa</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      // ============================================================
+      // CONFIRM MODAL
+      // ============================================================
+      let confirmCallback = null;
+
+      function showConfirm(message, callback, icon, title) {
+        icon = icon || "warning";
+        title = title || "Konfirmasi";
+        const overlay = document.getElementById("confirmModal");
+        const iconEl = document.getElementById("confirmIcon");
+        const titleEl = document.getElementById("confirmTitle");
+        const msgEl = document.getElementById("confirmMessage");
+        const yesBtn = document.getElementById("confirmYes");
+        const noBtn = document.getElementById("confirmNo");
+
+        const iconMap = {
+          warning: "⚠️",
+          danger: "🔴",
+          success: "✅",
+          info: "ℹ️",
+        };
+        iconEl.textContent = iconMap[icon] || "⚠️";
+        iconEl.className = "confirm-icon " + icon;
+        titleEl.textContent = title;
+        msgEl.textContent = message;
+        overlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+        confirmCallback = callback;
+
+        yesBtn.onclick = function () {
+          overlay.classList.remove("active");
+          document.body.style.overflow = "auto";
+          if (confirmCallback) confirmCallback(true);
+          confirmCallback = null;
+        };
+        noBtn.onclick = function () {
+          overlay.classList.remove("active");
+          document.body.style.overflow = "auto";
+          if (confirmCallback) confirmCallback(false);
+          confirmCallback = null;
+        };
+        overlay.onclick = function (e) {
+          if (e.target === overlay) {
+            overlay.classList.remove("active");
+            document.body.style.overflow = "auto";
+            if (confirmCallback) confirmCallback(false);
+            confirmCallback = null;
+          }
+        };
+      }
+
+      // ============================================================
+      // TOAST
+      // ============================================================
+      function showToast(message, type, duration) {
+        type = type || "info";
+        duration = duration || 3000;
+        const container = document.getElementById("toastContainer");
+        if (!container) return;
+        const colors = {
+          success: {
+            bg: "linear-gradient(135deg, #1b5e20, #2e7d32)",
+            icon: "fa-check-circle",
+          },
+          error: {
+            bg: "linear-gradient(135deg, #b71c1c, #c62828)",
+            icon: "fa-exclamation-circle",
+          },
+          warning: {
+            bg: "linear-gradient(135deg, #bf360c, #e65100)",
+            icon: "fa-triangle-exclamation",
+          },
+          info: {
+            bg: "linear-gradient(135deg, #0a3a7a, #0d47a1)",
+            icon: "fa-info-circle",
+          },
+        };
+        const color = colors[type] || colors.info;
+        const notif = document.createElement("div");
+        notif.className = "toast " + type;
+        notif.style.background = color.bg;
+        notif.innerHTML = `
+          <i class="fas ${color.icon}"></i>
+          <span class="toast-content">${message}</span>
+          <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+        `;
+        container.appendChild(notif);
+        setTimeout(() => {
+          notif.classList.add("hide");
+          setTimeout(() => notif.remove(), 400);
+        }, duration);
+      }
+
+      // ============================================================
+      // DATA DEFAULT - BOBOT TOTAL = 1.00
+      // ============================================================
+      const DEFAULT_DATA = {
+        desa: {
+          identitas: {
+            luas_wilayah: 547.35,
+            luas_sawah: 505.5,
+            jumlah_dusun: 4,
+            jumlah_aparat: 13,
+            kepala_desa: "Abdul Goni",
+          },
+          demografi: {
+            total_penduduk: 4975,
+            laki_laki: 2512,
+            perempuan: 2463,
+            jumlah_kk: 1969,
+            kepadatan: 908.92,
+          },
+          pendidikan: {
+            sd: { total: 4073 },
+            sltp: { total: 1228 },
+            slta: { total: 1681 },
+            pt: { total: 116 },
+            penduduk_menganggur: { total: 416 },
+          },
+          sekolah: {
+            tk: { unit: 3, siswa: 97 },
+            sd: { unit: 3, siswa: 1500 },
+            ra: { unit: 1, siswa: 37 },
+          },
+          iklim: { curah_hujan: 2000, suhu_rata_rata: 31 },
+        },
+        potensi: [
+          {
+            id: 1,
+            nama: "Sektor Pertanian",
+            icon: "fa-seedling",
+            deskripsi: "Sektor utama dengan luas lahan sawah 505,50 Ha",
+            warna: "#e8f5e9",
+            teks_warna: "#2e7d32",
+            detail: [
+              "Sawah Irigasi Teknis: 445,50 Ha",
+              "Sawah Irigasi Setengah Teknis: 45,00 Ha",
+              "Sawah Pasang Surut: 15,00 Ha",
+              "Curah Hujan: 2.000 mm/tahun",
+            ],
+          },
+          {
+            id: 2,
+            nama: "Peternakan",
+            icon: "fa-cow",
+            deskripsi: "31 unit usaha dengan 39 tenaga kerja",
+            warna: "#fff3e0",
+            teks_warna: "#e65100",
+            detail: [
+              "Unit Usaha: 31 unit",
+              "Jenis Produk: 4 jenis",
+              "Tenaga Kerja: 39 orang",
+            ],
+          },
+          {
+            id: 3,
+            nama: "Jahit/Bordir",
+            icon: "fa-tshirt",
+            deskripsi: "15 unit usaha dengan 20 tenaga kerja",
+            warna: "#fce4ec",
+            teks_warna: "#c62828",
+            detail: [
+              "Unit Usaha: 15 unit",
+              "Jenis Produk: 2 jenis",
+              "Tenaga Kerja: 20 orang",
+            ],
+          },
+          {
+            id: 4,
+            nama: "Pengolahan Kayu",
+            icon: "fa-tree",
+            deskripsi: "3 unit usaha dengan 8 tenaga kerja",
+            warna: "#e3f2fd",
+            teks_warna: "#1565c0",
+            detail: [
+              "Unit Usaha: 3 unit",
+              "Jenis Produk: 5 jenis",
+              "Tenaga Kerja: 8 orang",
+            ],
+          },
+          {
+            id: 5,
+            nama: "BUMDes",
+            icon: "fa-building",
+            deskripsi: "1 unit dengan 6 jenis kegiatan usaha",
+            warna: "#e8eaf6",
+            teks_warna: "#283593",
+            detail: [
+              "Unit: 1 unit",
+              "Jenis Kegiatan: 6 jenis",
+              "Pengurus: 4 orang",
+            ],
+          },
+          {
+            id: 6,
+            nama: "Lembaga Keuangan",
+            icon: "fa-university",
+            deskripsi: "1 unit bank pemerintah",
+            warna: "#fff8e1",
+            teks_warna: "#f57f17",
+            detail: [
+              "Unit: 1 unit",
+              "Jenis Kegiatan: 2 jenis",
+              "Pengurus: 7 orang",
+            ],
+          },
+          {
+            id: 7,
+            nama: "Lembaga Pendidikan",
+            icon: "fa-graduation-cap",
+            deskripsi: "7 unit sekolah dengan 1.634 siswa",
+            warna: "#f3e5f5",
+            teks_warna: "#6a1b9a",
+            detail: [
+              "TK: 3 unit, 97 siswa",
+              "SD: 3 unit, 1.500 siswa",
+              "RA: 1 unit, 37 siswa",
+            ],
+          },
+          {
+            id: 8,
+            nama: "Situs Sejarah",
+            icon: "fa-landmark",
+            deskripsi: "Potensi wisata sejarah 0,35 Ha",
+            warna: "#efebe9",
+            teks_warna: "#4e342e",
+            detail: ["Luas: 0,35 Ha", "Potensi Wisata Sejarah"],
+          },
+        ],
+        strategi: [
+          {
+            id: 1,
+            nama: "Pengembangan Pertanian Modern dan Diversifikasi Komoditas",
+            tipe: "SO",
+            deskripsi:
+              "Mengembangkan pertanian modern berbasis irigasi teknis untuk meningkatkan produksi.",
+            sumber_dana: ["Dana Desa (APBDes)", "Bantuan Pemerintah Provinsi"],
+            timeline: "2025-2030",
+            indikator: [
+              "Peningkatan produktivitas padi 20%",
+              "Rehabilitasi 100% saluran irigasi",
+            ],
+          },
+          {
+            id: 2,
+            nama: "Penguatan BUMDes sebagai Motor Penggerak Ekonomi Desa",
+            tipe: "SO",
+            deskripsi:
+              "Memperkuat BUMDes dengan memanfaatkan Dana Desa untuk membuka unit usaha baru.",
+            sumber_dana: ["Dana Desa", "PAD", "Investasi Swasta"],
+            timeline: "2025-2030",
+            indikator: [
+              "Peningkatan pendapatan BUMDes 50%",
+              "Terbentuk 3 unit usaha baru",
+            ],
+          },
+          {
+            id: 3,
+            nama: "Pengembangan UMKM Berbasis Teknologi Digital",
+            tipe: "WO",
+            deskripsi:
+              "Mengembangkan UMKM melalui program pemberdayaan dan akses modal.",
+            sumber_dana: ["Dana Desa", "ADD", "Program Pemerintah Daerah"],
+            timeline: "2025-2030",
+            indikator: ["50% pelaku UMKM digital", "Terbentuk 10 UMKM baru"],
+          },
+          {
+            id: 4,
+            nama: "Peningkatan Kualitas Sumber Daya Manusia",
+            tipe: "WO",
+            deskripsi:
+              "Meningkatkan kualitas SDM melalui pelatihan keterampilan vokasional.",
+            sumber_dana: ["ADD", "Dana Desa", "Bantuan Pendidikan"],
+            timeline: "2025-2030",
+            indikator: ["Penurunan pengangguran 30%", "100% anak sekolah"],
+          },
+          {
+            id: 5,
+            nama: "Diversifikasi Ekonomi dan Mitigasi Risiko",
+            tipe: "ST",
+            deskripsi:
+              "Mendiversifikasi komoditas pertanian dan membangun infrastruktur pengendalian banjir.",
+            sumber_dana: ["Dana Desa", "Bantuan Provinsi", "APBD Kabupaten"],
+            timeline: "2025-2030",
+            indikator: [
+              "Pengurangan risiko gagal panen 40%",
+              "Banjir teratasi di 4 Ha",
+            ],
+          },
+          {
+            id: 6,
+            nama: "Penguatan Kelembagaan dan Partisipasi Masyarakat",
+            tipe: "WT",
+            deskripsi:
+              "Memperkuat kelembagaan BPD dan LKMD serta membentuk koperasi.",
+            sumber_dana: ["ADD", "PAD", "APBDes"],
+            timeline: "2025-2030",
+            indikator: ["BPD aktif", "Terbentuk 5 kelompok usaha"],
+          },
+        ],
+        program: [
+          {
+            id: 1,
+            nama: "Pengembangan Pertanian Modern",
+            deskripsi: "Optimalisasi lahan sawah irigasi teknis",
+            sumber_dana: "Dana Desa (APBDes)",
+            tahun_mulai: 2025,
+            tahun_selesai: 2030,
+            penanggung_jawab: "Kepala Desa",
+            status: "Berjalan",
+            indikator: "Peningkatan produksi padi 20%",
+          },
+          {
+            id: 2,
+            nama: "Penguatan BUMDes",
+            deskripsi: "Pengembangan unit usaha pengolahan hasil pertanian",
+            sumber_dana: "Dana Desa, PAD",
+            tahun_mulai: 2025,
+            tahun_selesai: 2030,
+            penanggung_jawab: "Pengelola BUMDes",
+            status: "Berjalan",
+            indikator: "Pendapatan BUMDes naik 50%",
+          },
+          {
+            id: 3,
+            nama: "Digitalisasi UMKM",
+            deskripsi: "Pelatihan e-commerce dan sertifikasi produk",
+            sumber_dana: "Dana Desa, ADD",
+            tahun_mulai: 2025,
+            tahun_selesai: 2030,
+            penanggung_jawab: "Koordinator UMKM",
+            status: "Berjalan",
+            indikator: "50% UMKM go digital",
+          },
+          {
+            id: 4,
+            nama: "Program Beasiswa dan Pelatihan SDM",
+            deskripsi: "Program beasiswa siswa berprestasi",
+            sumber_dana: "ADD, Dana Desa",
+            tahun_mulai: 2025,
+            tahun_selesai: 2030,
+            penanggung_jawab: "Kepala Desa",
+            status: "Berjalan",
+            indikator: "Penurunan pengangguran 30%",
+          },
+          {
+            id: 5,
+            nama: "Diversifikasi Komoditas Pertanian",
+            deskripsi: "Pengembangan hortikultura dan tanaman obat",
+            sumber_dana: "Dana Desa, Bantuan Provinsi",
+            tahun_mulai: 2025,
+            tahun_selesai: 2030,
+            penanggung_jawab: "Koordinator Pertanian",
+            status: "Perencanaan",
+            indikator: "5 komoditas unggulan baru",
+          },
+          {
+            id: 6,
+            nama: "Mitigasi Banjir dan Irigasi",
+            deskripsi: "Pembangunan infrastruktur pengendalian banjir",
+            sumber_dana: "Dana Desa, APBD",
+            tahun_mulai: 2025,
+            tahun_selesai: 2027,
+            penanggung_jawab: "Kepala Desa",
+            status: "Perencanaan",
+            indikator: "0 genangan banjir di 4 Ha",
+          },
+          {
+            id: 7,
+            nama: "Penguatan BPD dan LKMD",
+            deskripsi: "Reaktivasi fungsi pengawasan BPD",
+            sumber_dana: "ADD, PAD",
+            tahun_mulai: 2025,
+            tahun_selesai: 2026,
+            penanggung_jawab: "Ketua BPD",
+            status: "Perencanaan",
+            indikator: "BPD aktif dan berfungsi",
+          },
+          {
+            id: 8,
+            nama: "Pembentukan Koperasi Desa",
+            deskripsi: "Pembentukan kelompok usaha bersama",
+            sumber_dana: "Dana Desa, ADD",
+            tahun_mulai: 2025,
+            tahun_selesai: 2026,
+            penanggung_jawab: "Pengelola BUMDes",
+            status: "Perencanaan",
+            indikator: "5 kelompok usaha terbentuk",
+          },
+        ],
+        swot: {
+          kekuatan: [
+            {
+              id: "S1",
+              nama: "Lahan pertanian luas (505,50 Ha) dengan irigasi teknis",
+              bobot: 0.15,
+              rating: 4,
+            },
+            {
+              id: "S2",
+              nama: "Jumlah penduduk besar (4.975 jiwa) sebagai tenaga kerja",
+              bobot: 0.1,
+              rating: 3,
+            },
+            {
+              id: "S3",
+              nama: "BUMDes aktif dengan 6 jenis unit usaha",
+              bobot: 0.1,
+              rating: 3,
+            },
+            {
+              id: "S4",
+              nama: "Usaha peternakan (31 unit), jahit/bordir (15 unit), kayu (3 unit)",
+              bobot: 0.08,
+              rating: 3,
+            },
+            {
+              id: "S5",
+              nama: "Lembaga pendidikan (TK & SD) sebagai modal SDM",
+              bobot: 0.07,
+              rating: 3,
+            },
+            {
+              id: "S6",
+              nama: "Struktur pemerintahan desa lengkap (13 aparat)",
+              bobot: 0.05,
+              rating: 3,
+            },
+            {
+              id: "S7",
+              nama: "Pendapatan Asli Desa stabil Rp342 juta/tahun",
+              bobot: 0.05,
+              rating: 3,
+            },
+          ],
+          kelemahan: [
+            {
+              id: "W1",
+              nama: "Tingkat pendidikan rendah (dominan SD 4.073 orang)",
+              bobot: 0.12,
+              rating: 1,
+            },
+            {
+              id: "W2",
+              nama: "416 penduduk usia produktif menganggur",
+              bobot: 0.08,
+              rating: 2,
+            },
+            {
+              id: "W3",
+              nama: "Keterbatasan akses pasar dan jaringan pemasaran",
+              bobot: 0.08,
+              rating: 1,
+            },
+            {
+              id: "W4",
+              nama: "Minimnya pemanfaatan teknologi digital",
+              bobot: 0.07,
+              rating: 1,
+            },
+            {
+              id: "W5",
+              nama: "Ketergantungan pada transfer/Dana Desa",
+              bobot: 0.05,
+              rating: 2,
+            },
+            {
+              id: "W6",
+              nama: "Kapasitas manajemen usaha masyarakat terbatas",
+              bobot: 0.06,
+              rating: 2,
+            },
+            { id: "W7", nama: "BPD berstatus pasif", bobot: 0.04, rating: 2 },
+          ],
+          peluang: [
+            {
+              id: "O1",
+              nama: "Program Dana Desa dan ADD berkelanjutan",
+              bobot: 0.15,
+              rating: 4,
+            },
+            {
+              id: "O2",
+              nama: "Perkembangan teknologi digital membuka pasar luas",
+              bobot: 0.12,
+              rating: 3,
+            },
+            {
+              id: "O3",
+              nama: "Meningkatnya permintaan produk pertanian organik",
+              bobot: 0.1,
+              rating: 3,
+            },
+            {
+              id: "O4",
+              nama: "Program pemberdayaan UMKM dari pemerintah daerah",
+              bobot: 0.08,
+              rating: 3,
+            },
+            {
+              id: "O5",
+              nama: "Potensi kerja sama dengan swasta & perguruan tinggi",
+              bobot: 0.05,
+              rating: 2,
+            },
+            {
+              id: "O6",
+              nama: "Program ketahanan pangan nasional",
+              bobot: 0.07,
+              rating: 3,
+            },
+            {
+              id: "O7",
+              nama: "Infrastruktur jalan yang dapat ditingkatkan",
+              bobot: 0.03,
+              rating: 2,
+            },
+          ],
+          ancaman: [
+            {
+              id: "T1",
+              nama: "Persaingan produk dari luar daerah yang ketat",
+              bobot: 0.15,
+              rating: 2,
+            },
+            {
+              id: "T2",
+              nama: "Fluktuasi harga komoditas pertanian",
+              bobot: 0.12,
+              rating: 2,
+            },
+            {
+              id: "T3",
+              nama: "Dampak perubahan iklim terhadap produktivitas",
+              bobot: 0.1,
+              rating: 2,
+            },
+            {
+              id: "T4",
+              nama: "Fenomena urbanisasi mengurangi tenaga kerja",
+              bobot: 0.08,
+              rating: 2,
+            },
+            {
+              id: "T5",
+              nama: "Ketergantungan pada curah hujan & irigasi",
+              bobot: 0.05,
+              rating: 2,
+            },
+            {
+              id: "T6",
+              nama: "Risiko banjir pada sebagian wilayah (4 Ha)",
+              bobot: 0.05,
+              rating: 2,
+            },
+            {
+              id: "T7",
+              nama: "Rendahnya daya saing produk lokal",
+              bobot: 0.05,
+              rating: 2,
+            },
+          ],
+        },
+      };
+
+      // ============================================================
+      // FUNGSI GET DATA
+      // ============================================================
+      function getMergedData(key, defaultData) {
+        const stored = localStorage.getItem(key);
+        if (stored) {
+          try {
+            const userData = JSON.parse(stored);
+            if (Array.isArray(defaultData) && Array.isArray(userData)) {
+              const defaultIds = defaultData
+                .filter((d) => d.isDefault)
+                .map((d) => d.id);
+              const userFiltered = userData.filter(
+                (d) => !defaultIds.includes(d.id),
+              );
+              return [...defaultData, ...userFiltered];
+            }
+            return userData;
+          } catch (e) {}
+        }
+        return defaultData;
+      }
+
+      function getMergedObject(key, defaultData) {
+        const stored = localStorage.getItem(key);
+        if (stored) {
+          try {
+            const userData = JSON.parse(stored);
+            return { ...defaultData, ...userData };
+          } catch (e) {}
+        }
+        return defaultData;
+      }
+
+      // ============================================================
+      // LOAD FUNCTIONS - TANPA (DEFAULT)
+      // ============================================================
+      function loadProfil() {
+        const container = document.getElementById("profilContent");
+        if (!container) return;
+        const data = getMergedObject("sipedes_desa", DEFAULT_DATA.desa);
+        container.innerHTML = `
+          <div class="profil-card"><div class="profil-icon"><i class="fas fa-map"></i></div><h3>Wilayah</h3><ul>
+            <li><strong>Luas:</strong> ${data.identitas.luas_wilayah} Ha</li>
+            <li><strong>Sawah:</strong> ${data.identitas.luas_sawah} Ha</li>
+            <li><strong>Dusun:</strong> ${data.identitas.jumlah_dusun}</li>
+            <li><strong>Aparat:</strong> ${data.identitas.jumlah_aparat} orang</li>
+            <li><strong>Kades:</strong> ${data.identitas.kepala_desa}</li>
+          </ul></div>
+          <div class="profil-card"><div class="profil-icon"><i class="fas fa-users"></i></div><h3>Demografi</h3><ul>
+            <li><strong>Penduduk:</strong> ${data.demografi.total_penduduk.toLocaleString()}</li>
+            <li><strong>Laki:</strong> ${data.demografi.laki_laki.toLocaleString()}</li>
+            <li><strong>Perempuan:</strong> ${data.demografi.perempuan.toLocaleString()}</li>
+            <li><strong>KK:</strong> ${data.demografi.jumlah_kk.toLocaleString()}</li>
+            <li><strong>Kepadatan:</strong> ${data.demografi.kepadatan} jiwa/km²</li>
+          </ul></div>
+          <div class="profil-card"><div class="profil-icon"><i class="fas fa-graduation-cap"></i></div><h3>Pendidikan</h3><ul>
+            <li><strong>SD:</strong> ${data.pendidikan.sd.total.toLocaleString()}</li>
+            <li><strong>SLTP:</strong> ${data.pendidikan.sltp.total.toLocaleString()}</li>
+            <li><strong>SLTA:</strong> ${data.pendidikan.slta.total.toLocaleString()}</li>
+            <li><strong>PT:</strong> ${data.pendidikan.pt.total.toLocaleString()}</li>
+            <li><strong>Pengangguran:</strong> ${data.pendidikan.penduduk_menganggur.total.toLocaleString()}</li>
+          </ul></div>
+          <div class="profil-card"><div class="profil-icon"><i class="fas fa-school"></i></div><h3>Fasilitas</h3><ul>
+            <li><strong>TK:</strong> ${data.sekolah.tk.unit} unit (${data.sekolah.tk.siswa} siswa)</li>
+            <li><strong>SD:</strong> ${data.sekolah.sd.unit} unit (${data.sekolah.sd.siswa} siswa)</li>
+            <li><strong>RA:</strong> ${data.sekolah.ra.unit} unit (${data.sekolah.ra.siswa} siswa)</li>
+            <li><strong>Curah Hujan:</strong> ${data.iklim.curah_hujan} mm</li>
+            <li><strong>Suhu:</strong> ${data.iklim.suhu_rata_rata}°C</li>
+          </ul></div>
+        `;
+      }
+
+      function loadPotensi() {
+        const container = document.getElementById("potensiContent");
+        if (!container) return;
+        const data = getMergedData("sipedes_potensi", DEFAULT_DATA.potensi);
+        container.innerHTML = data
+          .slice(0, 8)
+          .map(
+            (s, i) => `
+          <div class="potensi-card" data-aos="fade-up" data-aos-delay="${i * 50}">
+            <div class="potensi-icon" style="background:${s.warna || "#e8f5e9"};color:${s.teks_warna || "#2e7d32"};">
+              <i class="fas ${s.icon || "fa-seedling"}"></i>
+            </div>
+            <h3>${s.nama}</h3>
+            <p>${s.deskripsi}</p>
+            <ul>${(s.detail || [])
+              .slice(0, 3)
+              .map((d) => `<li><i class="fas fa-check-circle"></i> ${d}</li>`)
+              .join("")}</ul>
+          </div>
+        `,
+          )
+          .join("");
+      }
+
+      function loadStrategi() {
+        const container = document.getElementById("strategiContent");
+        if (!container) return;
+        const data = getMergedData("sipedes_strategi", DEFAULT_DATA.strategi);
+        const tipeColor = {
+          SO: "#2e7d32",
+          WO: "#0d47a1",
+          ST: "#e65100",
+          WT: "#c62828",
+        };
+        const tipeLabel = {
+          SO: "Agresif",
+          WO: "Turnaround",
+          ST: "Diversifikasi",
+          WT: "Defensif",
+        };
+        container.innerHTML = data
+          .slice(0, 6)
+          .map(
+            (s, i) => `
+          <div class="strategi-card" data-aos="fade-up" data-aos-delay="${i * 80}">
+            <div class="strategi-number">${String(i + 1).padStart(2, "0")}</div>
+            <div class="strategi-content">
+              <h3>${s.nama}</h3>
+              <span class="strategi-type" style="background:${tipeColor[s.tipe] || "#2e7d32"}20;color:${tipeColor[s.tipe] || "#2e7d32"};">
+                ${tipeLabel[s.tipe] || s.tipe}
+              </span>
+              <p>${s.deskripsi}</p>
+              <div class="strategi-detail">
+                <span><i class="fas fa-coins"></i> ${(s.sumber_dana || []).join(", ")}</span>
+                <span><i class="fas fa-clock"></i> ${s.timeline || "2025-2030"}</span>
+              </div>
+              <div class="strategi-indikator">
+                <small>Indikator:</small>
+                <ul>${(s.indikator || [])
+                  .slice(0, 2)
+                  .map((ind) => `<li>${ind}</li>`)
+                  .join("")}</ul>
+              </div>
+            </div>
+          </div>
+        `,
+          )
+          .join("");
+      }
+
+      function loadProgram() {
+        const container = document.getElementById("programContent");
+        if (!container) return;
+        const data = getMergedData("sipedes_program", DEFAULT_DATA.program);
+        const statusColor = {
+          Berjalan: "#2e7d32",
+          Perencanaan: "#e65100",
+          Selesai: "#0d47a1",
+        };
+        container.innerHTML = data
+          .slice(0, 8)
+          .map(
+            (p, i) => `
+          <div class="program-card" data-aos="fade-up" data-aos-delay="${i * 80}">
+            <div class="program-number">${String(i + 1).padStart(2, "0")}</div>
+            <div class="program-content">
+              <h4>${p.nama}</h4>
+              <p>${p.deskripsi}</p>
+              <div class="program-meta">
+                <span><i class="fas fa-coins"></i> ${p.sumber_dana}</span>
+                <span><i class="fas fa-calendar"></i> ${p.tahun_mulai || "-"}</span>
+                <span class="program-status" style="background:${statusColor[p.status] || "#e65100"}20;color:${statusColor[p.status] || "#e65100"};">
+                  ${p.status || "Perencanaan"}
+                </span>
+              </div>
+              <div class="program-indikator"><small>Target:</small> <span>${p.indikator || "-"}</span></div>
+            </div>
+          </div>
+        `,
+          )
+          .join("");
+      }
+
+      // ============================================================
+      // SWOT - LENGKAP
+      // ============================================================
+      const SWOT = {
+        colors: {
+          kekuatan: {
+            bg: "#e8f5e9",
+            border: "#2e7d32",
+            text: "#1b5e20",
+            icon: "#2e7d32",
+          },
+          kelemahan: {
+            bg: "#ffebee",
+            border: "#c62828",
+            text: "#b71c1c",
+            icon: "#c62828",
+          },
+          peluang: {
+            bg: "#e3f2fd",
+            border: "#0d47a1",
+            text: "#0d47a1",
+            icon: "#1565c0",
+          },
+          ancaman: {
+            bg: "#fff3e0",
+            border: "#e65100",
+            text: "#bf360c",
+            icon: "#e65100",
+          },
+        },
+
+        renderForm: function (containerId) {
+          const container = document.getElementById(containerId);
+          if (!container) return;
+          let data = JSON.parse(localStorage.getItem("sipedes_swot") || "null");
+          if (!data) {
+            data = { faktor: DEFAULT_DATA.swot, hasil: {} };
+            localStorage.setItem("sipedes_swot", JSON.stringify(data));
+          }
+          const faktor = data.faktor || {
+            kekuatan: [],
+            kelemahan: [],
+            peluang: [],
+            ancaman: [],
+          };
+          let html = `
+            <div class="swot-container-inner">
+              <div class="swot-form-grid">
+                ${this.renderKolom(faktor.kekuatan, "kekuatan", "S", this.colors.kekuatan)}
+                ${this.renderKolom(faktor.kelemahan, "kelemahan", "W", this.colors.kelemahan)}
+                ${this.renderKolom(faktor.peluang, "peluang", "O", this.colors.peluang)}
+                ${this.renderKolom(faktor.ancaman, "ancaman", "T", this.colors.ancaman)}
+              </div>
+              <div class="swot-form-actions">
+                <button class="btn btn-primary" onclick="SWOT.hitungSWOT()" style="background:#0f4c3a;color:#fff;padding:10px 24px;border:none;border-radius:30px;cursor:pointer;font-weight:600;">
+                  <i class="fas fa-calculator"></i> Hitung Analisis
+                </button>
+                <button class="btn btn-outline" onclick="SWOT.resetSWOT()" style="background:#c62828;color:#fff;padding:10px 24px;border:none;border-radius:30px;cursor:pointer;font-weight:600;">
+                  <i class="fas fa-undo"></i> Reset
+                </button>
+              </div>
+            </div>
+          `;
+          container.innerHTML = html;
+          if (data.hasil && data.hasil.total_s !== undefined) {
+            this.tampilkanHasil(data.hasil);
+            this.renderKuadran(data.hasil);
+            this.renderMatriks();
+            document.getElementById("swotHasil").style.display = "block";
+            document.getElementById("swotKuadran").style.display = "block";
+            document.getElementById("matrixWrapper").style.display = "block";
+          }
+        },
+
+        renderKolom: function (faktorList, tipe, prefix, colors) {
+          const listHtml =
+            faktorList && faktorList.length > 0
+              ? faktorList
+                  .map(
+                    (f, index) => `
+            <div class="swot-faktor-item" style="border-left:4px solid ${colors.border};">
+              <span class="faktor-id" style="color:${colors.border};">${f.id || prefix + (index + 1)}</span>
+              <input type="text" class="faktor-nama" value="${f.nama || ""}" placeholder="Nama faktor" data-tipe="${tipe}" data-index="${index}" style="border-color:${colors.border};">
+              <input type="number" class="faktor-bobot" value="${f.bobot || 0}" step="0.01" min="0" max="1" placeholder="Bobot" data-tipe="${tipe}" data-index="${index}" style="border-color:${colors.border};">
+              <select class="faktor-rating" data-tipe="${tipe}" data-index="${index}" style="border-color:${colors.border};">
+                ${[1, 2, 3, 4].map((r) => `<option value="${r}" ${f.rating === r ? "selected" : ""}>${r}</option>`).join("")}
+              </select>
+              <span class="faktor-skor" style="color:${colors.border};">${(f.bobot * f.rating).toFixed(2)}</span>
+              <button class="btn-remove" onclick="SWOT.hapusFaktor('${tipe}', ${index})" style="color:${colors.border};">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          `,
+                  )
+                  .join("")
+              : `<div class="empty-state">Belum ada data. Klik "Tambah" untuk menambahkan.</div>`;
+          const iconMap = {
+            kekuatan: "fa-plus-circle",
+            kelemahan: "fa-minus-circle",
+            peluang: "fa-arrow-trend-up",
+            ancaman: "fa-triangle-exclamation",
+          };
+          return `
+            <div class="swot-form-col" style="background:${colors.bg};border-radius:12px;padding:12px;border:2px solid ${colors.border};">
+              <h4 style="color:${colors.text};"><i class="fas ${iconMap[tipe]}" style="color:${colors.icon};"></i> ${tipe.charAt(0).toUpperCase() + tipe.slice(1)} (${prefix}) <span style="font-weight:400;font-size:11px;color:#7a8a92;margin-left:6px;">${faktorList ? faktorList.length : 0}</span></h4>
+              <div class="swot-faktor-list">${listHtml}</div>
+              <button class="btn-sm btn-add" onclick="SWOT.tambahFaktor('${tipe}', '${prefix}')" style="background:${colors.border};color:#fff;">
+                <i class="fas fa-plus"></i> Tambah
+              </button>
+            </div>
+          `;
+        },
+
+        tambahFaktor: function (tipe, prefix) {
+          let data = JSON.parse(localStorage.getItem("sipedes_swot") || "null");
+          if (!data) data = { faktor: DEFAULT_DATA.swot, hasil: {} };
+          if (!data.faktor)
+            data.faktor = {
+              kekuatan: [],
+              kelemahan: [],
+              peluang: [],
+              ancaman: [],
+            };
+          if (!data.faktor[tipe]) data.faktor[tipe] = [];
+          const newId = prefix + (data.faktor[tipe].length + 1);
+          data.faktor[tipe].push({ id: newId, nama: "", bobot: 0, rating: 3 });
+          localStorage.setItem("sipedes_swot", JSON.stringify(data));
+          this.renderForm("swotContainer");
+          showToast("Faktor ditambahkan", "success");
+        },
+
+        hapusFaktor: function (tipe, index) {
+          showConfirm(
+            "Hapus faktor ini?",
+            (confirmed) => {
+              if (!confirmed) return;
+              let data = JSON.parse(
+                localStorage.getItem("sipedes_swot") || "null",
+              );
+              if (!data || !data.faktor || !data.faktor[tipe]) return;
+              const faktor = data.faktor[tipe][index];
+              const defaultIds = [
+                "S1",
+                "S2",
+                "S3",
+                "S4",
+                "S5",
+                "S6",
+                "S7",
+                "W1",
+                "W2",
+                "W3",
+                "W4",
+                "W5",
+                "W6",
+                "W7",
+                "O1",
+                "O2",
+                "O3",
+                "O4",
+                "O5",
+                "O6",
+                "O7",
+                "T1",
+                "T2",
+                "T3",
+                "T4",
+                "T5",
+                "T6",
+                "T7",
+              ];
+              if (faktor && defaultIds.includes(faktor.id)) {
+                showToast("Data default tidak bisa dihapus", "warning");
+                return;
+              }
+              data.faktor[tipe].splice(index, 1);
+              localStorage.setItem("sipedes_swot", JSON.stringify(data));
+              this.renderForm("swotContainer");
+              showToast("Faktor dihapus", "info");
+            },
+            "danger",
+            "Hapus Faktor",
+          );
+        },
+
+        hitungSWOT: function () {
+          const faktor = {
+            kekuatan: [],
+            kelemahan: [],
+            peluang: [],
+            ancaman: [],
+          };
+          ["kekuatan", "kelemahan", "peluang", "ancaman"].forEach((tipe) => {
+            document
+              .querySelectorAll(`.faktor-nama[data-tipe="${tipe}"]`)
+              .forEach((item, i) => {
+                if (item.value.trim()) {
+                  const bobots = document.querySelectorAll(
+                    `.faktor-bobot[data-tipe="${tipe}"]`,
+                  );
+                  const ratings = document.querySelectorAll(
+                    `.faktor-rating[data-tipe="${tipe}"]`,
+                  );
+                  const idEl = item
+                    .closest(".swot-faktor-item")
+                    .querySelector(".faktor-id");
+                  faktor[tipe].push({
+                    id: idEl
+                      ? idEl.textContent
+                      : tipe.charAt(0).toUpperCase() + (i + 1),
+                    nama: item.value.trim(),
+                    bobot: parseFloat(bobots[i]?.value) || 0,
+                    rating: parseInt(ratings[i]?.value) || 3,
+                  });
+                }
+              });
+          });
+
+          if (
+            faktor.kekuatan.length === 0 ||
+            faktor.kelemahan.length === 0 ||
+            faktor.peluang.length === 0 ||
+            faktor.ancaman.length === 0
+          ) {
+            showToast("Setiap kategori minimal 1 faktor", "error");
+            return;
+          }
+
+          const semuaFaktor = [
+            ...faktor.kekuatan,
+            ...faktor.kelemahan,
+            ...faktor.peluang,
+            ...faktor.ancaman,
+          ];
+          const totalBobot = semuaFaktor.reduce((sum, f) => sum + f.bobot, 0);
+          if (totalBobot < 0.95 || totalBobot > 1.05) {
+            showToast(
+              "Total bobot: " + totalBobot.toFixed(2) + " (ideal 1.00)",
+              "warning",
+            );
+          }
+
+          const hasil = this.hitungSkor(faktor);
+          let data = JSON.parse(localStorage.getItem("sipedes_swot") || "null");
+          if (!data) data = { faktor: {}, hasil: {} };
+          data.faktor = faktor;
+          data.hasil = hasil;
+          localStorage.setItem("sipedes_swot", JSON.stringify(data));
+
+          this.tampilkanHasil(hasil);
+          this.renderKuadran(hasil);
+          this.renderMatriks();
+          document.getElementById("swotHasil").style.display = "block";
+          document.getElementById("swotKuadran").style.display = "block";
+          document.getElementById("matrixWrapper").style.display = "block";
+          document
+            .getElementById("swotHasil")
+            .scrollIntoView({ behavior: "smooth", block: "start" });
+          showToast("Analisis SWOT berhasil dihitung", "success");
+        },
+
+        hitungSkor: function (faktor) {
+          const totalS = faktor.kekuatan.reduce(
+            (sum, f) => sum + f.bobot * f.rating,
+            0,
+          );
+          const totalW = faktor.kelemahan.reduce(
+            (sum, f) => sum + f.bobot * f.rating,
+            0,
+          );
+          const totalO = faktor.peluang.reduce(
+            (sum, f) => sum + f.bobot * f.rating,
+            0,
+          );
+          const totalT = faktor.ancaman.reduce(
+            (sum, f) => sum + f.bobot * f.rating,
+            0,
+          );
+          const selisihSW = totalS - totalW;
+          const selisihOT = totalO - totalT;
+
+          let kuadran, strategi, deskripsi, warna;
+          if (selisihSW > 0 && selisihOT > 0) {
+            kuadran = "I";
+            strategi = "Agresif (SO)";
+            deskripsi = "Memanfaatkan kekuatan untuk merebut peluang yang ada";
+            warna = "#2e7d32";
+          } else if (selisihSW < 0 && selisihOT > 0) {
+            kuadran = "II";
+            strategi = "Diversifikasi (ST)";
+            deskripsi = "Menggunakan kekuatan untuk menghadapi ancaman";
+            warna = "#e65100";
+          } else if (selisihSW < 0 && selisihOT < 0) {
+            kuadran = "III";
+            strategi = "Turnaround (WO)";
+            deskripsi = "Memperbaiki kelemahan dengan memanfaatkan peluang";
+            warna = "#0d47a1";
+          } else {
+            kuadran = "IV";
+            strategi = "Defensif (WT)";
+            deskripsi = "Meminimalkan kelemahan dan menghindari ancaman";
+            warna = "#c62828";
+          }
+          return {
+            total_s: totalS,
+            total_w: totalW,
+            total_o: totalO,
+            total_t: totalT,
+            selisih_s_w: selisihSW,
+            selisih_o_t: selisihOT,
+            kuadran,
+            strategi,
+            deskripsi,
+            warna,
+            posisi_x: selisihSW,
+            posisi_y: selisihOT,
+          };
+        },
+
+        tampilkanHasil: function (hasil) {
+          const container = document.getElementById("swotHasilContent");
+          if (!container) return;
+
+          const warnaS = hasil.selisih_s_w >= 0 ? "#2e7d32" : "#c62828";
+          const warnaO = hasil.selisih_o_t >= 0 ? "#0d47a1" : "#e65100";
+
+          container.innerHTML = `
+            <div class="hasil-container">
+              <div class="hasil-grid">
+                <div class="hasil-item" style="border-left:4px solid #2e7d32;background:#e8f5e9;">
+                  <span class="hasil-label"><i class="fas fa-plus-circle" style="color:#2e7d32;"></i> Kekuatan (S)</span>
+                  <span class="hasil-value" style="color:#2e7d32;font-size:22px;">${hasil.total_s.toFixed(2)}</span>
+                </div>
+                <div class="hasil-item" style="border-left:4px solid #c62828;background:#ffebee;">
+                  <span class="hasil-label"><i class="fas fa-minus-circle" style="color:#c62828;"></i> Kelemahan (W)</span>
+                  <span class="hasil-value" style="color:#c62828;font-size:22px;">${hasil.total_w.toFixed(2)}</span>
+                </div>
+                <div class="hasil-item highlight" style="border-left:4px solid ${warnaS};background:${warnaS}15;">
+                  <span class="hasil-label"><i class="fas fa-arrow-right" style="color:${warnaS};"></i> Selisih (S - W)</span>
+                  <span class="hasil-value" style="color:${warnaS};font-size:26px;font-weight:800;">${hasil.selisih_s_w >= 0 ? "+" : ""}${hasil.selisih_s_w.toFixed(2)}</span>
+                </div>
+                <div class="hasil-item" style="border-left:4px solid #0d47a1;background:#e3f2fd;">
+                  <span class="hasil-label"><i class="fas fa-arrow-trend-up" style="color:#0d47a1;"></i> Peluang (O)</span>
+                  <span class="hasil-value" style="color:#0d47a1;font-size:22px;">${hasil.total_o.toFixed(2)}</span>
+                </div>
+                <div class="hasil-item" style="border-left:4px solid #e65100;background:#fff3e0;">
+                  <span class="hasil-label"><i class="fas fa-triangle-exclamation" style="color:#e65100;"></i> Ancaman (T)</span>
+                  <span class="hasil-value" style="color:#e65100;font-size:22px;">${hasil.total_t.toFixed(2)}</span>
+                </div>
+                <div class="hasil-item highlight" style="border-left:4px solid ${warnaO};background:${warnaO}15;">
+                  <span class="hasil-label"><i class="fas fa-arrow-right" style="color:${warnaO};"></i> Selisih (O - T)</span>
+                  <span class="hasil-value" style="color:${warnaO};font-size:26px;font-weight:800;">${hasil.selisih_o_t >= 0 ? "+" : ""}${hasil.selisih_o_t.toFixed(2)}</span>
+                </div>
+              </div>
+              <div class="hasil-kuadran-info" style="border-top:4px solid ${hasil.warna};background:${hasil.warna}08;">
+                <div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:6px;">
+                  <span class="kuadran-badge" style="background:${hasil.warna};font-size:15px;padding:6px 24px;">Kuadran ${hasil.kuadran}</span>
+                  <span class="strategi-badge" style="background:${hasil.warna};font-size:14px;padding:6px 24px;">${hasil.strategi}</span>
+                </div>
+                <p class="strategi-deskripsi" style="color:${hasil.warna};font-size:14px;font-weight:500;">
+                  <i class="fas fa-lightbulb" style="color:${hasil.warna};"></i> ${hasil.deskripsi}
+                </p>
+                <div class="hasil-detail">
+                  <span class="label">S - W:</span> ${hasil.selisih_s_w >= 0 ? "+" : ""}${hasil.selisih_s_w.toFixed(2)}
+                  <span>·</span>
+                  <span class="label">O - T:</span> ${hasil.selisih_o_t >= 0 ? "+" : ""}${hasil.selisih_o_t.toFixed(2)}
+                  <span>·</span>
+                  <span class="label">S:</span> ${hasil.total_s.toFixed(2)}
+                  <span class="label">W:</span> ${hasil.total_w.toFixed(2)}
+                  <span class="label">O:</span> ${hasil.total_o.toFixed(2)}
+                  <span class="label">T:</span> ${hasil.total_t.toFixed(2)}
+                </div>
+              </div>
+            </div>
+          `;
+        },
+
+        renderKuadran: function (hasil) {
+          const container = document.getElementById("swotKuadranContent");
+          if (!container) return;
+          const x = Math.min(Math.max(hasil.selisih_s_w, -2), 2);
+          const y = Math.min(Math.max(hasil.selisih_o_t, -2), 2);
+          const posX = ((x + 2) / 4) * 100;
+          const posY = 100 - ((y + 2) / 4) * 100;
+
+          container.innerHTML = `
+            <div class="kuadran-container">
+              <div class="kuadran-chart-wrapper" style="display:flex;justify-content:center;margin-bottom:12px;">
+                <div class="kuadran-chart">
+                  <div class="kuadran-axis-x">
+                    <span>← Kelemahan</span>
+                    <span>Kekuatan →</span>
+                  </div>
+                  <div class="kuadran-axis-y">
+                    <span>Ancaman ↑</span>
+                    <span>↓ Peluang</span>
+                  </div>
+                  <div class="kuadran-grid">
+                    <div class="kuadran-area ${hasil.kuadran === "II" ? "active" : ""}" style="${hasil.kuadran === "II" ? "background:#fff3e0;border-color:#e65100;" : ""}">
+                      <div><span class="kuadran-label" style="color:#e65100;">Kuadran II</span><span class="kuadran-strategy" style="color:#e65100;">Diversifikasi (ST)</span></div>
+                    </div>
+                    <div class="kuadran-area ${hasil.kuadran === "I" ? "active" : ""}" style="${hasil.kuadran === "I" ? "background:#e8f5e9;border-color:#2e7d32;" : ""}">
+                      <div><span class="kuadran-label" style="color:#2e7d32;">Kuadran I</span><span class="kuadran-strategy" style="color:#2e7d32;">Agresif (SO)</span>${hasil.kuadran === "I" ? '<span class="check" style="color:#2e7d32;">✓</span>' : ""}</div>
+                    </div>
+                    <div class="kuadran-area ${hasil.kuadran === "III" ? "active" : ""}" style="${hasil.kuadran === "III" ? "background:#e3f2fd;border-color:#0d47a1;" : ""}">
+                      <div><span class="kuadran-label" style="color:#0d47a1;">Kuadran III</span><span class="kuadran-strategy" style="color:#0d47a1;">Turnaround (WO)</span></div>
+                    </div>
+                    <div class="kuadran-area ${hasil.kuadran === "IV" ? "active" : ""}" style="${hasil.kuadran === "IV" ? "background:#ffebee;border-color:#c62828;" : ""}">
+                      <div><span class="kuadran-label" style="color:#c62828;">Kuadran IV</span><span class="kuadran-strategy" style="color:#c62828;">Defensif (WT)</span></div>
+                    </div>
+                    <div class="kuadran-dot" style="left:${posX}%;top:${posY}%;background:${hasil.warna};">
+                      <span class="dot-label">(${hasil.selisih_s_w.toFixed(2)}, ${hasil.selisih_o_t.toFixed(2)})</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="kuadran-note" style="border-left:4px solid ${hasil.warna};">
+                <i class="fas fa-location-dot" style="color:${hasil.warna};"></i>
+                Desa Sleman berada pada <strong style="color:${hasil.warna};">Kuadran ${hasil.kuadran}</strong>,
+                strategi: <strong style="color:${hasil.warna};">${hasil.strategi}</strong>
+              </div>
+            </div>
+          `;
+        },
+
+        renderMatriks: function () {
+          const container = document.getElementById("matrixContent");
+          if (!container) return;
+          container.innerHTML = `
+            <div class="matrix-container">
+              <div class="matrix-grid">
+                <div class="matrix-header"></div>
+                <div class="matrix-header matrix-s" style="background:#2e7d32;color:#fff;padding:8px 12px;font-weight:700;font-size:12px;text-align:center;">Kekuatan (S)</div>
+                <div class="matrix-header matrix-w" style="background:#c62828;color:#fff;padding:8px 12px;font-weight:700;font-size:12px;text-align:center;">Kelemahan (W)</div>
+                <div class="matrix-header matrix-o" style="background:#0d47a1;color:#fff;padding:8px 12px;font-weight:700;font-size:12px;text-align:center;">Peluang (O)</div>
+                <div class="matrix-cell matrix-so" style="border-left:4px solid #2e7d32;background:#e8f5e9;padding:10px 14px;">
+                  <strong style="color:#2e7d32;">Strategi SO (Agresif)</strong>
+                  <ul><li>Mengembangkan pertanian modern berbasis irigasi teknis</li><li>Memperkuat BUMDes dengan Dana Desa</li><li>Mengembangkan UMKM melalui program pemberdayaan</li></ul>
+                </div>
+                <div class="matrix-cell matrix-wo" style="border-left:4px solid #0d47a1;background:#e3f2fd;padding:10px 14px;">
+                  <strong style="color:#0d47a1;">Strategi WO (Turnaround)</strong>
+                  <ul><li>Pelatihan keterampilan & literasi digital</li><li>Memanfaatkan e-commerce untuk pemasaran</li><li>Kerja sama program beasiswa & pendidikan</li></ul>
+                </div>
+                <div class="matrix-header matrix-t" style="background:#e65100;color:#fff;padding:8px 12px;font-weight:700;font-size:12px;text-align:center;">Ancaman (T)</div>
+                <div class="matrix-cell matrix-st" style="border-left:4px solid #e65100;background:#fff3e0;padding:10px 14px;">
+                  <strong style="color:#e65100;">Strategi ST (Diversifikasi)</strong>
+                  <ul><li>Diversifikasi komoditas pertanian</li><li>Mengembangkan usaha non-pertanian alternatif</li><li>Membangun infrastruktur pengendalian banjir</li></ul>
+                </div>
+                <div class="matrix-cell matrix-wt" style="border-left:4px solid #c62828;background:#ffebee;padding:10px 14px;">
+                  <strong style="color:#c62828;">Strategi WT (Defensif)</strong>
+                  <ul><li>Memperkuat BPD dan LKMD</li><li>Membentuk koperasi/kelompok usaha bersama</li><li>Efisiensi APBDes untuk program berdampak ekonomi</li></ul>
+                </div>
+              </div>
+            </div>
+          `;
+        },
+
+        resetSWOT: function () {
+          showConfirm(
+            "Reset data SWOT ke default?",
+            (confirmed) => {
+              if (!confirmed) return;
+              const data = { faktor: DEFAULT_DATA.swot, hasil: {} };
+              localStorage.setItem("sipedes_swot", JSON.stringify(data));
+              this.renderForm("swotContainer");
+              document.getElementById("swotHasil").style.display = "none";
+              document.getElementById("swotKuadran").style.display = "none";
+              document.getElementById("matrixWrapper").style.display = "none";
+              showToast("SWOT direset ke default", "success");
+            },
+            "warning",
+            "Reset SWOT",
+          );
+        },
+      };
+
+      // ============================================================
+      // INIT
+      // ============================================================
+      document.addEventListener("DOMContentLoaded", function () {
+        AOS.init({
+          duration: 600,
+          once: true,
+          offset: 30,
+          easing: "ease-out-cubic",
+        });
+
+        setTimeout(() => {
+          const preloader = document.getElementById("preloader");
+          if (preloader) preloader.classList.add("hide");
+        }, 800);
+
+        // Nav Toggle
+        const toggle = document.getElementById("navToggle");
+        const mobileMenu = document.getElementById("navMenuMobile");
+        if (toggle && mobileMenu) {
+          toggle.addEventListener("click", function () {
+            this.classList.toggle("active");
+            mobileMenu.classList.toggle("open");
+          });
+          mobileMenu.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", () => {
+              toggle.classList.remove("active");
+              mobileMenu.classList.remove("open");
+            });
+          });
+        }
+
+        // Navbar Scroll
+        const header = document.getElementById("header");
+        window.addEventListener("scroll", function () {
+          header.classList.toggle("scrolled", window.pageYOffset > 50);
+        });
+
+        // Nav Link Active
+        const sections = document.querySelectorAll("section[id]");
+        const navLinks = document.querySelectorAll(
+          ".nav-link:not(.nav-dashboard):not(.nav-login)",
+        );
+        window.addEventListener("scroll", function () {
+          let current = "";
+          sections.forEach((section) => {
+            if (window.pageYOffset >= section.offsetTop - 120) {
+              current = section.getAttribute("id");
+            }
+          });
+          navLinks.forEach((link) => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === "#" + current) {
+              link.classList.add("active");
+            }
+          });
+        });
+
+        // Scroll Top
+        const scrollBtn = document.createElement("button");
+        scrollBtn.className = "scroll-top";
+        scrollBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+        scrollBtn.setAttribute("aria-label", "Scroll to top");
+        document.body.appendChild(scrollBtn);
+        window.addEventListener("scroll", function () {
+          scrollBtn.classList.toggle("visible", window.pageYOffset > 500);
+        });
+        scrollBtn.addEventListener("click", function () {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        // Animated Counter
+        function animateCounters() {
+          document
+            .querySelectorAll(".stat-number[data-count]")
+            .forEach((counter) => {
+              const target = parseInt(counter.getAttribute("data-count"));
+              const observer = new IntersectionObserver(
+                (entries) => {
+                  entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                      let current = 0;
+                      const step = Math.max(1, Math.floor(target / 60));
+                      const interval = setInterval(() => {
+                        current += step;
+                        if (current >= target) {
+                          counter.textContent = target.toLocaleString();
+                          clearInterval(interval);
+                        } else {
+                          counter.textContent = current.toLocaleString();
+                        }
+                      }, 30);
+                      observer.unobserve(counter);
+                    }
+                  });
+                },
+                { threshold: 0.5 },
+              );
+              observer.observe(counter);
+            });
+        }
+        animateCounters();
+
+        // Load Data
+        loadProfil();
+        loadPotensi();
+        loadStrategi();
+        loadProgram();
+
+        // SWOT
+        if (typeof SWOT !== "undefined") {
+          SWOT.renderForm("swotContainer");
+        }
+
+        // Welcome Toast
+        setTimeout(() => {
+          showToast("Selamat datang di SIPEDES", "info", 2500);
+        }, 1200);
+
+        const user = localStorage.getItem("sipedes_user");
+        if (user) {
+          try {
+            const userData = JSON.parse(user);
+            setTimeout(() => {
+              showToast("Halo, " + userData.nama, "success", 2000);
+            }, 2000);
+          } catch (e) {}
+        }
+
+        console.log(
+          "%c SIPEDES ",
+          "background:#0f4c3a;color:#fff;padding:12px 24px;font-size:20px;font-weight:700;border-radius:6px;",
+        );
+        console.log(
+          "%c Data default dari skripsi - Bobot total 1.00",
+          "background:#f0e0c8;color:#0f4c3a;padding:8px 16px;border-radius:6px;",
+        );
+        console.log(
+          "%c Kuadran I - Agresif (SO)",
+          "background:#2e7d32;color:#fff;padding:4px 12px;border-radius:4px;",
+        );
+      });
+    </script>
+  </body>
+</html>

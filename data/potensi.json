@@ -1,0 +1,106 @@
+{
+  "sektor": [
+    {
+      "id": 1,
+      "nama": "Sektor Pertanian",
+      "icon": "fa-seedling",
+      "deskripsi": "Sektor utama perekonomian Desa Sleman dengan luas lahan sawah mencapai 505,50 Ha.",
+      "warna": "#e8f5e9",
+      "teks_warna": "#2e7d32",
+      "detail": [
+        "Sawah Irigasi Teknis: 445,50 Ha",
+        "Sawah Irigasi Setengah Teknis: 45,00 Ha",
+        "Sawah Pasang Surut: 15,00 Ha",
+        "Curah Hujan: 2.000 mm/tahun",
+        "Bulan Hujan: 5 bulan",
+        "Kelembapan: 82%",
+        "Suhu Rata-rata: 31°C"
+      ]
+    },
+    {
+      "id": 2,
+      "nama": "Peternakan",
+      "icon": "fa-cow",
+      "deskripsi": "Usaha peternakan yang berkembang dengan 31 unit usaha dan menyerap 39 tenaga kerja.",
+      "warna": "#fff3e0",
+      "teks_warna": "#e65100",
+      "detail": [
+        "Unit Usaha: 31 unit",
+        "Jenis Produk: 4 jenis",
+        "Tenaga Kerja: 39 orang"
+      ]
+    },
+    {
+      "id": 3,
+      "nama": "Jahit/Bordir",
+      "icon": "fa-tshirt",
+      "deskripsi": "Usaha jahit dan bordir dengan 15 unit usaha yang menyerap 20 tenaga kerja.",
+      "warna": "#fce4ec",
+      "teks_warna": "#c62828",
+      "detail": [
+        "Unit Usaha: 15 unit",
+        "Jenis Produk: 2 jenis",
+        "Tenaga Kerja: 20 orang"
+      ]
+    },
+    {
+      "id": 4,
+      "nama": "Pengolahan Kayu",
+      "icon": "fa-tree",
+      "deskripsi": "Usaha pengolahan kayu dengan 3 unit usaha dan menyerap 8 tenaga kerja.",
+      "warna": "#e3f2fd",
+      "teks_warna": "#1565c0",
+      "detail": [
+        "Unit Usaha: 3 unit",
+        "Jenis Produk: 5 jenis",
+        "Tenaga Kerja: 8 orang"
+      ]
+    },
+    {
+      "id": 5,
+      "nama": "BUMDes",
+      "icon": "fa-building",
+      "deskripsi": "Badan Usaha Milik Desa dengan 1 unit yang mengelola 6 jenis kegiatan usaha.",
+      "warna": "#e8eaf6",
+      "teks_warna": "#283593",
+      "detail": ["Unit: 1 unit", "Jenis Kegiatan: 6 jenis", "Pengurus: 4 orang"]
+    },
+    {
+      "id": 6,
+      "nama": "Lembaga Keuangan",
+      "icon": "fa-university",
+      "deskripsi": "Terdapat 1 unit bank pemerintah dengan 2 jenis kegiatan.",
+      "warna": "#fff8e1",
+      "teks_warna": "#f57f17",
+      "detail": ["Unit: 1 unit", "Jenis Kegiatan: 2 jenis", "Pengurus: 7 orang"]
+    },
+    {
+      "id": 7,
+      "nama": "Lembaga Pendidikan",
+      "icon": "fa-graduation-cap",
+      "deskripsi": "Fasilitas pendidikan dengan 7 unit sekolah yang menampung 1.634 siswa.",
+      "warna": "#f3e5f5",
+      "teks_warna": "#6a1b9a",
+      "detail": [
+        "TK: 3 unit, 97 siswa",
+        "SD: 3 unit, 1.500 siswa",
+        "RA: 1 unit, 37 siswa",
+        "Total: 7 unit, 1.634 siswa"
+      ]
+    },
+    {
+      "id": 8,
+      "nama": "Situs Sejarah",
+      "icon": "fa-landmark",
+      "deskripsi": "Potensi wisata berbasis situs sejarah seluas 0,35 Ha yang dapat dikembangkan.",
+      "warna": "#efebe9",
+      "teks_warna": "#4e342e",
+      "detail": [
+        "Luas: 0,35 Ha",
+        "Potensi Wisata Sejarah",
+        "Dapat dikembangkan sebagai destinasi wisata"
+      ]
+    }
+  ],
+  "updated_at": "2026-07-19"
+}

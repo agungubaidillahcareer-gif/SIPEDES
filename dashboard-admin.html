@@ -1,0 +1,2992 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Admin · SIPEDES</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="icon" type="image/png" href="assets/images/logo.png" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <style>
+      /* ===== STYLE SAMA ===== */
+      :root {
+        --primary: #0f4c3a;
+        --primary-light: #1b6b52;
+        --primary-dark: #0a3327;
+        --primary-50: #e8f5e9;
+        --accent: #c9956b;
+        --bg: #f0eeea;
+        --bg-white: #ffffff;
+        --text: #1a262a;
+        --text-light: #4a5a62;
+        --text-muted: #8a9a9f;
+        --border: #e4e6db;
+        --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        --shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.1);
+        --radius: 14px;
+        --radius-sm: 10px;
+        --font: "Inter", sans-serif;
+        --header-height: 64px;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: var(--font);
+        background: var(--bg);
+        color: var(--text);
+        padding-top: var(--header-height);
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      ul {
+        list-style: none;
+      }
+      .container {
+        max-width: 1360px;
+        margin: 0 auto;
+        padding: 0 16px;
+      }
+
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.97);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border);
+        height: var(--header-height);
+      }
+      .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: var(--header-height);
+        padding: 0 16px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        font-size: 18px;
+        color: var(--primary-dark);
+      }
+      .brand img {
+        height: 34px;
+        width: 34px;
+        border-radius: 8px;
+      }
+      .brand small {
+        font-size: 10px;
+        font-weight: 400;
+        color: var(--text-muted);
+        background: var(--bg);
+        padding: 2px 10px;
+        border-radius: 20px;
+      }
+      .nav-menu {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .nav-menu a {
+        padding: 6px 14px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text-light);
+        border-radius: 24px;
+        transition: 0.3s;
+      }
+      .nav-menu a:hover {
+        color: var(--primary);
+        background: var(--primary-50);
+      }
+      .nav-menu a.active {
+        color: #fff;
+        background: var(--primary);
+      }
+      .nav-menu .nav-logout {
+        background: #c62828;
+        color: #fff !important;
+      }
+      .nav-menu .nav-logout:hover {
+        background: #b71c1c !important;
+      }
+      .role-badge {
+        font-size: 10px;
+        font-weight: 600;
+        padding: 2px 12px;
+        border-radius: 12px;
+        color: #fff;
+        background: #2e7d32;
+        margin-left: 4px;
+      }
+
+      .dashboard-wrapper {
+        padding: 20px 0 40px;
+      }
+      .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 20px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--border);
+      }
+      .dashboard-header .title h1 {
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--primary-dark);
+      }
+      .dashboard-header .title h1 span {
+        color: var(--accent);
+      }
+      .dashboard-header .title p {
+        font-size: 14px;
+        color: var(--text-muted);
+      }
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--bg-white);
+        padding: 6px 16px 6px 18px;
+        border-radius: 50px;
+        border: 1px solid var(--border);
+      }
+      .user-info .avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 14px;
+      }
+      .user-info .name {
+        font-weight: 600;
+        font-size: 14px;
+      }
+      .user-info .role-text {
+        font-size: 11px;
+        color: var(--text-muted);
+      }
+      .btn-logout {
+        background: #c62828;
+        color: #fff;
+        border: none;
+        padding: 8px 18px;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 13px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .btn-logout:hover {
+        background: #b71c1c;
+        transform: translateY(-2px);
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+      .stat-card {
+        background: var(--bg-white);
+        padding: 18px 16px;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        transition: 0.3s;
+      }
+      .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-hover);
+      }
+      .stat-card .stat-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        margin-bottom: 8px;
+      }
+      .stat-card .stat-number {
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--primary-dark);
+      }
+      .stat-card .stat-label {
+        font-size: 13px;
+        color: var(--text-muted);
+      }
+
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 20px;
+      }
+      .card {
+        background: var(--bg-white);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        overflow: hidden;
+      }
+      .card-header {
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .card-header h3 {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--primary-dark);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .card-header h3 i {
+        color: var(--accent);
+      }
+      .card-body {
+        padding: 14px 18px;
+      }
+      .chart-container {
+        height: 220px;
+        position: relative;
+      }
+
+      .menu-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .menu-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px;
+        background: var(--bg);
+        border-radius: 10px;
+        transition: 0.3s;
+        border: 1px solid transparent;
+        cursor: pointer;
+      }
+      .menu-item:hover {
+        background: var(--primary-50);
+        border-color: var(--primary);
+        transform: translateY(-2px);
+      }
+      .menu-item i {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg-white);
+        color: var(--primary);
+        font-size: 14px;
+      }
+      .menu-item span {
+        font-size: 13px;
+        font-weight: 500;
+      }
+      .menu-item .arrow {
+        margin-left: auto;
+        color: var(--text-muted);
+        font-size: 12px;
+      }
+
+      .table-wrapper {
+        overflow-x: auto;
+        margin-top: 8px;
+      }
+      .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+      .data-table thead {
+        background: var(--primary);
+        color: #fff;
+      }
+      .data-table th {
+        padding: 10px 12px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+      }
+      .data-table td {
+        padding: 8px 12px;
+        border-bottom: 1px solid var(--border);
+      }
+      .data-table tbody tr:hover {
+        background: var(--primary-50);
+      }
+      .btn-action {
+        padding: 4px 10px;
+        border-radius: 4px;
+        border: none;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .btn-edit {
+        background: #e3f2fd;
+        color: #0d47a1;
+      }
+      .btn-edit:hover {
+        background: #bbdefb;
+      }
+      .btn-delete {
+        background: #ffebee;
+        color: #c62828;
+      }
+      .btn-delete:hover {
+        background: #ffcdd2;
+      }
+      .btn-add-row {
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        padding: 6px 16px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .btn-add-row:hover {
+        background: var(--primary-light);
+        transform: translateY(-1px);
+      }
+
+      .apbdes-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+        margin-bottom: 12px;
+      }
+      .apbdes-table thead {
+        background: var(--primary);
+        color: #fff;
+      }
+      .apbdes-table th {
+        padding: 8px 12px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 11px;
+        text-transform: uppercase;
+      }
+      .apbdes-table td {
+        padding: 6px 12px;
+        border-bottom: 1px solid var(--border);
+      }
+      .apbdes-table tr:hover td {
+        background: var(--primary-50);
+      }
+
+      .user-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+        margin-top: 8px;
+      }
+      .user-table thead {
+        background: var(--primary);
+        color: #fff;
+      }
+      .user-table th {
+        padding: 8px 12px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+      }
+      .user-table td {
+        padding: 8px 12px;
+        border-bottom: 1px solid var(--border);
+      }
+      .user-table tbody tr:hover {
+        background: var(--primary-50);
+      }
+      .role-badge-small {
+        font-size: 10px;
+        font-weight: 600;
+        padding: 2px 10px;
+        border-radius: 12px;
+        color: #fff;
+      }
+      .role-badge-small.admin {
+        background: #2e7d32;
+      }
+      .role-badge-small.perangkat {
+        background: #0d47a1;
+      }
+      .role-badge-small.kades {
+        background: #e65100;
+      }
+
+      .activity-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .activity-item:last-child {
+        border-bottom: none;
+      }
+      .activity-item .icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        flex-shrink: 0;
+      }
+      .activity-item .icon.green {
+        background: #e8f5e9;
+        color: #2e7d32;
+      }
+      .activity-item .icon.blue {
+        background: #e3f2fd;
+        color: #0d47a1;
+      }
+      .activity-item .icon.orange {
+        background: #fff3e0;
+        color: #e65100;
+      }
+      .activity-item .content {
+        flex: 1;
+      }
+      .activity-item .content .text {
+        font-size: 13px;
+      }
+      .activity-item .content .time {
+        font-size: 11px;
+        color: var(--text-muted);
+      }
+
+      /* ===== MODAL ===== */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 9998;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .modal-overlay.active {
+        display: flex;
+      }
+      .modal-box {
+        background: var(--bg-white);
+        border-radius: var(--radius);
+        max-width: 500px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
+        animation: modalIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      @keyframes modalIn {
+        from {
+          transform: scale(0.95) translateY(20px);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1) translateY(0);
+          opacity: 1;
+        }
+      }
+      .modal-header {
+        padding: 16px 24px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        background: var(--bg-white);
+        z-index: 10;
+        border-radius: var(--radius) var(--radius) 0 0;
+      }
+      .modal-header h2 {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--primary-dark);
+      }
+      .modal-close {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: var(--text-muted);
+        transition: 0.2s;
+        padding: 4px 8px;
+        border-radius: 6px;
+        line-height: 1;
+      }
+      .modal-close:hover {
+        background: #ffebee;
+        color: #c62828;
+      }
+      .modal-body {
+        padding: 24px;
+      }
+      .modal-body .form-group {
+        margin-bottom: 16px;
+      }
+      .modal-body .form-group label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 4px;
+      }
+      .modal-body .form-group input,
+      .modal-body .form-group select,
+      .modal-body .form-group textarea {
+        width: 100%;
+        padding: 10px 14px;
+        border: 2px solid var(--border);
+        border-radius: 8px;
+        font-size: 14px;
+        font-family: var(--font);
+        background: #f8f6f0;
+        transition: 0.3s;
+      }
+      .modal-body .form-group input:focus,
+      .modal-body .form-group select:focus,
+      .modal-body .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        background: #fff;
+        box-shadow: 0 0 0 4px rgba(15, 76, 58, 0.08);
+      }
+      .modal-footer {
+        padding: 16px 24px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+      }
+      .btn-modal {
+        padding: 10px 28px;
+        border-radius: 8px;
+        border: none;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .btn-modal-save {
+        background: var(--primary);
+        color: #fff;
+      }
+      .btn-modal-save:hover {
+        background: var(--primary-light);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(15, 76, 58, 0.25);
+      }
+      .btn-modal-cancel {
+        background: #e0e3d8;
+        color: var(--text);
+      }
+      .btn-modal-cancel:hover {
+        background: #d0d3c8;
+      }
+
+      .confirm-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 99999;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .confirm-overlay.active {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--bg-white);
+        border-radius: var(--radius);
+        max-width: 420px;
+        width: 100%;
+        padding: 32px 28px;
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
+        animation: modalIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        text-align: center;
+      }
+      .confirm-box .confirm-icon {
+        font-size: 48px;
+        color: #e65100;
+        margin-bottom: 12px;
+      }
+      .confirm-box h3 {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--primary-dark);
+        margin-bottom: 8px;
+      }
+      .confirm-box p {
+        font-size: 14px;
+        color: var(--text-muted);
+        margin-bottom: 24px;
+      }
+      .confirm-box .confirm-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+      }
+      .confirm-box .confirm-actions button {
+        padding: 10px 32px;
+        border-radius: 8px;
+        border: none;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .confirm-box .confirm-actions .btn-confirm-yes {
+        background: #c62828;
+        color: #fff;
+      }
+      .confirm-box .confirm-actions .btn-confirm-yes:hover {
+        background: #b71c1c;
+        transform: translateY(-2px);
+      }
+      .confirm-box .confirm-actions .btn-confirm-no {
+        background: #e0e3d8;
+        color: var(--text);
+      }
+      .confirm-box .confirm-actions .btn-confirm-no:hover {
+        background: #d0d3c8;
+      }
+
+      /* ===== TOAST ===== */
+      #toastContainer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 9999;
+        padding: 20px;
+        pointer-events: none;
+      }
+      #toastContainer .toast {
+        pointer-events: auto;
+        margin-bottom: 12px;
+        padding: 14px 20px;
+        border-radius: 12px;
+        font-weight: 500;
+        font-size: 14px;
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+        animation: toastIn 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        max-width: 380px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #fff;
+        border-left: 4px solid rgba(255, 255, 255, 0.3);
+      }
+      #toastContainer .toast.success {
+        background: #2e7d32;
+      }
+      #toastContainer .toast.error {
+        background: #c62828;
+      }
+      #toastContainer .toast.warning {
+        background: #e65100;
+      }
+      #toastContainer .toast.info {
+        background: #0d47a1;
+      }
+      #toastContainer .toast.hide {
+        opacity: 0;
+        transform: translateX(40px);
+        transition: 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      #toastContainer .toast i {
+        font-size: 18px;
+      }
+      @keyframes toastIn {
+        from {
+          transform: translateX(100px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      .search-bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--bg);
+        padding: 6px 14px;
+        border-radius: 30px;
+        border: 1px solid var(--border);
+        transition: 0.3s;
+        margin-bottom: 12px;
+      }
+      .search-bar:focus-within {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px var(--primary-50);
+      }
+      .search-bar input {
+        border: none;
+        background: transparent;
+        padding: 6px 0;
+        font-size: 13px;
+        font-family: var(--font);
+        outline: none;
+        width: 160px;
+        color: var(--text);
+      }
+      .search-bar input::placeholder {
+        color: var(--text-muted);
+      }
+      .search-bar i {
+        color: var(--text-muted);
+        font-size: 14px;
+      }
+
+      /* ===== EXPORT BUTTONS ===== */
+      .export-buttons {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .btn-export {
+        padding: 8px 18px;
+        border-radius: 8px;
+        border: none;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn-export:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      }
+      .btn-export-pdf {
+        background: linear-gradient(135deg, #c62828, #b71c1c);
+        color: #fff;
+      }
+      .btn-export-pdf:hover {
+        box-shadow: 0 4px 20px rgba(198, 40, 40, 0.4);
+      }
+      .btn-export-excel {
+        background: linear-gradient(135deg, #2e7d32, #1b5e20);
+        color: #fff;
+      }
+      .btn-export-excel:hover {
+        box-shadow: 0 4px 20px rgba(46, 125, 50, 0.4);
+      }
+      .btn-export-print {
+        background: linear-gradient(135deg, #0d47a1, #0a3a7a);
+        color: #fff;
+      }
+      .btn-export-print:hover {
+        box-shadow: 0 4px 20px rgba(13, 71, 161, 0.4);
+      }
+      .btn-export-all {
+        background: linear-gradient(135deg, #6a1b9a, #4a148c);
+        color: #fff;
+      }
+      .btn-export-all:hover {
+        box-shadow: 0 4px 20px rgba(106, 27, 154, 0.4);
+      }
+
+      /* ===== PRINT STYLES ===== */
+      @media print {
+        .header,
+        .nav-menu,
+        .btn-add-row,
+        .btn-action,
+        .btn-export,
+        .search-bar,
+        .btn-logout,
+        .menu-item,
+        .card-action,
+        .modal-overlay,
+        .confirm-overlay,
+        #toastContainer,
+        .dashboard-header .title p,
+        .user-info .role-text,
+        .role-badge {
+          display: none !important;
+        }
+        .dashboard-wrapper {
+          padding-top: 0 !important;
+        }
+        .card {
+          box-shadow: none !important;
+          border: 1px solid #ddd !important;
+          break-inside: avoid;
+          page-break-inside: avoid;
+        }
+        body {
+          padding-top: 0 !important;
+          background: #fff !important;
+          font-size: 11px !important;
+        }
+        .container {
+          max-width: 100% !important;
+          padding: 0 !important;
+        }
+        .stats-grid {
+          display: grid !important;
+          grid-template-columns: repeat(4, 1fr) !important;
+          gap: 10px !important;
+        }
+        .stat-card {
+          border: 1px solid #ddd !important;
+          padding: 12px !important;
+        }
+        .stat-card .stat-number {
+          font-size: 18px !important;
+        }
+        .dashboard-grid {
+          display: block !important;
+        }
+        .dashboard-grid > div {
+          margin-bottom: 20px !important;
+        }
+        .dashboard-header .title h1 {
+          font-size: 18px !important;
+        }
+        .user-info {
+          border: 1px solid #ddd !important;
+          padding: 4px 12px !important;
+        }
+        .user-info .avatar {
+          width: 28px !important;
+          height: 28px !important;
+          font-size: 11px !important;
+        }
+        .user-info .name {
+          font-size: 12px !important;
+        }
+        .btn-logout {
+          display: none !important;
+        }
+        .data-table th,
+        .data-table td {
+          padding: 4px 8px !important;
+          font-size: 10px !important;
+        }
+        .apbdes-table th,
+        .apbdes-table td {
+          padding: 4px 8px !important;
+          font-size: 10px !important;
+        }
+        .user-table th,
+        .user-table td {
+          padding: 4px 8px !important;
+          font-size: 10px !important;
+        }
+        .card-header {
+          padding: 8px 12px !important;
+        }
+        .card-header h3 {
+          font-size: 12px !important;
+        }
+        .card-body {
+          padding: 8px 12px !important;
+        }
+        .chart-container {
+          height: 150px !important;
+        }
+        .activity-item {
+          padding: 4px 0 !important;
+        }
+        .activity-item .content .text {
+          font-size: 10px !important;
+        }
+        .activity-item .content .time {
+          font-size: 9px !important;
+        }
+        .stat-card .stat-label {
+          font-size: 10px !important;
+        }
+        .export-buttons {
+          display: none !important;
+        }
+        .page-break {
+          page-break-before: always !important;
+          break-before: page !important;
+        }
+        .print-header {
+          display: block !important;
+          text-align: center;
+          padding: 10px 0;
+          border-bottom: 2px solid #0f4c3a;
+          margin-bottom: 16px;
+        }
+        .print-header h2 {
+          color: #0f4c3a;
+          font-size: 18px;
+        }
+        .print-header p {
+          color: #7a8a92;
+          font-size: 11px;
+          margin-top: 2px;
+        }
+        .print-footer {
+          text-align: center;
+          padding-top: 10px;
+          border-top: 1px solid #ddd;
+          margin-top: 16px;
+          font-size: 9px;
+          color: #999;
+        }
+        .print-only {
+          display: block !important;
+        }
+        .no-print {
+          display: none !important;
+        }
+      }
+
+      .print-only {
+        display: none;
+      }
+
+      @media (max-width: 992px) {
+        .dashboard-grid {
+          grid-template-columns: 1fr;
+        }
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 768px) {
+        .dashboard-header {
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .stats-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+        }
+        .menu-grid {
+          grid-template-columns: 1fr;
+        }
+        .chart-container {
+          height: 160px;
+        }
+        .modal-box {
+          max-width: 100%;
+          margin: 10px;
+        }
+        .search-bar input {
+          width: 100px;
+        }
+        #toastContainer {
+          top: 60px;
+          right: 8px;
+          left: 8px;
+        }
+        #toastContainer .toast {
+          font-size: 12px;
+          padding: 10px 14px;
+        }
+      }
+      @media (max-width: 480px) {
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+        .dashboard-header .title h1 {
+          font-size: 20px;
+        }
+        .nav-menu a {
+          font-size: 11px;
+          padding: 4px 10px;
+        }
+        .brand {
+          font-size: 16px;
+        }
+        .brand img {
+          height: 28px;
+          width: 28px;
+        }
+        .search-bar input {
+          width: 80px;
+          font-size: 12px;
+        }
+        .export-buttons {
+          flex-direction: column;
+        }
+        .btn-export {
+          width: 100%;
+          justify-content: center;
+        }
+        .btn-export-all {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ===== TOAST ===== -->
+    <div id="toastContainer"></div>
+
+    <!-- ===== CONFIRM MODAL ===== -->
+    <div class="confirm-overlay" id="confirmModal">
+      <div class="confirm-box">
+        <div class="confirm-icon">⚠️</div>
+        <h3 id="confirmTitle">Konfirmasi</h3>
+        <p id="confirmMessage">Yakin ingin menghapus data ini?</p>
+        <div class="confirm-actions">
+          <button class="btn-confirm-no" id="confirmNo">Batal</button>
+          <button class="btn-confirm-yes" id="confirmYes">Ya, Hapus</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== MODAL CRUD ===== -->
+    <div class="modal-overlay" id="crudModal">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h2 id="modalTitle">Tambah Data</h2>
+          <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-footer">
+          <button class="btn-modal btn-modal-cancel" onclick="closeModal()">
+            Batal
+          </button>
+          <button class="btn-modal btn-modal-save" onclick="saveData()">
+            Simpan
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+      <div class="container" style="padding: 0 16px">
+        <nav class="navbar">
+          <a href="dashboard-admin.html" class="brand">
+            <img src="assets/images/logo.png" alt="SIPEDES" />
+            <span>SIPEDES</span>
+            <small>Admin</small>
+          </a>
+          <div class="nav-menu">
+            <a href="dashboard-admin.html" class="active"
+              ><i class="fas fa-gauge-high"></i
+            ></a>
+            <a href="index.html"><i class="fas fa-home"></i></a>
+            <a href="logout.html" class="nav-logout"
+              ><i class="fas fa-sign-out-alt"></i
+            ></a>
+            <span class="role-badge">Admin</span>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ===== DASHBOARD ===== -->
+    <div class="dashboard-wrapper">
+      <div class="container">
+        <!-- ===== PRINT HEADER (Hanya muncul saat print) ===== -->
+        <div class="print-only print-header">
+          <h2>SIPEDES - Laporan Sistem Informasi Potensi Desa</h2>
+          <p>Desa Sleman, Kecamatan Sliyeg, Kabupaten Indramayu</p>
+          <p style="font-size: 10px; color: #999">
+            Dicetak: <span id="printDate"></span>
+          </p>
+        </div>
+
+        <!-- HEADER -->
+        <div class="dashboard-header">
+          <div class="title">
+            <h1>Dashboard <span>Administrator</span></h1>
+            <p>Kelola seluruh data dan konfigurasi sistem SIPEDES</p>
+          </div>
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 12px;
+              flex-wrap: wrap;
+            "
+          >
+            <div class="user-info">
+              <div class="avatar" id="userAvatar">A</div>
+              <div>
+                <div class="name" id="userName">Administrator</div>
+                <div class="role-text">Administrator Sistem</div>
+              </div>
+            </div>
+            <button
+              class="btn-logout"
+              onclick="window.location.href = 'logout.html'"
+            >
+              <i class="fas fa-sign-out-alt"></i> Keluar
+            </button>
+          </div>
+        </div>
+
+        <!-- STATS -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon" style="background: #e8f5e9; color: #2e7d32">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-number" id="statUser">0</div>
+            <div class="stat-label">Pengguna</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: #e3f2fd; color: #0d47a1">
+              <i class="fas fa-seedling"></i>
+            </div>
+            <div class="stat-number" id="statPotensi">0</div>
+            <div class="stat-label">Potensi</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: #fff3e0; color: #e65100">
+              <i class="fas fa-bullseye"></i>
+            </div>
+            <div class="stat-number" id="statStrategi">0</div>
+            <div class="stat-label">Strategi</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: #f3e5f5; color: #6a1b9a">
+              <i class="fas fa-tasks"></i>
+            </div>
+            <div class="stat-number" id="statProgram">0</div>
+            <div class="stat-label">Program</div>
+          </div>
+        </div>
+
+        <!-- GRID -->
+        <div class="dashboard-grid">
+          <!-- KIRI -->
+          <div>
+            <!-- APBDES -->
+            <div class="card" style="margin-bottom: 20px">
+              <div class="card-header">
+                <h3><i class="fas fa-chart-bar"></i> APBDes</h3>
+                <button
+                  class="btn-add-row"
+                  onclick="openAddModal('apbdes')"
+                  style="background: #6a1b9a"
+                >
+                  <i class="fas fa-plus"></i> Tambah
+                </button>
+              </div>
+              <div class="card-body">
+                <div id="apbdesContainer"></div>
+                <div class="chart-container">
+                  <canvas id="apbdesChart"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- MANAJEMEN DATA -->
+            <div class="card">
+              <div class="card-header">
+                <h3><i class="fas fa-database"></i> Manajemen Data</h3>
+                <span style="font-size: 11px; color: var(--text-muted)"
+                  >(CRUD)</span
+                >
+              </div>
+              <div class="card-body">
+                <div
+                  style="
+                    display: flex;
+                    gap: 8px;
+                    flex-wrap: wrap;
+                    margin-bottom: 12px;
+                  "
+                >
+                  <button class="btn-add-row" onclick="openAddModal('potensi')">
+                    <i class="fas fa-plus"></i> Tambah Potensi
+                  </button>
+                  <button
+                    class="btn-add-row"
+                    onclick="openAddModal('strategi')"
+                    style="background: #0d47a1"
+                  >
+                    <i class="fas fa-plus"></i> Tambah Strategi
+                  </button>
+                  <button
+                    class="btn-add-row"
+                    onclick="openAddModal('program')"
+                    style="background: #e65100"
+                  >
+                    <i class="fas fa-plus"></i> Tambah Program
+                  </button>
+                  <button
+                    class="btn-add-row"
+                    onclick="openAddModal('swot')"
+                    style="background: #6a1b9a"
+                  >
+                    <i class="fas fa-plus"></i> Tambah SWOT
+                  </button>
+                </div>
+                <div class="search-bar">
+                  <i class="fas fa-search"></i>
+                  <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Cari data..."
+                    onkeyup="searchData()"
+                  />
+                </div>
+                <div class="table-wrapper">
+                  <table class="data-table" id="dataTable">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Jenis</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- KANAN -->
+          <div>
+            <!-- KELOLA USER -->
+            <div class="card" style="margin-bottom: 20px">
+              <div class="card-header">
+                <h3><i class="fas fa-users-cog"></i> Kelola Pengguna</h3>
+                <span style="font-size: 11px; color: var(--text-muted)"
+                  >(Admin Only)</span
+                >
+              </div>
+              <div class="card-body">
+                <button
+                  class="btn-add-row"
+                  onclick="openAddModal('user')"
+                  style="background: #6a1b9a; margin-bottom: 12px"
+                >
+                  <i class="fas fa-plus"></i> Tambah User
+                </button>
+                <div class="table-wrapper">
+                  <table class="user-table" id="userTable">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Nama</th>
+                        <th>Role</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody id="userTableBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- EXPORT LAPORAN -->
+            <div class="card" style="margin-bottom: 20px">
+              <div class="card-header">
+                <h3><i class="fas fa-file-alt"></i> Ekspor Laporan</h3>
+                <span style="font-size: 11px; color: var(--text-muted)"
+                  >(PDF / Excel / Print)</span
+                >
+              </div>
+              <div class="card-body">
+                <div class="export-buttons">
+                  <button
+                    class="btn-export btn-export-pdf"
+                    onclick="exportToPDF()"
+                  >
+                    <i class="fas fa-file-pdf"></i> PDF
+                  </button>
+                  <button
+                    class="btn-export btn-export-excel"
+                    onclick="exportToExcel()"
+                  >
+                    <i class="fas fa-file-excel"></i> Excel
+                  </button>
+                  <button
+                    class="btn-export btn-export-print"
+                    onclick="window.print()"
+                  >
+                    <i class="fas fa-print"></i> Print
+                  </button>
+                  <button
+                    class="btn-export btn-export-all"
+                    onclick="exportAll()"
+                  >
+                    <i class="fas fa-download"></i> All
+                  </button>
+                </div>
+                <div
+                  style="
+                    margin-top: 10px;
+                    font-size: 11px;
+                    color: var(--text-muted);
+                  "
+                >
+                  <i class="fas fa-info-circle"></i> Ekspor semua data dalam
+                  satu file
+                </div>
+              </div>
+            </div>
+
+            <!-- MENU ADMIN -->
+            <div class="card" style="margin-bottom: 20px">
+              <div class="card-header">
+                <h3><i class="fas fa-cog"></i> Menu Admin</h3>
+              </div>
+              <div class="card-body">
+                <div class="menu-grid">
+                  <a
+                    href="index.html#potensi"
+                    class="menu-item"
+                    onclick="showToast('Membuka Potensi...', 'info')"
+                  >
+                    <i class="fas fa-seedling"></i><span>Potensi</span>
+                    <span class="arrow"
+                      ><i class="fas fa-chevron-right"></i
+                    ></span>
+                  </a>
+                  <a
+                    href="index.html#swot"
+                    class="menu-item"
+                    onclick="showToast('Membuka SWOT...', 'info')"
+                  >
+                    <i class="fas fa-chart-pie"></i><span>SWOT</span>
+                    <span class="arrow"
+                      ><i class="fas fa-chevron-right"></i
+                    ></span>
+                  </a>
+                  <a
+                    href="index.html#strategi"
+                    class="menu-item"
+                    onclick="showToast('Membuka Strategi...', 'info')"
+                  >
+                    <i class="fas fa-bullseye"></i><span>Strategi</span>
+                    <span class="arrow"
+                      ><i class="fas fa-chevron-right"></i
+                    ></span>
+                  </a>
+                  <a
+                    href="index.html#program"
+                    class="menu-item"
+                    onclick="showToast('Membuka Program...', 'info')"
+                  >
+                    <i class="fas fa-tasks"></i><span>Program</span>
+                    <span class="arrow"
+                      ><i class="fas fa-chevron-right"></i
+                    ></span>
+                  </a>
+                  <a
+                    href="index.html#profil"
+                    class="menu-item"
+                    style="grid-column: 1/-1"
+                    onclick="showToast('Membuka Profil...', 'info')"
+                  >
+                    <i class="fas fa-info-circle"></i><span>Profil Desa</span>
+                    <span class="arrow"
+                      ><i class="fas fa-chevron-right"></i
+                    ></span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- AKTIVITAS -->
+            <div class="card">
+              <div class="card-header">
+                <h3><i class="fas fa-clock"></i> Aktivitas</h3>
+              </div>
+              <div class="card-body">
+                <div id="activityContainer"></div>
+              </div>
+            </div>
+
+            <!-- PRINT FOOTER -->
+            <div class="print-only print-footer">
+              <p>SIPEDES - Sistem Informasi Potensi Desa © 2026</p>
+              <p>Dicetak dari sistem pada <span id="printDateFooter"></span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      // ============================================================
+      // CONFIRM MODAL
+      // ============================================================
+      let confirmCallback = null;
+
+      function showConfirm(message, callback) {
+        document.getElementById("confirmMessage").textContent = message;
+        document.getElementById("confirmModal").classList.add("active");
+        confirmCallback = callback;
+      }
+
+      document.getElementById("confirmYes").onclick = function () {
+        document.getElementById("confirmModal").classList.remove("active");
+        if (confirmCallback) confirmCallback(true);
+        confirmCallback = null;
+      };
+      document.getElementById("confirmNo").onclick = function () {
+        document.getElementById("confirmModal").classList.remove("active");
+        if (confirmCallback) confirmCallback(false);
+        confirmCallback = null;
+      };
+      document.getElementById("confirmModal").onclick = function (e) {
+        if (e.target === this) {
+          document.getElementById("confirmModal").classList.remove("active");
+          if (confirmCallback) confirmCallback(false);
+          confirmCallback = null;
+        }
+      };
+
+      // ============================================================
+      // TOAST
+      // ============================================================
+      function showToast(msg, type, duration) {
+        type = type || "info";
+        duration = duration || 3500;
+        const c = document.getElementById("toastContainer");
+        if (!c) return;
+        const colors = {
+          success: { bg: "#2e7d32", icon: "fa-check-circle" },
+          error: { bg: "#c62828", icon: "fa-exclamation-circle" },
+          warning: { bg: "#e65100", icon: "fa-triangle-exclamation" },
+          info: { bg: "#0d47a1", icon: "fa-info-circle" },
+        };
+        const color = colors[type] || colors.info;
+        const n = document.createElement("div");
+        n.className = "toast " + type;
+        n.style.cssText = `background:${color.bg};color:#fff;padding:14px 20px;border-radius:12px;font-weight:500;font-size:14px;box-shadow:0 8px 40px rgba(0,0,0,0.15);animation:toastIn 0.5s cubic-bezier(0.22,1,0.36,1);max-width:380px;display:flex;align-items:center;gap:12px;font-family:'Inter',sans-serif;border-left:4px solid ${color.bg};margin-bottom:12px;`;
+        n.innerHTML = `<i class="fas ${color.icon}" style="font-size:18px;"></i> ${msg}`;
+        c.appendChild(n);
+        setTimeout(() => {
+          n.classList.add("hide");
+          setTimeout(() => n.remove(), 400);
+        }, duration);
+      }
+
+      // ============================================================
+      // LOCAL STORAGE
+      // ============================================================
+      const KEYS = {
+        users: "sipedes_users",
+        desa: "sipedes_desa",
+        potensi: "sipedes_potensi",
+        strategi: "sipedes_strategi",
+        program: "sipedes_program",
+        swot: "sipedes_swot",
+        apbdes: "sipedes_apbdes",
+        aktivitas: "sipedes_aktivitas",
+      };
+
+      function getData(key, defaultData) {
+        const stored = localStorage.getItem(key);
+        if (stored) {
+          try {
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+            if (!Array.isArray(parsed) && parsed !== null) return parsed;
+          } catch (e) {}
+        }
+        localStorage.setItem(key, JSON.stringify(defaultData));
+        return defaultData;
+      }
+
+      function saveDataToStorage(key, data) {
+        localStorage.setItem(key, JSON.stringify(data));
+        return true;
+      }
+
+      // ============================================================
+      // DEFAULT DATA
+      // ============================================================
+      const DEFAULT_DATA = {
+        users: [
+          {
+            id: 1,
+            username: "admin",
+            password: "admin123",
+            nama: "Administrator Sistem",
+            role: "admin",
+          },
+          {
+            id: 2,
+            username: "perangkat",
+            password: "perangkat123",
+            nama: "Perangkat Desa",
+            role: "perangkat",
+          },
+          {
+            id: 3,
+            username: "kades",
+            password: "kades123",
+            nama: "Kepala Desa Sleman",
+            role: "kades",
+          },
+        ],
+        potensi: [
+          { id: 1, nama: "Sektor Pertanian", isDefault: true },
+          { id: 2, nama: "Peternakan", isDefault: true },
+          { id: 3, nama: "Jahit/Bordir", isDefault: true },
+          { id: 4, nama: "Pengolahan Kayu", isDefault: true },
+          { id: 5, nama: "BUMDes", isDefault: true },
+          { id: 6, nama: "Lembaga Keuangan", isDefault: true },
+          { id: 7, nama: "Lembaga Pendidikan", isDefault: true },
+          { id: 8, nama: "Situs Sejarah", isDefault: true },
+        ],
+        strategi: [
+          {
+            id: 1,
+            nama: "Pengembangan Pertanian Modern dan Diversifikasi Komoditas",
+            tipe: "SO",
+            isDefault: true,
+          },
+          {
+            id: 2,
+            nama: "Penguatan BUMDes sebagai Motor Penggerak Ekonomi Desa",
+            tipe: "SO",
+            isDefault: true,
+          },
+          {
+            id: 3,
+            nama: "Pengembangan UMKM Berbasis Teknologi Digital",
+            tipe: "WO",
+            isDefault: true,
+          },
+          {
+            id: 4,
+            nama: "Peningkatan Kualitas Sumber Daya Manusia",
+            tipe: "WO",
+            isDefault: true,
+          },
+          {
+            id: 5,
+            nama: "Diversifikasi Ekonomi dan Mitigasi Risiko",
+            tipe: "ST",
+            isDefault: true,
+          },
+          {
+            id: 6,
+            nama: "Penguatan Kelembagaan dan Partisipasi Masyarakat",
+            tipe: "WT",
+            isDefault: true,
+          },
+        ],
+        program: [
+          { id: 1, nama: "Pengembangan Pertanian Modern", isDefault: true },
+          { id: 2, nama: "Penguatan BUMDes", isDefault: true },
+          { id: 3, nama: "Digitalisasi UMKM", isDefault: true },
+          {
+            id: 4,
+            nama: "Program Beasiswa dan Pelatihan SDM",
+            isDefault: true,
+          },
+          { id: 5, nama: "Diversifikasi Komoditas Pertanian", isDefault: true },
+          { id: 6, nama: "Mitigasi Banjir dan Irigasi", isDefault: true },
+          { id: 7, nama: "Penguatan BPD dan LKMD", isDefault: true },
+          { id: 8, nama: "Pembentukan Koperasi Desa", isDefault: true },
+        ],
+        apbdes: [
+          {
+            id: 1,
+            tahun: 2024,
+            pendapatan: { total: 2155218000 },
+            belanja: { total: 2193650344 },
+            defisit: -38432344,
+          },
+          {
+            id: 2,
+            tahun: 2025,
+            pendapatan: { total: 2123726000 },
+            belanja: { total: 2186961683 },
+            defisit: -63235683,
+          },
+        ],
+        swot: {
+          kekuatan: [
+            {
+              id: "S1",
+              nama: "Lahan pertanian luas (505,50 Ha) dengan irigasi teknis",
+              bobot: 0.15,
+              rating: 4,
+            },
+            {
+              id: "S2",
+              nama: "Jumlah penduduk besar (4.975 jiwa) sebagai tenaga kerja",
+              bobot: 0.1,
+              rating: 3,
+            },
+            {
+              id: "S3",
+              nama: "BUMDes aktif dengan 6 jenis unit usaha",
+              bobot: 0.1,
+              rating: 3,
+            },
+            {
+              id: "S4",
+              nama: "Usaha peternakan (31 unit), jahit/bordir (15 unit), kayu (3 unit)",
+              bobot: 0.08,
+              rating: 3,
+            },
+            {
+              id: "S5",
+              nama: "Lembaga pendidikan (TK & SD) sebagai modal SDM",
+              bobot: 0.07,
+              rating: 3,
+            },
+            {
+              id: "S6",
+              nama: "Struktur pemerintahan desa lengkap (13 aparat)",
+              bobot: 0.05,
+              rating: 3,
+            },
+            {
+              id: "S7",
+              nama: "Pendapatan Asli Desa stabil Rp342 juta/tahun",
+              bobot: 0.05,
+              rating: 3,
+            },
+          ],
+          kelemahan: [
+            {
+              id: "W1",
+              nama: "Tingkat pendidikan rendah (dominan SD 4.073 orang)",
+              bobot: 0.12,
+              rating: 1,
+            },
+            {
+              id: "W2",
+              nama: "416 penduduk usia produktif menganggur",
+              bobot: 0.08,
+              rating: 2,
+            },
+            {
+              id: "W3",
+              nama: "Keterbatasan akses pasar dan jaringan pemasaran",
+              bobot: 0.08,
+              rating: 1,
+            },
+            {
+              id: "W4",
+              nama: "Minimnya pemanfaatan teknologi digital",
+              bobot: 0.07,
+              rating: 1,
+            },
+            {
+              id: "W5",
+              nama: "Ketergantungan pada transfer/Dana Desa",
+              bobot: 0.05,
+              rating: 2,
+            },
+            {
+              id: "W6",
+              nama: "Kapasitas manajemen usaha masyarakat terbatas",
+              bobot: 0.06,
+              rating: 2,
+            },
+            { id: "W7", nama: "BPD berstatus pasif", bobot: 0.04, rating: 2 },
+          ],
+          peluang: [
+            {
+              id: "O1",
+              nama: "Program Dana Desa dan ADD berkelanjutan",
+              bobot: 0.15,
+              rating: 4,
+            },
+            {
+              id: "O2",
+              nama: "Perkembangan teknologi digital membuka pasar luas",
+              bobot: 0.12,
+              rating: 3,
+            },
+            {
+              id: "O3",
+              nama: "Meningkatnya permintaan produk pertanian organik",
+              bobot: 0.1,
+              rating: 3,
+            },
+            {
+              id: "O4",
+              nama: "Program pemberdayaan UMKM dari pemerintah daerah",
+              bobot: 0.08,
+              rating: 3,
+            },
+            {
+              id: "O5",
+              nama: "Potensi kerja sama dengan swasta & perguruan tinggi",
+              bobot: 0.05,
+              rating: 2,
+            },
+            {
+              id: "O6",
+              nama: "Program ketahanan pangan nasional",
+              bobot: 0.07,
+              rating: 3,
+            },
+            {
+              id: "O7",
+              nama: "Infrastruktur jalan yang dapat ditingkatkan",
+              bobot: 0.03,
+              rating: 2,
+            },
+          ],
+          ancaman: [
+            {
+              id: "T1",
+              nama: "Persaingan produk dari luar daerah yang ketat",
+              bobot: 0.15,
+              rating: 2,
+            },
+            {
+              id: "T2",
+              nama: "Fluktuasi harga komoditas pertanian",
+              bobot: 0.12,
+              rating: 2,
+            },
+            {
+              id: "T3",
+              nama: "Dampak perubahan iklim terhadap produktivitas",
+              bobot: 0.1,
+              rating: 2,
+            },
+            {
+              id: "T4",
+              nama: "Fenomena urbanisasi mengurangi tenaga kerja",
+              bobot: 0.08,
+              rating: 2,
+            },
+            {
+              id: "T5",
+              nama: "Ketergantungan pada curah hujan & irigasi",
+              bobot: 0.05,
+              rating: 2,
+            },
+            {
+              id: "T6",
+              nama: "Risiko banjir pada sebagian wilayah (4 Ha)",
+              bobot: 0.05,
+              rating: 2,
+            },
+            {
+              id: "T7",
+              nama: "Rendahnya daya saing produk lokal",
+              bobot: 0.05,
+              rating: 2,
+            },
+          ],
+        },
+      };
+
+      function initDefaultData() {
+        ["potensi", "strategi", "program", "apbdes", "users", "swot"].forEach(
+          (key) => {
+            if (!localStorage.getItem(KEYS[key])) {
+              localStorage.setItem(
+                KEYS[key],
+                JSON.stringify(DEFAULT_DATA[key]),
+              );
+            }
+          },
+        );
+        if (!localStorage.getItem(KEYS.aktivitas)) {
+          localStorage.setItem(
+            KEYS.aktivitas,
+            JSON.stringify([
+              {
+                text: "Sistem SIPEDES <strong>diaktifkan</strong>",
+                time: "Baru saja",
+                type: "success",
+                icon: "fa-check",
+              },
+            ]),
+          );
+        }
+      }
+
+      // ============================================================
+      // LOAD FUNCTIONS
+      // ============================================================
+      function loadStats() {
+        const users = getData(KEYS.users, DEFAULT_DATA.users);
+        const p = getData(KEYS.potensi, DEFAULT_DATA.potensi);
+        const s = getData(KEYS.strategi, DEFAULT_DATA.strategi);
+        const pr = getData(KEYS.program, DEFAULT_DATA.program);
+        document.getElementById("statUser").textContent = users.length;
+        document.getElementById("statPotensi").textContent = p.length;
+        document.getElementById("statStrategi").textContent = s.length;
+        document.getElementById("statProgram").textContent = pr.length;
+      }
+
+      let allData = [];
+
+      function searchData() {
+        const keyword =
+          document.getElementById("searchInput")?.value.toLowerCase().trim() ||
+          "";
+        const tbody = document.getElementById("tableBody");
+        if (!tbody) return;
+
+        const p = getData(KEYS.potensi, DEFAULT_DATA.potensi);
+        const s = getData(KEYS.strategi, DEFAULT_DATA.strategi);
+        const pr = getData(KEYS.program, DEFAULT_DATA.program);
+        const sw = getData(KEYS.swot, DEFAULT_DATA.swot);
+
+        allData = [];
+        p.forEach((item) => allData.push({ ...item, jenis: "Potensi" }));
+        s.forEach((item) => allData.push({ ...item, jenis: "Strategi" }));
+        pr.forEach((item) => allData.push({ ...item, jenis: "Program" }));
+        if (sw.kekuatan)
+          sw.kekuatan.forEach((item) =>
+            allData.push({ ...item, jenis: "SWOT-Kekuatan" }),
+          );
+        if (sw.kelemahan)
+          sw.kelemahan.forEach((item) =>
+            allData.push({ ...item, jenis: "SWOT-Kelemahan" }),
+          );
+        if (sw.peluang)
+          sw.peluang.forEach((item) =>
+            allData.push({ ...item, jenis: "SWOT-Peluang" }),
+          );
+        if (sw.ancaman)
+          sw.ancaman.forEach((item) =>
+            allData.push({ ...item, jenis: "SWOT-Ancaman" }),
+          );
+
+        let filtered = allData;
+        if (keyword) {
+          filtered = allData.filter(
+            (item) =>
+              (item.nama || "").toLowerCase().includes(keyword) ||
+              (item.id || "").toString().includes(keyword) ||
+              (item.jenis || "").toLowerCase().includes(keyword),
+          );
+        }
+
+        if (filtered.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--text-muted);">Tidak ada data ditemukan.</td></tr>`;
+          return;
+        }
+
+        const colorMap = {
+          Potensi: "#e8f5e9",
+          Strategi: "#e3f2fd",
+          Program: "#fff3e0",
+          "SWOT-Kekuatan": "#e8f5e9",
+          "SWOT-Kelemahan": "#ffebee",
+          "SWOT-Peluang": "#e3f2fd",
+          "SWOT-Ancaman": "#fff3e0",
+        };
+
+        tbody.innerHTML = filtered
+          .slice(0, 20)
+          .map(
+            (item) => `
+          <tr>
+            <td>${item.id || "-"}</td>
+            <td>${item.nama || item.tahun || "Data"}</td>
+            <td><span style="background:${colorMap[item.jenis] || "#f0f0f0"};padding:2px 10px;border-radius:12px;font-size:11px;">${item.jenis}</span></td>
+            <td>
+              <button class="btn-action btn-edit" onclick="editData('${item.jenis}', '${item.id}')">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn-action btn-delete" onclick="deleteData('${item.jenis}', '${item.id}')">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        `,
+          )
+          .join("");
+      }
+
+      function loadUsers() {
+        const tbody = document.getElementById("userTableBody");
+        if (!tbody) return;
+        const users = getData(KEYS.users, DEFAULT_DATA.users);
+        if (users.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--text-muted);">Belum ada user.</td></tr>`;
+          return;
+        }
+        const roleLabels = {
+          admin: "Admin",
+          perangkat: "Perangkat",
+          kades: "Kades",
+        };
+        tbody.innerHTML = users
+          .map(
+            (item) => `
+          <tr>
+            <td>${item.id || "-"}</td>
+            <td>${item.username || "-"}</td>
+            <td>${item.nama || "-"}</td>
+            <td><span class="role-badge-small ${item.role}">${roleLabels[item.role] || item.role}</span></td>
+            <td>
+              <button class="btn-action btn-edit" onclick="editData('User', ${item.id})">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn-action btn-delete" onclick="deleteData('User', ${item.id})">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        `,
+          )
+          .join("");
+      }
+
+      function loadAPBDes() {
+        const c = document.getElementById("apbdesContainer");
+        const data = getData(KEYS.apbdes, DEFAULT_DATA.apbdes);
+        if (data.length === 0) {
+          c.innerHTML = `<div style="padding:16px;text-align:center;background:#f8f6f0;border-radius:8px;margin-bottom:12px;border:1px dashed var(--border);">
+            <p style="color:var(--text-muted);font-size:14px;"><i class="fas fa-info-circle"></i> Belum ada data APBDes.
+            <button onclick="openAddModal('apbdes')" style="background:var(--primary);color:#fff;border:none;padding:4px 14px;border-radius:4px;cursor:pointer;">Tambah</button></p>
+          </div>`;
+          return;
+        }
+        let html = `<div style="overflow-x:auto;margin-bottom:12px;"><table class="apbdes-table"><thead><tr><th>Tahun</th><th style="text-align:right;">Pendapatan</th><th style="text-align:right;">Belanja</th><th style="text-align:right;">Defisit</th></tr></thead><tbody>`;
+        data.forEach((item) => {
+          const def =
+            item.defisit || item.pendapatan?.total - item.belanja?.total;
+          const warna = def < 0 ? "#c62828" : "#2e7d32";
+          html += `<tr><td><strong>${item.tahun}</strong></td><td style="text-align:right;">Rp${(item.pendapatan?.total || 0).toLocaleString()}</td><td style="text-align:right;">Rp${(item.belanja?.total || 0).toLocaleString()}</td><td style="text-align:right;color:${warna};font-weight:600;">${def < 0 ? "-" : ""}Rp${Math.abs(def).toLocaleString()}</td></tr>`;
+        });
+        html += `</tbody></table></div><div style="display:flex;gap:8px;flex-wrap:wrap;"><button onclick="openAddModal('apbdes')" class="btn-add-row" style="background:#6a1b9a;"><i class="fas fa-plus"></i> Tambah APBDes</button></div>`;
+        c.innerHTML = html;
+      }
+
+      let chartInstance = null;
+
+      function loadChart() {
+        const data = getData(KEYS.apbdes, DEFAULT_DATA.apbdes);
+        const labels = data.map((item) => item.tahun || "");
+        const p = data.map((item) => (item.pendapatan?.total || 0) / 1000000);
+        const b = data.map((item) => (item.belanja?.total || 0) / 1000000);
+        const cl = labels.length > 0 ? labels : ["2024", "2025"];
+        const cp = p.length > 0 ? p : [2155, 2124];
+        const cb = b.length > 0 ? b : [2194, 2187];
+        const ctx = document.getElementById("apbdesChart")?.getContext("2d");
+        if (!ctx) return;
+        if (chartInstance) chartInstance.destroy();
+        chartInstance = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: cl,
+            datasets: [
+              {
+                label: "Pendapatan (Rp Juta)",
+                data: cp,
+                backgroundColor: "rgba(15,76,58,0.8)",
+                borderColor: "#0f4c3a",
+                borderWidth: 2,
+                borderRadius: 4,
+              },
+              {
+                label: "Belanja (Rp Juta)",
+                data: cb,
+                backgroundColor: "rgba(201,149,107,0.8)",
+                borderColor: "#c9956b",
+                borderWidth: 2,
+                borderRadius: 4,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: "top",
+                labels: {
+                  usePointStyle: true,
+                  font: { family: "Inter", size: 10 },
+                  padding: 12,
+                },
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  callback: (v) => "Rp" + v.toLocaleString(),
+                  font: { family: "Inter", size: 9 },
+                },
+                grid: { color: "rgba(0,0,0,0.05)" },
+              },
+              x: {
+                grid: { display: false },
+                ticks: { font: { family: "Inter", size: 11, weight: "600" } },
+              },
+            },
+          },
+        });
+      }
+
+      function loadActivity() {
+        const c = document.getElementById("activityContainer");
+        if (!c) return;
+        let data = getData(KEYS.aktivitas, []);
+        if (data.length === 0) {
+          data = [
+            {
+              text: "Sistem SIPEDES <strong>diaktifkan</strong>",
+              time: "Baru saja",
+              type: "success",
+              icon: "fa-check",
+            },
+          ];
+          saveDataToStorage(KEYS.aktivitas, data);
+        }
+        const latest = data.slice(-5).reverse();
+        const colorMap = {
+          success: "green",
+          warning: "orange",
+          info: "blue",
+          error: "red",
+        };
+        c.innerHTML = latest
+          .map(
+            (act) => `
+          <div class="activity-item">
+            <div class="icon ${colorMap[act.type] || "blue"}">
+              <i class="fas ${act.icon || "fa-check"}"></i>
+            </div>
+            <div class="content">
+              <div class="text">${act.text}</div>
+              <div class="time">${act.time}</div>
+            </div>
+          </div>
+        `,
+          )
+          .join("");
+      }
+
+      function addActivity(text, type = "info", icon = "fa-check") {
+        const data = getData(KEYS.aktivitas, []);
+        const now = new Date();
+        const time = now.toLocaleTimeString("id-ID", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+        data.push({ text, time, type, icon });
+        saveDataToStorage(KEYS.aktivitas, data);
+        loadActivity();
+      }
+
+      // ============================================================
+      // EXPORT FUNCTIONS - IMPROVED
+      // ============================================================
+
+      // === EXPORT PDF ===
+      function exportToPDF() {
+        showToast("Menyiapkan PDF...", "info");
+        setTimeout(() => {
+          try {
+            const element = document.querySelector(
+              ".dashboard-wrapper .container",
+            );
+            // Tambahkan header untuk PDF
+            const originalHTML = element.innerHTML;
+            const printHeader = `
+              <div style="text-align:center;padding:20px 0;border-bottom:3px solid #0f4c3a;margin-bottom:20px;">
+                <h1 style="color:#0f4c3a;font-size:24px;margin:0;">SIPEDES</h1>
+                <p style="color:#4a5a62;font-size:14px;margin:4px 0;">Sistem Informasi Potensi Desa</p>
+                <p style="color:#7a8a92;font-size:12px;margin:2px 0;">Desa Sleman, Kecamatan Sliyeg, Kabupaten Indramayu</p>
+                <p style="color:#999;font-size:11px;margin:2px 0;">Dicetak: ${new Date().toLocaleString("id-ID")}</p>
+              </div>
+            `;
+            const printFooter = `
+              <div style="text-align:center;padding:12px 0;border-top:1px solid #ddd;margin-top:20px;font-size:10px;color:#999;">
+                SIPEDES - Sistem Informasi Potensi Desa © ${new Date().getFullYear()}
+              </div>
+            `;
+            // Clone element untuk export
+            const clone = element.cloneNode(true);
+            // Hapus tombol-tombol aksi
+            clone
+              .querySelectorAll(
+                ".btn-action, .btn-add-row, .btn-export, .search-bar, .btn-logout, .menu-item, .card-action, .modal-overlay, .confirm-overlay, #toastContainer",
+              )
+              .forEach((el) => el.remove());
+            // Tambahkan header dan footer
+            const wrapper = document.createElement("div");
+            wrapper.innerHTML = printHeader + clone.innerHTML + printFooter;
+            document.body.appendChild(wrapper);
+
+            html2canvas(wrapper, {
+              scale: 2,
+              useCORS: true,
+              backgroundColor: "#ffffff",
+              logging: false,
+              onclone: function (doc) {
+                // Styling untuk PDF
+                const style = doc.createElement("style");
+                style.textContent = `
+                  * { font-family: 'Inter', sans-serif; }
+                  .card { border: 1px solid #ddd !important; margin-bottom: 16px !important; border-radius: 8px !important; overflow: hidden !important; }
+                  .card-header { background: #f5f5f5 !important; padding: 10px 16px !important; border-bottom: 1px solid #ddd !important; }
+                  .card-body { padding: 12px 16px !important; }
+                  .stats-grid { display: grid !important; grid-template-columns: repeat(4,1fr) !important; gap: 12px !important; }
+                  .stat-card { border: 1px solid #ddd !important; padding: 12px !important; border-radius: 8px !important; }
+                  .stat-number { font-size: 20px !important; font-weight: 700 !important; }
+                  table { width: 100% !important; border-collapse: collapse !important; font-size: 11px !important; }
+                  th { background: #0f4c3a !important; color: #fff !important; padding: 6px 10px !important; text-align: left !important; }
+                  td { padding: 6px 10px !important; border-bottom: 1px solid #eee !important; }
+                  .dashboard-grid { display: grid !important; grid-template-columns: 2fr 1fr !important; gap: 16px !important; }
+                  .chart-container { height: 180px !important; }
+                  .print-only { display: none !important; }
+                `;
+                doc.head.appendChild(style);
+              },
+            }).then((canvas) => {
+              const imgData = canvas.toDataURL("image/png");
+              const { jsPDF } = window.jspdf;
+              const pdf = new jsPDF("p", "mm", "a4");
+              const imgWidth = 210;
+              const pageHeight = 297;
+              const imgHeight = (canvas.height * imgWidth) / canvas.width;
+              let heightLeft = imgHeight;
+              let position = 0;
+
+              pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+              heightLeft -= pageHeight;
+
+              while (heightLeft > 0) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+              }
+              pdf.save(
+                "Laporan_SIPEDES_" +
+                  new Date().toISOString().slice(0, 10) +
+                  ".pdf",
+              );
+              wrapper.remove();
+              showToast("PDF berhasil diekspor!", "success");
+              addActivity("Laporan PDF diekspor", "success", "fa-file-pdf");
+            });
+          } catch (e) {
+            showToast("Gagal export PDF: " + e.message, "error");
+          }
+        }, 500);
+      }
+
+      // === EXPORT EXCEL ===
+      function exportToExcel() {
+        showToast("Menyiapkan Excel...", "info");
+        setTimeout(() => {
+          try {
+            const workbook = XLSX.utils.book_new();
+
+            // Style untuk header
+            const headerStyle = {
+              font: { bold: true, color: { rgb: "FFFFFF" } },
+              fill: { fgColor: { rgb: "0F4C3A" } },
+            };
+
+            // 1. Sheet Info Desa
+            const desaData = [
+              ["LAPORAN SIPEDES"],
+              ["Sistem Informasi Potensi Desa"],
+              [""],
+              ["DESA SLEMAN, KECAMATAN SLIYEG, KABUPATEN INDRAMAYU"],
+              [""],
+              ["Dicetak:", new Date().toLocaleString("id-ID")],
+              [""],
+              ["INFORMASI DESA"],
+              ["Kepala Desa", "Abdul Goni"],
+              ["Luas Wilayah", "547,35 Ha"],
+              ["Jumlah Dusun", "4"],
+              ["Jumlah Aparat", "13"],
+              ["Total Penduduk", "4.975"],
+              ["Jumlah KK", "1.969"],
+            ];
+            const ws1 = XLSX.utils.aoa_to_sheet(desaData);
+            ws1["!cols"] = [{ wch: 25 }, { wch: 30 }];
+            XLSX.utils.book_append_sheet(workbook, ws1, "Info Desa");
+
+            // 2. Sheet Potensi
+            const p = getData(KEYS.potensi, DEFAULT_DATA.potensi);
+            const potensiData = [["ID", "Nama Potensi", "Deskripsi", "Icon"]];
+            p.forEach((item) =>
+              potensiData.push([
+                item.id,
+                item.nama,
+                item.deskripsi || "-",
+                item.icon || "-",
+              ]),
+            );
+            const ws2 = XLSX.utils.aoa_to_sheet(potensiData);
+            ws2["!cols"] = [{ wch: 8 }, { wch: 30 }, { wch: 40 }, { wch: 15 }];
+            XLSX.utils.book_append_sheet(workbook, ws2, "Potensi");
+
+            // 3. Sheet Strategi
+            const s = getData(KEYS.strategi, DEFAULT_DATA.strategi);
+            const strategiData = [
+              ["ID", "Nama Strategi", "Tipe", "Sumber Dana", "Timeline"],
+            ];
+            s.forEach((item) =>
+              strategiData.push([
+                item.id,
+                item.nama,
+                item.tipe || "-",
+                (item.sumber_dana || []).join(", "),
+                item.timeline || "2025-2030",
+              ]),
+            );
+            const ws3 = XLSX.utils.aoa_to_sheet(strategiData);
+            ws3["!cols"] = [
+              { wch: 8 },
+              { wch: 45 },
+              { wch: 12 },
+              { wch: 30 },
+              { wch: 15 },
+            ];
+            XLSX.utils.book_append_sheet(workbook, ws3, "Strategi");
+
+            // 4. Sheet Program
+            const pr = getData(KEYS.program, DEFAULT_DATA.program);
+            const programData = [
+              [
+                "ID",
+                "Nama Program",
+                "Sumber Dana",
+                "Status",
+                "Tahun Mulai",
+                "Tahun Selesai",
+              ],
+            ];
+            pr.forEach((item) =>
+              programData.push([
+                item.id,
+                item.nama,
+                item.sumber_dana || "-",
+                item.status || "-",
+                item.tahun_mulai || "-",
+                item.tahun_selesai || "-",
+              ]),
+            );
+            const ws4 = XLSX.utils.aoa_to_sheet(programData);
+            ws4["!cols"] = [
+              { wch: 8 },
+              { wch: 35 },
+              { wch: 25 },
+              { wch: 15 },
+              { wch: 15 },
+              { wch: 15 },
+            ];
+            XLSX.utils.book_append_sheet(workbook, ws4, "Program");
+
+            // 5. Sheet APBDes
+            const apb = getData(KEYS.apbdes, DEFAULT_DATA.apbdes);
+            const apbdesData = [["Tahun", "Pendapatan", "Belanja", "Defisit"]];
+            apb.forEach((item) =>
+              apbdesData.push([
+                item.tahun,
+                item.pendapatan?.total || 0,
+                item.belanja?.total || 0,
+                item.defisit || 0,
+              ]),
+            );
+            const ws5 = XLSX.utils.aoa_to_sheet(apbdesData);
+            ws5["!cols"] = [{ wch: 10 }, { wch: 18 }, { wch: 18 }, { wch: 18 }];
+            XLSX.utils.book_append_sheet(workbook, ws5, "APBDes");
+
+            // 6. Sheet Users
+            const users = getData(KEYS.users, DEFAULT_DATA.users);
+            const userData = [["ID", "Username", "Nama", "Role"]];
+            users.forEach((item) =>
+              userData.push([item.id, item.username, item.nama, item.role]),
+            );
+            const ws6 = XLSX.utils.aoa_to_sheet(userData);
+            ws6["!cols"] = [{ wch: 8 }, { wch: 15 }, { wch: 25 }, { wch: 12 }];
+            XLSX.utils.book_append_sheet(workbook, ws6, "Users");
+
+            // 7. Sheet SWOT
+            const sw = getData(KEYS.swot, DEFAULT_DATA.swot);
+            const swotData = [
+              ["Kategori", "ID", "Nama", "Bobot", "Rating", "Skor"],
+            ];
+            ["kekuatan", "kelemahan", "peluang", "ancaman"].forEach((kat) => {
+              (sw[kat] || []).forEach((f) => {
+                swotData.push([
+                  kat,
+                  f.id,
+                  f.nama,
+                  f.bobot,
+                  f.rating,
+                  (f.bobot * f.rating).toFixed(2),
+                ]);
+              });
+            });
+            const ws7 = XLSX.utils.aoa_to_sheet(swotData);
+            ws7["!cols"] = [
+              { wch: 12 },
+              { wch: 8 },
+              { wch: 50 },
+              { wch: 10 },
+              { wch: 10 },
+              { wch: 10 },
+            ];
+            XLSX.utils.book_append_sheet(workbook, ws7, "SWOT");
+
+            XLSX.writeFile(
+              workbook,
+              "Laporan_SIPEDES_" +
+                new Date().toISOString().slice(0, 10) +
+                ".xlsx",
+            );
+            showToast("Excel berhasil diekspor! (7 Sheets)", "success");
+            addActivity("Laporan Excel diekspor", "success", "fa-file-excel");
+          } catch (e) {
+            showToast("Gagal export Excel: " + e.message, "error");
+          }
+        }, 500);
+      }
+
+      // === EXPORT ALL (PDF + Excel) ===
+      function exportAll() {
+        showToast("Mengekspor semua format...", "info");
+        setTimeout(() => {
+          exportToPDF();
+          setTimeout(() => exportToExcel(), 1000);
+          showToast("Semua format sedang diproses", "success");
+          addActivity(
+            "Ekspor semua format (PDF+Excel)",
+            "success",
+            "fa-download",
+          );
+        }, 500);
+      }
+
+      // ============================================================
+      // MODAL CRUD
+      // ============================================================
+      let currentType = "";
+      let currentId = null;
+
+      function openModal(title, body) {
+        document.getElementById("modalTitle").textContent = title;
+        document.getElementById("modalBody").innerHTML = body;
+        document.getElementById("crudModal").classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeModal() {
+        document.getElementById("crudModal").classList.remove("active");
+        document.body.style.overflow = "auto";
+        currentType = "";
+        currentId = null;
+      }
+
+      document
+        .getElementById("crudModal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) closeModal();
+        });
+
+      function openAddModal(type) {
+        currentType = type;
+        currentId = null;
+        let title = "Tambah Data";
+        let html = "";
+
+        switch (type) {
+          case "user":
+            title = "Tambah Pengguna";
+            html = `<div class="form-group"><label>Username</label><input type="text" id="inUsername" placeholder="Masukkan username" /></div>
+                    <div class="form-group"><label>Password</label><input type="password" id="inPassword" placeholder="Masukkan password" /></div>
+                    <div class="form-group"><label>Nama Lengkap</label><input type="text" id="inNama" placeholder="Masukkan nama lengkap" /></div>
+                    <div class="form-group"><label>Role</label><select id="inRole"><option value="admin">Admin</option><option value="perangkat">Perangkat</option><option value="kades">Kades</option></select></div>`;
+            break;
+          case "potensi":
+            title = "Tambah Potensi Desa";
+            html = `<div class="form-group"><label>Nama Potensi</label><input type="text" id="inNama" placeholder="Contoh: Sektor Pertanian" /></div>
+                    <div class="form-group"><label>Deskripsi</label><textarea id="inDeskripsi" placeholder="Deskripsi potensi"></textarea></div>
+                    <div class="form-group"><label>Icon</label><input type="text" id="inIcon" placeholder="fa-seedling" value="fa-seedling" /></div>`;
+            break;
+          case "strategi":
+            title = "Tambah Strategi";
+            html = `<div class="form-group"><label>Nama Strategi</label><input type="text" id="inNama" placeholder="Nama strategi" /></div>
+                    <div class="form-group"><label>Tipe</label><select id="inTipe"><option value="SO">SO - Agresif</option><option value="WO">WO - Turnaround</option><option value="ST">ST - Diversifikasi</option><option value="WT">WT - Defensif</option></select></div>
+                    <div class="form-group"><label>Deskripsi</label><textarea id="inDeskripsi" placeholder="Deskripsi"></textarea></div>
+                    <div class="form-group"><label>Sumber Dana</label><input type="text" id="inSumber" placeholder="Dana Desa, APBDes" /></div>`;
+            break;
+          case "program":
+            title = "Tambah Program";
+            html = `<div class="form-group"><label>Nama Program</label><input type="text" id="inNama" placeholder="Nama program" /></div>
+                    <div class="form-group"><label>Deskripsi</label><textarea id="inDeskripsi" placeholder="Deskripsi"></textarea></div>
+                    <div class="form-group"><label>Sumber Dana</label><input type="text" id="inSumber" placeholder="Dana Desa, ADD" /></div>
+                    <div class="form-group"><label>Status</label><select id="inStatus"><option value="Berjalan">Berjalan</option><option value="Perencanaan">Perencanaan</option><option value="Selesai">Selesai</option></select></div>`;
+            break;
+          case "swot":
+            title = "Tambah Faktor SWOT";
+            html = `<div class="form-group"><label>Kategori</label><select id="inKategori"><option value="kekuatan">Kekuatan</option><option value="kelemahan">Kelemahan</option><option value="peluang">Peluang</option><option value="ancaman">Ancaman</option></select></div>
+                    <div class="form-group"><label>Nama Faktor</label><input type="text" id="inNama" placeholder="Nama faktor SWOT" /></div>
+                    <div class="form-group"><label>Bobot (0-1)</label><input type="number" id="inBobot" step="0.01" min="0" max="1" placeholder="0.15" value="0.10" /></div>
+                    <div class="form-group"><label>Rating (1-4)</label><select id="inRating"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option></select></div>`;
+            break;
+          case "apbdes":
+            title = "Tambah APBDes";
+            html = `<div class="form-group"><label>Tahun</label><input type="number" id="inTahun" placeholder="2026" value="2026" /></div>
+                    <div class="form-group"><label>Pendapatan (Rp)</label><input type="number" id="inPendapatan" placeholder="Total pendapatan" /></div>
+                    <div class="form-group"><label>Belanja (Rp)</label><input type="number" id="inBelanja" placeholder="Total belanja" /></div>`;
+            break;
+          default:
+            html = '<p style="color:red;">Jenis data tidak dikenal.</p>';
+        }
+        openModal(title, html);
+      }
+
+      // ============================================================
+      // SAVE DATA
+      // ============================================================
+      function saveData() {
+        const type = currentType;
+        const id = currentId;
+        if (!type) {
+          showToast("Tidak ada data yang disimpan!", "error");
+          return;
+        }
+
+        let data = {};
+        let msg = "";
+        let key = "";
+
+        try {
+          switch (type) {
+            case "user":
+              key = KEYS.users;
+              const username = document
+                .getElementById("inUsername")
+                ?.value.trim();
+              const password = document
+                .getElementById("inPassword")
+                ?.value.trim();
+              const nama = document.getElementById("inNama")?.value.trim();
+              const role = document.getElementById("inRole")?.value;
+              if (!username) {
+                showToast("Username harus diisi!", "error");
+                return;
+              }
+              if (!password) {
+                showToast("Password harus diisi!", "error");
+                return;
+              }
+              if (!nama) {
+                showToast("Nama harus diisi!", "error");
+                return;
+              }
+              data = {
+                id: id || Date.now(),
+                username,
+                password,
+                nama,
+                role: role || "user",
+              };
+              msg =
+                "User berhasil " + (id ? "diperbarui" : "ditambahkan") + "!";
+              break;
+            case "potensi":
+              key = KEYS.potensi;
+              const namaP = document.getElementById("inNama")?.value.trim();
+              const deskP = document
+                .getElementById("inDeskripsi")
+                ?.value.trim();
+              const icon =
+                document.getElementById("inIcon")?.value.trim() ||
+                "fa-seedling";
+              if (!namaP) {
+                showToast("Nama potensi harus diisi!", "error");
+                return;
+              }
+              data = {
+                id: id || Date.now(),
+                nama: namaP,
+                deskripsi: deskP || "Potensi desa",
+                icon,
+              };
+              msg =
+                "Potensi berhasil " + (id ? "diperbarui" : "ditambahkan") + "!";
+              break;
+            case "strategi":
+              key = KEYS.strategi;
+              const ns = document.getElementById("inNama")?.value.trim();
+              const tipe = document.getElementById("inTipe")?.value;
+              const ds = document.getElementById("inDeskripsi")?.value.trim();
+              const src = document.getElementById("inSumber")?.value.trim();
+              if (!ns) {
+                showToast("Nama strategi harus diisi!", "error");
+                return;
+              }
+              data = {
+                id: id || Date.now(),
+                nama: ns,
+                tipe: tipe || "SO",
+                deskripsi: ds || "Strategi desa",
+                sumber_dana: src ? [src] : ["Dana Desa"],
+              };
+              msg =
+                "Strategi berhasil " +
+                (id ? "diperbarui" : "ditambahkan") +
+                "!";
+              break;
+            case "program":
+              key = KEYS.program;
+              const np = document.getElementById("inNama")?.value.trim();
+              const dp = document.getElementById("inDeskripsi")?.value.trim();
+              const sp = document.getElementById("inSumber")?.value.trim();
+              const st = document.getElementById("inStatus")?.value;
+              if (!np) {
+                showToast("Nama program harus diisi!", "error");
+                return;
+              }
+              data = {
+                id: id || Date.now(),
+                nama: np,
+                deskripsi: dp || "Program desa",
+                sumber_dana: sp || "Dana Desa",
+                status: st || "Perencanaan",
+              };
+              msg =
+                "Program berhasil " + (id ? "diperbarui" : "ditambahkan") + "!";
+              break;
+            case "swot":
+              key = KEYS.swot;
+              const kategori = document.getElementById("inKategori")?.value;
+              const namaF = document.getElementById("inNama")?.value.trim();
+              const bobot =
+                parseFloat(document.getElementById("inBobot")?.value) || 0;
+              const rating =
+                parseInt(document.getElementById("inRating")?.value) || 3;
+              if (!namaF) {
+                showToast("Nama faktor harus diisi!", "error");
+                return;
+              }
+              let swotData = getData(key, DEFAULT_DATA.swot);
+              if (!swotData[kategori]) swotData[kategori] = [];
+              const newId =
+                kategori.charAt(0).toUpperCase() +
+                (swotData[kategori].length + 1);
+              const newItem = { id: newId, nama: namaF, bobot, rating };
+              if (id) {
+                const idx = swotData[kategori].findIndex(
+                  (item) => item.id === id,
+                );
+                if (idx !== -1)
+                  swotData[kategori][idx] = {
+                    ...swotData[kategori][idx],
+                    ...newItem,
+                  };
+                else swotData[kategori].push(newItem);
+              } else {
+                swotData[kategori].push(newItem);
+              }
+              saveDataToStorage(key, swotData);
+              msg =
+                "Faktor SWOT berhasil " +
+                (id ? "diperbarui" : "ditambahkan") +
+                "!";
+              showToast(msg, "success");
+              addActivity(msg, "success", "fa-chart-pie");
+              loadStats();
+              searchData();
+              closeModal();
+              return;
+            case "apbdes":
+              key = KEYS.apbdes;
+              const th = document.getElementById("inTahun")?.value;
+              const pend = parseFloat(
+                document.getElementById("inPendapatan")?.value,
+              );
+              const bel = parseFloat(
+                document.getElementById("inBelanja")?.value,
+              );
+              if (!th) {
+                showToast("Tahun harus diisi!", "error");
+                return;
+              }
+              if (isNaN(pend) || isNaN(bel)) {
+                showToast("Pendapatan dan belanja harus diisi!", "error");
+                return;
+              }
+              data = {
+                id: id || Date.now(),
+                tahun: parseInt(th),
+                pendapatan: { total: pend },
+                belanja: { total: bel },
+                defisit: pend - bel,
+              };
+              msg =
+                "APBDes berhasil " + (id ? "diperbarui" : "ditambahkan") + "!";
+              break;
+            default:
+              showToast("Jenis data tidak dikenal: " + type, "error");
+              return;
+          }
+
+          let existing = getData(key, []);
+          if (id) {
+            const idx = existing.findIndex((item) => item.id == id);
+            if (idx !== -1) existing[idx] = { ...existing[idx], ...data };
+            else existing.push(data);
+          } else {
+            existing.push(data);
+          }
+          saveDataToStorage(key, existing);
+
+          closeModal();
+          showToast(msg, "success");
+          addActivity(msg, "success", "fa-check");
+          loadStats();
+          if (type === "user") loadUsers();
+          else searchData();
+          loadAPBDes();
+          loadChart();
+        } catch (error) {
+          showToast("Terjadi kesalahan: " + error.message, "error");
+        }
+      }
+
+      // ============================================================
+      // EDIT DATA
+      // ============================================================
+      function editData(type, id) {
+        let key = "";
+        let data = [];
+        let item = null;
+        let actualType = "";
+
+        if (type == "Potensi" || type == "potensi") {
+          key = KEYS.potensi;
+          data = getData(key, DEFAULT_DATA.potensi);
+          item = data.find((d) => d.id == id);
+          actualType = "potensi";
+        } else if (type == "Strategi" || type == "strategi") {
+          key = KEYS.strategi;
+          data = getData(key, DEFAULT_DATA.strategi);
+          item = data.find((d) => d.id == id);
+          actualType = "strategi";
+        } else if (type == "Program" || type == "program") {
+          key = KEYS.program;
+          data = getData(key, DEFAULT_DATA.program);
+          item = data.find((d) => d.id == id);
+          actualType = "program";
+        } else if (type == "User" || type == "user") {
+          key = KEYS.users;
+          data = getData(key, DEFAULT_DATA.users);
+          item = data.find((d) => d.id == id);
+          actualType = "user";
+        } else if (type == "APBDes" || type == "apbdes") {
+          key = KEYS.apbdes;
+          data = getData(key, DEFAULT_DATA.apbdes);
+          item = data.find((d) => d.id == id);
+          actualType = "apbdes";
+        } else if (type && type.includes("SWOT")) {
+          key = KEYS.swot;
+          const swotData = getData(key, DEFAULT_DATA.swot);
+          const kategoriMap = {
+            "SWOT-Kekuatan": "kekuatan",
+            "SWOT-Kelemahan": "kelemahan",
+            "SWOT-Peluang": "peluang",
+            "SWOT-Ancaman": "ancaman",
+          };
+          const kategori = kategoriMap[type] || "kekuatan";
+          const list = swotData[kategori] || [];
+          item = list.find((d) => d.id == id);
+          if (item) {
+            currentType = "swot";
+            currentId = id;
+            const html = `
+              <div class="form-group"><label>Kategori</label><select id="inKategori"><option value="kekuatan" ${kategori === "kekuatan" ? "selected" : ""}>Kekuatan</option><option value="kelemahan" ${kategori === "kelemahan" ? "selected" : ""}>Kelemahan</option><option value="peluang" ${kategori === "peluang" ? "selected" : ""}>Peluang</option><option value="ancaman" ${kategori === "ancaman" ? "selected" : ""}>Ancaman</option></select></div>
+              <div class="form-group"><label>Nama Faktor</label><input type="text" id="inNama" value="${item.nama || ""}" /></div>
+              <div class="form-group"><label>Bobot (0-1)</label><input type="number" id="inBobot" step="0.01" min="0" max="1" value="${item.bobot || 0}" /></div>
+              <div class="form-group"><label>Rating (1-4)</label><select id="inRating"><option value="1" ${item.rating === 1 ? "selected" : ""}>1</option><option value="2" ${item.rating === 2 ? "selected" : ""}>2</option><option value="3" ${item.rating === 3 ? "selected" : ""}>3</option><option value="4" ${item.rating === 4 ? "selected" : ""}>4</option></select></div>
+            `;
+            openModal("Edit Faktor SWOT", html);
+            return;
+          }
+          showToast("Data SWOT tidak ditemukan!", "error");
+          return;
+        }
+
+        if (!item) {
+          showToast("Data tidak ditemukan!", "error");
+          return;
+        }
+
+        currentType = actualType;
+        currentId = id;
+        let title = "Edit Data";
+        let html = "";
+
+        switch (actualType) {
+          case "user":
+            title = "Edit Pengguna";
+            html = `<div class="form-group"><label>Username</label><input type="text" id="inUsername" value="${item.username || ""}" /></div>
+                    <div class="form-group"><label>Password (kosongkan jika tidak diubah)</label><input type="password" id="inPassword" placeholder="Password baru" /></div>
+                    <div class="form-group"><label>Nama Lengkap</label><input type="text" id="inNama" value="${item.nama || ""}" /></div>
+                    <div class="form-group"><label>Role</label><select id="inRole"><option value="admin" ${item.role === "admin" ? "selected" : ""}>Admin</option><option value="perangkat" ${item.role === "perangkat" ? "selected" : ""}>Perangkat</option><option value="kades" ${item.role === "kades" ? "selected" : ""}>Kades</option></select></div>`;
+            break;
+          case "potensi":
+            title = "Edit Potensi";
+            html = `<div class="form-group"><label>Nama Potensi</label><input type="text" id="inNama" value="${item.nama || ""}" /></div>
+                    <div class="form-group"><label>Deskripsi</label><textarea id="inDeskripsi">${item.deskripsi || ""}</textarea></div>
+                    <div class="form-group"><label>Icon</label><input type="text" id="inIcon" value="${item.icon || "fa-seedling"}" /></div>`;
+            break;
+          case "strategi":
+            title = "Edit Strategi";
+            html = `<div class="form-group"><label>Nama Strategi</label><input type="text" id="inNama" value="${item.nama || ""}" /></div>
+                    <div class="form-group"><label>Tipe</label><select id="inTipe"><option value="SO" ${item.tipe === "SO" ? "selected" : ""}>SO</option><option value="WO" ${item.tipe === "WO" ? "selected" : ""}>WO</option><option value="ST" ${item.tipe === "ST" ? "selected" : ""}>ST</option><option value="WT" ${item.tipe === "WT" ? "selected" : ""}>WT</option></select></div>
+                    <div class="form-group"><label>Deskripsi</label><textarea id="inDeskripsi">${item.deskripsi || ""}</textarea></div>
+                    <div class="form-group"><label>Sumber Dana</label><input type="text" id="inSumber" value="${item.sumber_dana ? (Array.isArray(item.sumber_dana) ? item.sumber_dana.join(", ") : item.sumber_dana) : ""}" /></div>`;
+            break;
+          case "program":
+            title = "Edit Program";
+            html = `<div class="form-group"><label>Nama Program</label><input type="text" id="inNama" value="${item.nama || ""}" /></div>
+                    <div class="form-group"><label>Deskripsi</label><textarea id="inDeskripsi">${item.deskripsi || ""}</textarea></div>
+                    <div class="form-group"><label>Sumber Dana</label><input type="text" id="inSumber" value="${item.sumber_dana || ""}" /></div>
+                    <div class="form-group"><label>Status</label><select id="inStatus"><option value="Berjalan" ${item.status === "Berjalan" ? "selected" : ""}>Berjalan</option><option value="Perencanaan" ${item.status === "Perencanaan" ? "selected" : ""}>Perencanaan</option><option value="Selesai" ${item.status === "Selesai" ? "selected" : ""}>Selesai</option></select></div>`;
+            break;
+          case "apbdes":
+            title = "Edit APBDes";
+            html = `<div class="form-group"><label>Tahun</label><input type="number" id="inTahun" value="${item.tahun || ""}" /></div>
+                    <div class="form-group"><label>Pendapatan (Rp)</label><input type="number" id="inPendapatan" value="${item.pendapatan?.total || ""}" /></div>
+                    <div class="form-group"><label>Belanja (Rp)</label><input type="number" id="inBelanja" value="${item.belanja?.total || ""}" /></div>`;
+            break;
+          default:
+            html = '<p style="color:red;">Jenis data tidak dikenal.</p>';
+        }
+        openModal(title, html);
+      }
+
+      // ============================================================
+      // DELETE DATA
+      // ============================================================
+      function deleteData(type, id) {
+        showConfirm("Yakin ingin menghapus data ini?", function (confirmed) {
+          if (!confirmed) return;
+
+          let key = "";
+          let data = [];
+
+          if (type == "Potensi" || type == "potensi") {
+            key = KEYS.potensi;
+            data = getData(key, DEFAULT_DATA.potensi);
+          } else if (type == "Strategi" || type == "strategi") {
+            key = KEYS.strategi;
+            data = getData(key, DEFAULT_DATA.strategi);
+          } else if (type == "Program" || type == "program") {
+            key = KEYS.program;
+            data = getData(key, DEFAULT_DATA.program);
+          } else if (type == "User" || type == "user") {
+            key = KEYS.users;
+            data = getData(key, DEFAULT_DATA.users);
+          } else if (type == "APBDes" || type == "apbdes") {
+            key = KEYS.apbdes;
+            data = getData(key, DEFAULT_DATA.apbdes);
+          } else if (type && type.includes("SWOT")) {
+            key = KEYS.swot;
+            const swotData = getData(key, DEFAULT_DATA.swot);
+            const kategoriMap = {
+              "SWOT-Kekuatan": "kekuatan",
+              "SWOT-Kelemahan": "kelemahan",
+              "SWOT-Peluang": "peluang",
+              "SWOT-Ancaman": "ancaman",
+            };
+            const kategori = kategoriMap[type] || "kekuatan";
+            const list = swotData[kategori] || [];
+            const itemFound = list.find((d) => d.id == id);
+            const defaultIds = [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6",
+              "S7",
+              "W1",
+              "W2",
+              "W3",
+              "W4",
+              "W5",
+              "W6",
+              "W7",
+              "O1",
+              "O2",
+              "O3",
+              "O4",
+              "O5",
+              "O6",
+              "O7",
+              "T1",
+              "T2",
+              "T3",
+              "T4",
+              "T5",
+              "T6",
+              "T7",
+            ];
+            if (itemFound && defaultIds.includes(itemFound.id)) {
+              showToast("Data default tidak dapat dihapus!", "warning");
+              return;
+            }
+            swotData[kategori] = list.filter((d) => d.id != id);
+            saveDataToStorage(key, swotData);
+            showToast("Data SWOT berhasil dihapus!", "success");
+            addActivity("Data SWOT dihapus", "warning", "fa-trash");
+            loadStats();
+            searchData();
+            return;
+          } else {
+            showToast("Jenis data tidak dikenal: " + type, "error");
+            return;
+          }
+
+          const item = data.find((d) => d.id == id);
+          if (item && item.isDefault) {
+            showToast("Data default tidak dapat dihapus!", "warning");
+            return;
+          }
+
+          if (type == "User" || type == "user") {
+            const admins = data.filter((u) => u.role === "admin");
+            if (admins.length === 1 && admins[0].id == id) {
+              showToast("Tidak dapat menghapus admin terakhir!", "warning");
+              return;
+            }
+          }
+
+          const newData = data.filter((item) => item.id != id);
+          if (newData.length === data.length) {
+            showToast("Data tidak ditemukan!", "error");
+            return;
+          }
+
+          saveDataToStorage(key, newData);
+          showToast("Data berhasil dihapus!", "success");
+          addActivity("Data " + type + " dihapus", "warning", "fa-trash");
+          loadStats();
+          if (type == "User" || type == "user") loadUsers();
+          else searchData();
+          loadAPBDes();
+          loadChart();
+        });
+      }
+
+      // ============================================================
+      // INIT
+      // ============================================================
+      document.addEventListener("DOMContentLoaded", function () {
+        initDefaultData();
+
+        const userData = localStorage.getItem("sipedes_user");
+        if (!userData) {
+          showToast("Silakan login terlebih dahulu", "warning");
+          setTimeout(() => (window.location.href = "login.html"), 1000);
+          return;
+        }
+
+        const user = JSON.parse(userData);
+        if (user.role !== "admin") {
+          const pages = {
+            perangkat: "dashboard-perangkat.html",
+            kades: "dashboard-kades.html",
+          };
+          showToast("Redirect ke dashboard " + user.role, "info");
+          setTimeout(
+            () => (window.location.href = pages[user.role] || "index.html"),
+            500,
+          );
+          return;
+        }
+
+        document.getElementById("userAvatar").textContent = user.nama
+          .charAt(0)
+          .toUpperCase();
+        document.getElementById("userName").textContent = user.nama;
+
+        // Set print date
+        const now = new Date().toLocaleString("id-ID");
+        document.getElementById("printDate").textContent = now;
+        document.getElementById("printDateFooter").textContent = now;
+
+        loadStats();
+        searchData();
+        loadUsers();
+        loadAPBDes();
+        loadChart();
+        loadActivity();
+
+        addActivity(
+          "Admin <strong>" + user.nama + "</strong> login",
+          "success",
+          "fa-user",
+        );
+        showToast("Selamat datang, " + user.nama + "!", "success", 3000);
+      });
+    </script>
+  </body>
+</html>

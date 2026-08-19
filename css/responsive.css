@@ -1,0 +1,597 @@
+/* ============================================================
+   RESPONSIVE STYLES - SIPEDES
+   ============================================================ */
+
+/* ===== EXTRA SMALL (≤480px) ===== */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 12px !important;
+  }
+
+  .brand {
+    font-size: 16px !important;
+  }
+
+  .brand img {
+    height: 28px !important;
+    width: 28px !important;
+  }
+
+  .brand small {
+    font-size: 9px !important;
+    padding: 1px 8px !important;
+  }
+
+  .nav-menu a {
+    font-size: 11px !important;
+    padding: 4px 8px !important;
+  }
+
+  .nav-menu a i {
+    font-size: 12px !important;
+  }
+
+  .hero {
+    padding: 60px 0 30px !important;
+    min-height: 80vh !important;
+  }
+
+  .hero-content h1 {
+    font-size: 22px !important;
+  }
+
+  .hero-content p {
+    font-size: 13px !important;
+  }
+
+  .hero-stats {
+    grid-template-columns: 1fr 1fr !important;
+    padding: 12px !important;
+  }
+
+  .hero-stats .stat-number {
+    font-size: 18px !important;
+  }
+
+  .hero-stats label {
+    font-size: 10px !important;
+  }
+
+  .btn {
+    padding: 10px 18px !important;
+    font-size: 13px !important;
+  }
+
+  .hero-actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .hero-actions .btn {
+    justify-content: center !important;
+  }
+
+  .section {
+    padding: 30px 0 !important;
+  }
+
+  .section-head h2 {
+    font-size: 20px !important;
+  }
+
+  .section-head p {
+    font-size: 13px !important;
+  }
+
+  .section-tag {
+    font-size: 10px !important;
+    padding: 3px 12px !important;
+  }
+
+  .section-line {
+    width: 32px !important;
+    height: 2px !important;
+  }
+
+  .profil-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .profil-card {
+    padding: 12px 14px !important;
+  }
+
+  .profil-card h3 {
+    font-size: 14px !important;
+  }
+
+  .profil-card ul li {
+    font-size: 12px !important;
+  }
+
+  .potensi-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .potensi-card {
+    padding: 14px !important;
+  }
+
+  .potensi-card h3 {
+    font-size: 14px !important;
+  }
+
+  .potensi-card p {
+    font-size: 12px !important;
+  }
+
+  .potensi-card ul li {
+    font-size: 11px !important;
+  }
+
+  .swot-container {
+    padding: 12px !important;
+  }
+
+  .swot-form-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .swot-form-col {
+    padding: 10px !important;
+  }
+
+  .swot-faktor-item {
+    grid-template-columns: 18px 1fr 40px 35px 20px 18px !important;
+    font-size: 10px !important;
+    padding: 3px 6px !important;
+  }
+
+  .swot-faktor-item .faktor-bobot {
+    width: 40px !important;
+  }
+
+  .swot-faktor-item .faktor-rating {
+    width: 35px !important;
+  }
+
+  .faktor-skor {
+    font-size: 9px !important;
+  }
+
+  .btn-sm {
+    font-size: 10px !important;
+    padding: 3px 10px !important;
+  }
+
+  .swot-form-actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .swot-form-actions .btn {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 10px 16px !important;
+    font-size: 13px !important;
+  }
+
+  .swot-hasil,
+  .swot-kuadran,
+  .matrix-wrapper {
+    padding: 12px !important;
+  }
+
+  .swot-hasil h3,
+  .swot-kuadran h3,
+  .matrix-wrapper h3 {
+    font-size: 14px !important;
+  }
+
+  .hasil-grid {
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+  }
+
+  .hasil-item {
+    padding: 8px 10px !important;
+    font-size: 11px !important;
+  }
+
+  .hasil-value {
+    font-size: 14px !important;
+  }
+
+  .kuadran-badge,
+  .strategi-badge {
+    font-size: 12px !important;
+    padding: 4px 14px !important;
+  }
+
+  .kuadran-chart {
+    max-width: 220px !important;
+  }
+
+  .kuadran-area {
+    font-size: 8px !important;
+    padding: 4px !important;
+  }
+
+  .kuadran-label {
+    font-size: 10px !important;
+  }
+
+  .kuadran-strategy {
+    font-size: 7px !important;
+  }
+
+  .kuadran-dot {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  .dot-label {
+    font-size: 7px !important;
+    padding: 1px 6px !important;
+    top: 18px !important;
+  }
+
+  .kuadran-note {
+    font-size: 11px !important;
+    padding: 10px 12px !important;
+  }
+
+  .kuadran-axis-y {
+    display: none !important;
+  }
+
+  .matrix-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2px !important;
+  }
+
+  .matrix-header {
+    display: none !important;
+  }
+
+  .matrix-cell {
+    padding: 10px 12px !important;
+    font-size: 11px !important;
+  }
+
+  .strategi-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .strategi-card {
+    padding: 12px 14px !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .strategi-number {
+    font-size: 20px !important;
+    min-width: auto !important;
+  }
+
+  .strategi-content h3 {
+    font-size: 14px !important;
+  }
+
+  .strategi-content p {
+    font-size: 12px !important;
+  }
+
+  .program-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .program-card {
+    padding: 12px 14px !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .program-number {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 12px !important;
+  }
+
+  .program-content h4 {
+    font-size: 14px !important;
+  }
+
+  .tentang-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .tentang-card {
+    padding: 16px !important;
+  }
+
+  .footer {
+    padding: 24px 0 12px !important;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .footer-brand h3 {
+    font-size: 18px !important;
+  }
+
+  #toastContainer {
+    top: 60px !important;
+    right: 8px !important;
+    left: 8px !important;
+    max-width: none !important;
+  }
+
+  #toastContainer .toast {
+    padding: 10px 14px !important;
+    font-size: 12px !important;
+    border-radius: 8px !important;
+  }
+
+  .scroll-top {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 14px !important;
+    bottom: 20px !important;
+    right: 20px !important;
+  }
+}
+
+/* ===== SMALL (481px - 768px) ===== */
+@media (min-width: 481px) and (max-width: 768px) {
+  .container {
+    padding: 0 16px !important;
+  }
+
+  .brand {
+    font-size: 18px !important;
+  }
+
+  .brand img {
+    height: 32px !important;
+    width: 32px !important;
+  }
+
+  .nav-menu a {
+    font-size: 12px !important;
+    padding: 5px 10px !important;
+  }
+
+  .hero-content h1 {
+    font-size: 30px !important;
+  }
+
+  .hero-content p {
+    font-size: 15px !important;
+  }
+
+  .hero-stats {
+    grid-template-columns: 1fr 1fr 1fr 1fr !important;
+    padding: 16px !important;
+  }
+
+  .hero-stats .stat-number {
+    font-size: 22px !important;
+  }
+
+  .btn {
+    padding: 11px 22px !important;
+    font-size: 14px !important;
+  }
+
+  .section {
+    padding: 40px 0 !important;
+  }
+
+  .section-head h2 {
+    font-size: 26px !important;
+  }
+
+  .profil-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+
+  .potensi-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+
+  .swot-form-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .swot-faktor-item {
+    grid-template-columns: 22px 1fr 50px 45px 25px 22px !important;
+    font-size: 11px !important;
+    padding: 4px 8px !important;
+  }
+
+  .hasil-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+
+  .kuadran-chart {
+    max-width: 280px !important;
+  }
+
+  .strategi-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .program-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .tentang-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 20px !important;
+  }
+
+  .matrix-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2px !important;
+  }
+
+  .matrix-header {
+    display: none !important;
+  }
+
+  .matrix-cell {
+    padding: 12px 14px !important;
+  }
+}
+
+/* ===== MEDIUM (769px - 1024px) ===== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-content h1 {
+    font-size: 38px !important;
+  }
+
+  .profil-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+  }
+
+  .potensi-grid {
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 16px !important;
+  }
+
+  .swot-faktor-item {
+    grid-template-columns: 25px 1fr 55px 50px 30px 25px !important;
+    font-size: 12px !important;
+  }
+
+  .strategi-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+  }
+
+  .program-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+  }
+
+  .tentang-grid {
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 16px !important;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 24px !important;
+  }
+
+  .kuadran-chart {
+    max-width: 350px !important;
+  }
+}
+
+/* ===== LARGE (1025px - 1366px) ===== */
+@media (min-width: 1025px) and (max-width: 1366px) {
+  .hero-content h1 {
+    font-size: 44px !important;
+  }
+
+  .profil-grid {
+    gap: 20px !important;
+  }
+
+  .potensi-grid {
+    gap: 20px !important;
+  }
+
+  .swot-faktor-item {
+    grid-template-columns: 28px 1fr 65px 55px 35px 28px !important;
+    font-size: 13px !important;
+  }
+}
+
+/* ===== LANDSCAPE PHONE ===== */
+@media (max-width: 768px) and (orientation: landscape) {
+  .hero {
+    min-height: auto !important;
+    padding: 60px 0 30px !important;
+  }
+
+  .hero-content h1 {
+    font-size: 28px !important;
+  }
+
+  .hero-stats {
+    grid-template-columns: 1fr 1fr 1fr 1fr !important;
+    padding: 12px 16px !important;
+  }
+
+  .hero-stats .stat-number {
+    font-size: 20px !important;
+  }
+
+  .swot-form-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .profil-grid,
+  .potensi-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ===== HIGH DPI / RETINA ===== */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .hero-bg {
+    background-image:
+      radial-gradient(
+        ellipse at 20% 50%,
+        rgba(255, 255, 255, 0.05) 0%,
+        transparent 60%
+      ),
+      radial-gradient(
+        ellipse at 80% 20%,
+        rgba(201, 149, 107, 0.08) 0%,
+        transparent 50%
+      ) !important;
+  }
+}

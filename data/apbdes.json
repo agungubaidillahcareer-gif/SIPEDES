@@ -1,0 +1,84 @@
+{
+  "tahun": [
+    {
+      "tahun": 2024,
+      "pendapatan": {
+        "pad": 342000000,
+        "transfer": 1813218000,
+        "lainnya": 0,
+        "total": 2155218000
+      },
+      "belanja": {
+        "pemerintahan": {
+          "nama": "Bid. Penyelenggaraan Pemerintahan Desa",
+          "nilai": 855634000
+        },
+        "pembangunan": {
+          "nama": "Bid. Pelaksanaan Pembangunan Desa",
+          "nilai": 443829600
+        },
+        "kemasyarakatan": {
+          "nama": "Bid. Pembinaan Kemasyarakatan",
+          "nilai": 124692344
+        },
+        "pemberdayaan": {
+          "nama": "Bid. Pemberdayaan Masyarakat",
+          "nilai": 769494400
+        },
+        "bencana": {
+          "nama": "Bid. Penanggulangan Bencana",
+          "nilai": 0
+        },
+        "total": 2193650344
+      },
+      "defisit": -38432344
+    },
+    {
+      "tahun": 2025,
+      "pendapatan": {
+        "pad": 342000000,
+        "transfer": 1781726000,
+        "lainnya": 0,
+        "total": 2123726000
+      },
+      "belanja": {
+        "pemerintahan": {
+          "nama": "Bid. Penyelenggaraan Pemerintahan Desa",
+          "nilai": 887093000
+        },
+        "pembangunan": {
+          "nama": "Bid. Pelaksanaan Pembangunan Desa",
+          "nilai": 609275000,
+          "rincian": [
+            "Pembangunan/Rehabilitasi Saluran Irigasi Tersier: Rp382.638.000",
+            "Pembuatan Rambu-rambu Jalan Desa: Rp14.500.000",
+            "Pengelolaan Informasi Publik: Rp1.000.000"
+          ]
+        },
+        "kemasyarakatan": {
+          "nama": "Bid. Pembinaan Kemasyarakatan",
+          "nilai": 117235683,
+          "rincian": [
+            "Penyelenggaraan PAUD/TK: Rp85.200.000",
+            "Posyandu dan Kesehatan: Rp53.150.000"
+          ]
+        },
+        "pemberdayaan": {
+          "nama": "Bid. Pemberdayaan Masyarakat",
+          "nilai": 443758000,
+          "rincian": [
+            "Penguatan Ketahanan Pangan Tingkat Desa: Rp15.000.000",
+            "Pengelolaan Jaringan Komunikasi Lokal: Rp9.205.000"
+          ]
+        },
+        "bencana": {
+          "nama": "Bid. Penanggulangan Bencana/Darurat",
+          "nilai": 129600000
+        },
+        "total": 2186961683
+      },
+      "defisit": -63235683
+    }
+  ],
+  "updated_at": "2026-07-19"
+}

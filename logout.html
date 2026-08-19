@@ -1,0 +1,211 @@
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logout · SIPEDES</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="icon" type="image/png" href="assets/images/logo.png" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #0a3327, #1b6b52);
+        padding: 20px;
+      }
+      .logout-card {
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 48px 40px;
+        max-width: 420px;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .logout-card .icon {
+        font-size: 64px;
+        color: #c9956b;
+        margin-bottom: 16px;
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+      }
+      .logout-card h1 {
+        font-size: 24px;
+        font-weight: 800;
+        color: #0a3327;
+      }
+      .logout-card p {
+        color: #7a8a92;
+        font-size: 15px;
+        margin: 8px 0 24px;
+        line-height: 1.6;
+      }
+      .logout-card .btn-group {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .logout-card .btn-group a {
+        padding: 12px 28px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 15px;
+        text-decoration: none;
+        transition: 0.3s;
+      }
+      .logout-card .btn-group .btn-primary {
+        background: #0f4c3a;
+        color: #fff;
+      }
+      .logout-card .btn-group .btn-primary:hover {
+        background: #1b6b52;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(15, 76, 58, 0.3);
+      }
+      .logout-card .btn-group .btn-outline {
+        background: transparent;
+        color: #0f4c3a;
+        border: 2px solid #0f4c3a;
+      }
+      .logout-card .btn-group .btn-outline:hover {
+        background: #e8f5e9;
+        transform: translateY(-2px);
+      }
+      .logout-spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #e0e3d8;
+        border-top-color: #0f4c3a;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin: 0 auto 16px;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .logout-timer {
+        font-size: 13px;
+        color: #7a8a92;
+        margin-top: 16px;
+      }
+      .logout-timer strong {
+        color: #0f4c3a;
+      }
+      .logout-success {
+        color: #2e7d32;
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      @media (max-width: 480px) {
+        .logout-card {
+          padding: 32px 24px;
+        }
+        .logout-card .icon {
+          font-size: 48px;
+        }
+        .logout-card h1 {
+          font-size: 20px;
+        }
+        .logout-card .btn-group a {
+          padding: 10px 20px;
+          font-size: 13px;
+          width: 100%;
+        }
+        .logout-card .btn-group {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="logout-card">
+      <div class="icon"><i class="fas fa-sign-out-alt"></i></div>
+      <h1>Logout Berhasil</h1>
+      <div class="logout-success">
+        <i class="fas fa-check-circle"></i> Anda telah keluar dari sistem
+      </div>
+      <p>
+        Sesi Anda telah berakhir dengan aman. Terima kasih telah menggunakan
+        SIPEDES.
+      </p>
+      <div class="logout-spinner"></div>
+      <div class="btn-group">
+        <a href="login.html" class="btn-primary"
+          ><i class="fas fa-sign-in-alt"></i> Login Kembali</a
+        >
+        <a href="index.html" class="btn-outline"
+          ><i class="fas fa-home"></i> Beranda</a
+        >
+      </div>
+      <div class="logout-timer">
+        <i class="fas fa-clock"></i>
+        Mengarahkan ke halaman login dalam
+        <strong id="countdown">5</strong> detik
+      </div>
+    </div>
+    <script>
+      localStorage.removeItem("sipedes_user");
+      sessionStorage.clear();
+
+      // Hapus semua data session
+      const keys = Object.keys(localStorage);
+      keys.forEach((key) => {
+        if (key.startsWith("sipedes_")) {
+          localStorage.removeItem(key);
+        }
+      });
+
+      let seconds = 5;
+      const countdownEl = document.getElementById("countdown");
+      const interval = setInterval(function () {
+        seconds--;
+        if (countdownEl) countdownEl.textContent = seconds;
+        if (seconds <= 0) {
+          clearInterval(interval);
+          window.location.href = "login.html";
+        }
+      }, 1000);
+    </script>
+  </body>
+</html>

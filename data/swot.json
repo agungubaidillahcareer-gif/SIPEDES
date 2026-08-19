@@ -1,0 +1,223 @@
+{
+  "faktor": {
+    "kekuatan": [
+      {
+        "id": "S1",
+        "nama": "Lahan pertanian luas (505,50 Ha) dengan irigasi teknis",
+        "bobot": 0.15,
+        "rating": 4,
+        "skor": 0.6
+      },
+      {
+        "id": "S2",
+        "nama": "Jumlah penduduk besar (4.975 jiwa) sebagai tenaga kerja",
+        "bobot": 0.1,
+        "rating": 3,
+        "skor": 0.3
+      },
+      {
+        "id": "S3",
+        "nama": "BUMDes aktif dengan 6 jenis unit usaha",
+        "bobot": 0.1,
+        "rating": 3,
+        "skor": 0.3
+      },
+      {
+        "id": "S4",
+        "nama": "Usaha peternakan (31 unit), jahit/bordir (15 unit), kayu (3 unit)",
+        "bobot": 0.08,
+        "rating": 3,
+        "skor": 0.24
+      },
+      {
+        "id": "S5",
+        "nama": "Lembaga pendidikan (TK & SD) sebagai modal SDM",
+        "bobot": 0.07,
+        "rating": 3,
+        "skor": 0.21
+      },
+      {
+        "id": "S6",
+        "nama": "Struktur pemerintahan desa lengkap (13 aparat)",
+        "bobot": 0.05,
+        "rating": 3,
+        "skor": 0.15
+      },
+      {
+        "id": "S7",
+        "nama": "Pendapatan Asli Desa stabil Rp342 juta/tahun",
+        "bobot": 0.05,
+        "rating": 3,
+        "skor": 0.15
+      }
+    ],
+    "kelemahan": [
+      {
+        "id": "W1",
+        "nama": "Tingkat pendidikan rendah (dominan SD 4.073 orang)",
+        "bobot": 0.12,
+        "rating": 1,
+        "skor": 0.12
+      },
+      {
+        "id": "W2",
+        "nama": "416 penduduk usia produktif menganggur",
+        "bobot": 0.08,
+        "rating": 2,
+        "skor": 0.16
+      },
+      {
+        "id": "W3",
+        "nama": "Keterbatasan akses pasar dan jaringan pemasaran",
+        "bobot": 0.08,
+        "rating": 1,
+        "skor": 0.08
+      },
+      {
+        "id": "W4",
+        "nama": "Minimnya pemanfaatan teknologi digital",
+        "bobot": 0.07,
+        "rating": 1,
+        "skor": 0.07
+      },
+      {
+        "id": "W5",
+        "nama": "Ketergantungan pada transfer/Dana Desa",
+        "bobot": 0.05,
+        "rating": 2,
+        "skor": 0.1
+      },
+      {
+        "id": "W6",
+        "nama": "Kapasitas manajemen usaha masyarakat terbatas",
+        "bobot": 0.06,
+        "rating": 2,
+        "skor": 0.12
+      },
+      {
+        "id": "W7",
+        "nama": "BPD berstatus pasif",
+        "bobot": 0.04,
+        "rating": 2,
+        "skor": 0.08
+      }
+    ],
+    "peluang": [
+      {
+        "id": "O1",
+        "nama": "Program Dana Desa dan ADD berkelanjutan",
+        "bobot": 0.15,
+        "rating": 4,
+        "skor": 0.6
+      },
+      {
+        "id": "O2",
+        "nama": "Perkembangan teknologi digital membuka pasar luas",
+        "bobot": 0.12,
+        "rating": 3,
+        "skor": 0.36
+      },
+      {
+        "id": "O3",
+        "nama": "Meningkatnya permintaan produk pertanian organik",
+        "bobot": 0.1,
+        "rating": 3,
+        "skor": 0.3
+      },
+      {
+        "id": "O4",
+        "nama": "Program pemberdayaan UMKM dari pemerintah daerah",
+        "bobot": 0.08,
+        "rating": 3,
+        "skor": 0.24
+      },
+      {
+        "id": "O5",
+        "nama": "Potensi kerja sama dengan swasta & perguruan tinggi",
+        "bobot": 0.05,
+        "rating": 2,
+        "skor": 0.1
+      },
+      {
+        "id": "O6",
+        "nama": "Program ketahanan pangan nasional",
+        "bobot": 0.07,
+        "rating": 3,
+        "skor": 0.21
+      },
+      {
+        "id": "O7",
+        "nama": "Infrastruktur jalan yang dapat ditingkatkan",
+        "bobot": 0.03,
+        "rating": 2,
+        "skor": 0.06
+      }
+    ],
+    "ancaman": [
+      {
+        "id": "T1",
+        "nama": "Persaingan produk dari luar daerah yang ketat",
+        "bobot": 0.15,
+        "rating": 2,
+        "skor": 0.3
+      },
+      {
+        "id": "T2",
+        "nama": "Fluktuasi harga komoditas pertanian",
+        "bobot": 0.12,
+        "rating": 2,
+        "skor": 0.24
+      },
+      {
+        "id": "T3",
+        "nama": "Dampak perubahan iklim terhadap produktivitas",
+        "bobot": 0.1,
+        "rating": 2,
+        "skor": 0.2
+      },
+      {
+        "id": "T4",
+        "nama": "Fenomena urbanisasi mengurangi tenaga kerja",
+        "bobot": 0.08,
+        "rating": 2,
+        "skor": 0.16
+      },
+      {
+        "id": "T5",
+        "nama": "Ketergantungan pada curah hujan & irigasi",
+        "bobot": 0.05,
+        "rating": 2,
+        "skor": 0.1
+      },
+      {
+        "id": "T6",
+        "nama": "Risiko banjir pada sebagian wilayah (4 Ha)",
+        "bobot": 0.05,
+        "rating": 2,
+        "skor": 0.1
+      },
+      {
+        "id": "T7",
+        "nama": "Rendahnya daya saing produk lokal",
+        "bobot": 0.05,
+        "rating": 2,
+        "skor": 0.1
+      }
+    ]
+  },
+  "hasil": {
+    "total_s": 1.95,
+    "total_w": 0.73,
+    "total_o": 1.87,
+    "total_t": 1.2,
+    "selisih_s_w": 1.22,
+    "selisih_o_t": 0.67,
+    "kuadran": "I",
+    "strategi": "Agresif (SO)",
+    "deskripsi": "Memanfaatkan kekuatan untuk merebut peluang yang ada",
+    "warna": "#2e7d32",
+    "posisi_x": 1.22,
+    "posisi_y": 0.67
+  },
+  "updated_at": "2026-07-19"
+}

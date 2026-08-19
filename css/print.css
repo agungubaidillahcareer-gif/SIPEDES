@@ -1,0 +1,452 @@
+/* ============================================================
+   PRINT STYLES - SIPEDES
+   ============================================================ */
+
+@media print {
+  /* Reset */
+  * {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Sembunyikan elemen */
+  .header,
+  .navbar,
+  .nav-menu,
+  .nav-toggle,
+  .hero-scroll,
+  .scroll-down,
+  .footer,
+  .btn,
+  .btn-primary,
+  .btn-outline,
+  .nav-dashboard,
+  .nav-login,
+  #preloader,
+  #toastContainer,
+  .modal-overlay,
+  .swot-form-actions,
+  .btn-add,
+  .btn-remove,
+  .btn-sm,
+  .quick-actions,
+  .card-action,
+  .hero-actions,
+  .hero-badge img,
+  .brand img,
+  .footer-links,
+  .footer-info,
+  .footer-brand img,
+  .section-tag i,
+  .profil-icon i,
+  .potensi-icon i,
+  .strategi-type,
+  .program-status,
+  .strategi-detail i,
+  .program-meta i,
+  .strategi-indikator i,
+  .program-indikator i,
+  .hasil-label i,
+  .kuadran-badge,
+  .strategi-badge,
+  .kuadran-note i,
+  .matrix-cell ul li::before,
+  .tentang-icon i,
+  .footer-tagline i,
+  .scroll-top,
+  .hero-bg {
+    display: none !important;
+  }
+
+  /* Page */
+  @page {
+    margin: 1.5cm;
+    size: A4;
+  }
+
+  body {
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 11pt !important;
+    line-height: 1.5 !important;
+    font-family: "Times New Roman", Georgia, serif !important;
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Section */
+  .section {
+    padding: 20px 0 !important;
+    page-break-inside: avoid;
+    border-bottom: 1px solid #ddd !important;
+  }
+
+  .section:last-child {
+    border-bottom: none !important;
+  }
+
+  .section-head h2 {
+    font-size: 20pt !important;
+    font-weight: 700 !important;
+    color: #000 !important;
+    text-align: center !important;
+  }
+
+  .section-head p {
+    font-size: 11pt !important;
+    color: #333 !important;
+    text-align: center !important;
+  }
+
+  .section-line {
+    width: 60px !important;
+    height: 2px !important;
+    background: #000 !important;
+    margin: 8px auto !important;
+  }
+
+  .section-tag {
+    font-size: 10pt !important;
+    color: #555 !important;
+    background: none !important;
+    padding: 0 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+  }
+
+  /* Hero */
+  .hero {
+    min-height: auto !important;
+    padding: 30px 0 !important;
+    background: #fff !important;
+    color: #000 !important;
+    page-break-after: avoid;
+  }
+
+  .hero-content h1 {
+    font-size: 24pt !important;
+    color: #000 !important;
+  }
+
+  .hero-content h1 span {
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+    background: none !important;
+  }
+
+  .hero-content p {
+    font-size: 12pt !important;
+    color: #333 !important;
+    max-width: 100% !important;
+  }
+
+  .hero-stats {
+    background: #f5f5f5 !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    padding: 12px !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 10px !important;
+    margin-top: 16px !important;
+  }
+
+  .hero-stats .stat-item .stat-number {
+    font-size: 18pt !important;
+    color: #000 !important;
+  }
+
+  .hero-stats .stat-item label {
+    font-size: 9pt !important;
+    color: #555 !important;
+  }
+
+  .hero-badge {
+    background: #f0f0f0 !important;
+    border: 1px solid #ddd !important;
+    color: #000 !important;
+    font-size: 10pt !important;
+  }
+
+  /* Cards */
+  .profil-card,
+  .potensi-card,
+  .strategi-card,
+  .program-card,
+  .tentang-card {
+    background: #f9f9f9 !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+  }
+
+  .profil-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .potensi-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .strategi-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+
+  .program-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+
+  .tentang-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 16px !important;
+  }
+
+  /* SWOT */
+  .swot-container {
+    background: #f9f9f9 !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    padding: 16px !important;
+    page-break-inside: avoid;
+  }
+
+  .swot-form-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+
+  .swot-form-col {
+    background: #fff !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    padding: 12px !important;
+  }
+
+  .swot-faktor-item {
+    border: 1px solid #eee !important;
+    padding: 4px 8px !important;
+    margin-bottom: 4px !important;
+    display: grid !important;
+    grid-template-columns: 25px 1fr 50px 40px 30px !important;
+    gap: 4px !important;
+    font-size: 9pt !important;
+  }
+
+  .swot-faktor-item input,
+  .swot-faktor-item select {
+    border: 1px solid #ccc !important;
+    background: #fff !important;
+    font-size: 9pt !important;
+    padding: 2px 4px !important;
+  }
+
+  /* Hasil */
+  .swot-hasil {
+    background: #f9f9f9 !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    padding: 16px !important;
+    page-break-inside: avoid;
+  }
+
+  .hasil-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .hasil-item {
+    background: #fff !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    padding: 8px 12px !important;
+  }
+
+  .hasil-item.highlight {
+    background: #f0f0f0 !important;
+    border-color: #000 !important;
+  }
+
+  .hasil-kuadran-info {
+    background: #f0f0f0 !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    padding: 12px !important;
+  }
+
+  /* Kuadran */
+  .swot-kuadran {
+    background: #f9f9f9 !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    padding: 16px !important;
+    page-break-inside: avoid;
+  }
+
+  .kuadran-chart {
+    max-width: 300px !important;
+    margin: 0 auto !important;
+  }
+
+  .kuadran-grid {
+    border: 1px solid #000 !important;
+    border-radius: 4px !important;
+  }
+
+  .kuadran-area {
+    background: #fff !important;
+    color: #000 !important;
+    border: 1px solid #ddd !important;
+    padding: 8px !important;
+    font-size: 9pt !important;
+  }
+
+  .kuadran-area.active {
+    background: #f0f0f0 !important;
+    border-color: #000 !important;
+  }
+
+  .kuadran-dot {
+    border: 2px solid #000 !important;
+    background: #000 !important;
+    box-shadow: none !important;
+  }
+
+  .dot-label {
+    background: #fff !important;
+    border: 1px solid #000 !important;
+    color: #000 !important;
+    font-size: 8pt !important;
+  }
+
+  .kuadran-note {
+    background: #f0f0f0 !important;
+    border-left: 3px solid #000 !important;
+    padding: 10px 14px !important;
+    font-size: 11pt !important;
+    color: #000 !important;
+  }
+
+  /* Matriks */
+  .matrix-wrapper {
+    background: #f9f9f9 !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    padding: 16px !important;
+    page-break-inside: avoid;
+  }
+
+  .matrix-grid {
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    overflow: hidden !important;
+  }
+
+  .matrix-header {
+    background: #f0f0f0 !important;
+    border: 1px solid #ddd !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    font-size: 10pt !important;
+    padding: 8px 12px !important;
+  }
+
+  .matrix-s,
+  .matrix-w,
+  .matrix-o,
+  .matrix-t {
+    background: #e8e8e8 !important;
+    color: #000 !important;
+  }
+
+  .matrix-cell {
+    background: #fff !important;
+    border: 1px solid #ddd !important;
+    padding: 10px 12px !important;
+    font-size: 10pt !important;
+  }
+
+  .matrix-cell strong {
+    font-size: 11pt !important;
+    color: #000 !important;
+  }
+
+  .matrix-cell ul li {
+    font-size: 9pt !important;
+    color: #333 !important;
+    padding: 2px 0 !important;
+    padding-left: 14px !important;
+  }
+
+  /* Footer */
+  .footer {
+    background: #f5f5f5 !important;
+    color: #000 !important;
+    padding: 20px 0 !important;
+    border-top: 2px solid #000 !important;
+    display: block !important;
+    page-break-before: avoid;
+  }
+
+  .footer-brand h3 {
+    color: #000 !important;
+  }
+
+  .footer-brand p,
+  .footer-tagline {
+    color: #333 !important;
+  }
+
+  .footer-bottom {
+    color: #555 !important;
+    border-top: 1px solid #ddd !important;
+    padding-top: 12px !important;
+  }
+
+  .footer-credit {
+    color: #777 !important;
+  }
+
+  /* Utility */
+  .text-success {
+    color: #000 !important;
+  }
+  .text-danger {
+    color: #000 !important;
+  }
+  .text-neutral {
+    color: #333 !important;
+  }
+  .text-muted {
+    color: #555 !important;
+  }
+
+  .page-break {
+    page-break-before: always !important;
+    break-before: page !important;
+  }
+
+  .page-break-after {
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+}

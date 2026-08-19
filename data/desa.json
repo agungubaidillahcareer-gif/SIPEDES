@@ -1,0 +1,61 @@
+{
+  "identitas": {
+    "nama_desa": "Sleman",
+    "kecamatan": "Sliyeg",
+    "kabupaten": "Indramayu",
+    "provinsi": "Jawa Barat",
+    "kepala_desa": "Abdul Goni",
+    "jumlah_aparat": 13,
+    "jumlah_dusun": 4,
+    "luas_wilayah": 547.35,
+    "luas_sawah": 505.5,
+    "luas_kering": 14.06,
+    "luas_fasum": 27.8,
+    "jarak_kecamatan": 3,
+    "jarak_kabupaten": 17,
+    "waktu_kecamatan": 9,
+    "waktu_kabupaten": 60
+  },
+  "demografi": {
+    "total_penduduk": 4975,
+    "laki_laki": 2512,
+    "perempuan": 2463,
+    "jumlah_kk": 1969,
+    "kepadatan": 908.92,
+    "agama": {
+      "islam": 5035
+    },
+    "etnis": {
+      "jawa": 4990,
+      "sunda": 45
+    }
+  },
+  "pendidikan": {
+    "sd": { "laki": 2425, "perempuan": 1648, "total": 4073 },
+    "sltp": { "laki": 574, "perempuan": 654, "total": 1228 },
+    "slta": { "laki": 786, "perempuan": 895, "total": 1681 },
+    "pt": { "laki": 40, "perempuan": 76, "total": 116 },
+    "total_angkatan_kerja": { "laki": 3825, "perempuan": 3273, "total": 7098 },
+    "penduduk_bekerja": { "laki": 2504, "perempuan": 1564, "total": 4068 },
+    "penduduk_menganggur": { "laki": 264, "perempuan": 152, "total": 416 },
+    "anak_tidak_sekolah": { "laki": 55, "perempuan": 43, "total": 98 }
+  },
+  "sekolah": {
+    "tk": { "unit": 3, "siswa": 97 },
+    "sd": { "unit": 3, "siswa": 1500 },
+    "ra": { "unit": 1, "siswa": 37 }
+  },
+  "iklim": {
+    "curah_hujan": 2000,
+    "bulan_hujan": 5,
+    "kelembapan": 82,
+    "suhu_rata_rata": 31
+  },
+  "batas_wilayah": {
+    "utara": "Desa Sleman Lor (Kec. Jatibarang & Balongan)",
+    "selatan": "Desa Sukalila & Kliwed (Kec. Kertasmaya)",
+    "timur": "Desa Tambi & Tenajar (Kec. Kedokan Bunder)",
+    "barat": "Desa Sleman Lor & Bulak (Kec. Jatibarang)"
+  },
+  "updated_at": "2026-07-19"
+}
